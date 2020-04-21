@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  dp3t_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: dpppt
+      POSTGRES_DB: dpppt
+      POSTGRES_USER: dpppt
+    ports:
+      - "5432:5432"
