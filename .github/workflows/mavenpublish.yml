@@ -23,13 +23,13 @@ jobs:
         servers: '[{"id": "github", "username": "${{ github.actor }}", "password": "${{ github.token}}"}, {"id": "github-annotation", "username": "${{ github.actor }}", "password": "${{ github.token }}"}]'
         repositories: '[{"id" : "github", "url" : "https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3"}, {"id" : "github-annotation", "url" : "https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3-annotations"}]'
     - name: Build with Maven
-      run: mvn -B package --file dpppt-backend-sdk/pom.xml
+      run: mvn -B package --file dpppt-config-backend/pom.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: Echo current ref
       run: echo "${{ github.ref }}"
     - name: Publish to GitHub Packages Apache Maven
       if: github.ref == 'refs/heads/develop'
-      run: mvn deploy --file dpppt-backend-sdk/pom.xml -s $GITHUB_WORKSPACE/settings.xml
+      run: mvn deploy --file dpppt-config-backend/pom.xml -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
