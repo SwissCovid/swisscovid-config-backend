@@ -24,7 +24,7 @@ public class DPPPTConfigControllerTest extends BaseControllerTest {
 		mockMvc.perform(get("/v1/config"))
 				.andExpect(status().is4xxClientError());
 		mockMvc.perform(
-				get("/v1/config").param("osVersion", "ios12").param("appVersion", "1.0"))
+				get("/v1/config").param("osversion", "ios12").param("appversion", "1.0"))
 				.andExpect(status().is2xxSuccessful());
 	}
 }
