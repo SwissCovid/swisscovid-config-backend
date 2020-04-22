@@ -26,7 +26,7 @@ jobs:
       run: mvn clean install --file dpppt-config-backend/pom.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
-    - name: Echo the current ref
+    - name: Echo current ref
       run: echo "${{ github.ref }}"
     - name: Create Snapshot Release
       uses: ncipollo/release-action@v1
