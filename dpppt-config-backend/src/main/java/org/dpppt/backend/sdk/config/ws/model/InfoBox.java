@@ -4,7 +4,7 @@ package org.dpppt.backend.sdk.config.ws.model;
  * @author bachmann
  * created on 28.04.20
  **/
-public class GhettoBox {
+public class InfoBox {
 
     private String title;
     private String msg;

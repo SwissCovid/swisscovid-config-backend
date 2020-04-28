@@ -4,7 +4,7 @@ public class ConfigResponse {
 
 	private boolean forceUpdate = false;
 
-	private GhettoBox ghettoBox = null;
+	private InfoBox infoBox = null;
 
 	public boolean isForceUpdate() {
 		return forceUpdate;
@@ -14,12 +14,12 @@ public class ConfigResponse {
 		this.forceUpdate = forceUpdate;
 	}
 
-	public GhettoBox getGhettoBox() {
-		return ghettoBox;
+	public InfoBox getInfoBox() {
+		return infoBox;
 	}
 
-	public void setGhettoBox(GhettoBox ghettoBox) {
-		this.ghettoBox = ghettoBox;
+	public void setInfoBox(InfoBox infoBox) {
+		this.infoBox = infoBox;
 	}
 
 }
