@@ -1,6 +1,7 @@
 package org.dpppt.backend.sdk.config.ws.controller;
 
 import org.dpppt.backend.sdk.config.ws.model.ConfigResponse;
+import org.dpppt.backend.sdk.config.ws.model.InfoBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,18 @@ public class DPPPTConfigController {
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
 			@RequestParam(required = true) String osversion) {
 		return ResponseEntity.ok(new ConfigResponse());
+	}
+	@CrossOrigin(origins = { "https://editor.swagger.io" })
+	@GetMapping(value = "/testinfobox/config")
+	public @ResponseBody ResponseEntity<ConfigResponse> getGhettoboxConfig(@RequestParam(required = true) String appversion,
+			@RequestParam(required = true) String osversion) {
+		ConfigResponse body = new ConfigResponse();
+		InfoBox infoBox = new InfoBox();
+		infoBox.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz");
+		infoBox.setTitle("Hinweis");
+		infoBox.setUrlTitle("Und ein externer Link");
+		infoBox.setUrl("https://www.bag.admin.ch/");
+		body.setInfoBox(infoBox);
+		return ResponseEntity.ok(body);
 	}
 }
