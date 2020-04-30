@@ -14,9 +14,9 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 @Profile("cloud-abn")
 public class WSAbnConfig extends WSBaseConfig {
-    @Value("${vcap.services.ecdsa_abn.credentials.privateKey}")
+    @Value("${vcap.services.ecdsa_cs_abn.credentials.privateKey}")
 	private String privateKey;
-	@Value("${vcap.services.ecdsa_abn.credentials.publicKey}")
+	@Value("${vcap.services.ecdsa_cs_abn.credentials.publicKey}")
 	public String publicKey;
 	
     @Override

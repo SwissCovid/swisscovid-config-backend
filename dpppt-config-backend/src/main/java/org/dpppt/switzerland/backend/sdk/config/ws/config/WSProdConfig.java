@@ -16,9 +16,9 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 @Configuration
 @Profile("cloud-prod")
 public class WSProdConfig extends WSBaseConfig {
-	@Value("${vcap.services.ecdsa_prod.credentials.privateKey}")
+	@Value("${vcap.services.ecdsa_cs_prod.credentials.privateKey}")
 	private String privateKey;
-	@Value("${vcap.services.ecdsa_prod.credentials.publicKey}")
+	@Value("${vcap.services.ecdsa_cs_prod.credentials.publicKey}")
 	public String publicKey;
 	
 	@Override
