@@ -9,8 +9,8 @@ package org.dpppt.switzerland.backend.sdk.config.ws.model;
 public class SDKConfig {
     private Integer numberOfWindowsForExposure = 15;
     private Float eventThreshold = 0.8f;
-    private Float badAttenuationThreshold;
-    private Float contactAttenuationThreshold;
+    private Float badAttenuationThreshold = 64.0f;
+    private Float contactAttenuationThreshold = 54.0f;
 
     public Integer getNumberOfWindowsForExposure() {
         return numberOfWindowsForExposure;
