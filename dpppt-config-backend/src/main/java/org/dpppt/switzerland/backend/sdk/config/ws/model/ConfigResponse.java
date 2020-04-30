@@ -12,7 +12,7 @@ public class ConfigResponse {
 
 	private InfoBoxCollection infoBox = null;
 
-	private SDKConfig sdkConfig = null;
+	private SDKConfig sdkConfig = new SDKConfig();
 
 	public boolean isForceUpdate() {
 		return forceUpdate;
