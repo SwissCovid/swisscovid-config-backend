@@ -3,6 +3,8 @@ package org.dpppt.backend.sdk.config.ws;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import io.jsonwebtoken.Jwts;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,8 +25,9 @@ public class DPPPTConfigControllerTest extends BaseControllerTest {
 	public void testGetConfig() throws Exception {
 		mockMvc.perform(get("/v1/config"))
 				.andExpect(status().is4xxClientError());
-		mockMvc.perform(
+		MockHttpServletResponse result = mockMvc.perform(
 				get("/v1/config").param("osversion", "ios12").param("appversion", "1.0"))
-				.andExpect(status().is2xxSuccessful());
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		Jwts.parserBuilder().setSigningKey(this.publicKey).build().parse(result.getHeader("Signature"));
 	}
 }
