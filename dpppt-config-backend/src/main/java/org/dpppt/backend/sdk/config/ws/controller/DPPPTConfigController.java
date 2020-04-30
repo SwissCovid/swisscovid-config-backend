@@ -2,6 +2,8 @@ package org.dpppt.backend.sdk.config.ws.controller;
 
 import org.dpppt.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.backend.sdk.config.ws.model.InfoBox;
+import org.dpppt.backend.sdk.config.ws.model.InfoBoxCollection;
+import org.dpppt.backend.sdk.config.ws.model.SDKConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -35,12 +37,37 @@ public class DPPPTConfigController {
 	public @ResponseBody ResponseEntity<ConfigResponse> getGhettoboxConfig(@RequestParam(required = true) String appversion,
 			@RequestParam(required = true) String osversion) {
 		ConfigResponse body = new ConfigResponse();
-		InfoBox infoBox = new InfoBox();
-		infoBox.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz");
-		infoBox.setTitle("Hinweis");
-		infoBox.setUrlTitle("Und ein externer Link");
-		infoBox.setUrl("https://www.bag.admin.ch/");
-		body.setInfoBox(infoBox);
+
+		InfoBox infoBoxde = new InfoBox();
+		infoBoxde.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz");
+		infoBoxde.setTitle("Hinweis");
+		infoBoxde.setUrlTitle("Und ein externer Link");
+		infoBoxde.setUrl("https://www.bag.admin.ch/");
+		InfoBox infoBoxfr = new InfoBox();
+		infoBoxfr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz");
+		infoBoxfr.setTitle("Hinweis");
+		infoBoxfr.setUrlTitle("Und ein externer Link");
+		infoBoxfr.setUrl("https://www.bag.admin.ch/");
+		InfoBox infoBoxit = new InfoBox();
+		infoBoxit.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz");
+		infoBoxit.setTitle("Hinweis");
+		infoBoxit.setUrlTitle("Und ein externer Link");
+		infoBoxit.setUrl("https://www.bag.admin.ch/");
+		InfoBox infoBoxen = new InfoBox();
+		infoBoxen.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz");
+		infoBoxen.setTitle("Hinweis");
+		infoBoxen.setUrlTitle("Und ein externer Link");
+		infoBoxen.setUrl("https://www.bag.admin.ch/");
+		InfoBoxCollection collection = new InfoBoxCollection();
+		collection.setDeInfoBox(infoBoxde);
+		collection.setEnInfoBox(infoBoxen);
+		collection.setFrInfoBox(infoBoxfr);
+		collection.setItInfoBox(infoBoxit);
+		body.setInfoBox(collection);
+
+		SDKConfig config = new SDKConfig();
+		body.setSdkConfig(config);
+		
 		return ResponseEntity.ok(body);
 	}
 }
