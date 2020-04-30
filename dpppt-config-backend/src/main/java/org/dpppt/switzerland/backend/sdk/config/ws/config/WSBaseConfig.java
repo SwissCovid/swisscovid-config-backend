@@ -4,7 +4,7 @@
  * Copyright (c) 2020. All rights reserved.
  */
 
-package org.dpppt.backend.sdk.config.ws.config;
+package org.dpppt.switzerland.backend.sdk.config.ws.config;
 
 import java.io.ByteArrayInputStream;
 import java.io.Reader;
@@ -18,11 +18,11 @@ import java.security.cert.CertificateFactory;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.List;
 
-import org.dpppt.backend.sdk.config.ws.filter.ResponseWrapperFilter;
+import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
-import org.dpppt.backend.sdk.config.ws.controller.DPPPTConfigController;
+import org.dpppt.switzerland.backend.sdk.config.ws.controller.DPPPTConfigController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

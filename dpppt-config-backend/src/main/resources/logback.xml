@@ -21,7 +21,7 @@
         </triggeringPolicy>
     </appender>
 
-    <logger name="org.dpppt" level="DEBUG"/>
+    <logger name="org.dpppt.switzerland" level="DEBUG"/>
     <!--    <logger name="org.springframework.web" level="DEBUG"/>-->
     <root level="INFO">
         <appender-ref ref="logfile"/>

@@ -4,13 +4,13 @@
  * Copyright (c) 2020. All rights reserved.
  */
 
-package org.dpppt.backend.sdk.config.ws;
+package org.dpppt.switzerland.backend.sdk.config.ws;
 
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(basePackages = {"org.dpppt.backend.sdk.config.ws.config"})
+@ComponentScan(basePackages = {"org.dpppt.switzerland.backend.sdk.config.ws.config"})
 @SpringBootApplication
 public class TestApplication {
 }

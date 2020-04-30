@@ -4,7 +4,7 @@
  * Copyright (c) 2020. All rights reserved.
  */
 
-package org.dpppt.backend.sdk.config.ws.config;
+package org.dpppt.switzerland.backend.sdk.config.ws.config;
 
 import java.util.Base64;
 

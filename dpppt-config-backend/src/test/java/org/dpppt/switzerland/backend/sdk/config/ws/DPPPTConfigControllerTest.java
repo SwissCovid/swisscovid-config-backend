@@ -1,4 +1,4 @@
-package org.dpppt.backend.sdk.config.ws;
+package org.dpppt.switzerland.backend.sdk.config.ws;
 
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletResponse;

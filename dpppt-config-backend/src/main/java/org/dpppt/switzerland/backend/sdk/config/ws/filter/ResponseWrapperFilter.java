@@ -4,7 +4,7 @@
  * Copyright (c) 2020. All rights reserved.
  */
 
-package org.dpppt.backend.sdk.config.ws.filter;
+package org.dpppt.switzerland.backend.sdk.config.ws.filter;
 
 import java.io.IOException;
 import java.security.KeyPair;
@@ -20,7 +20,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.dpppt.backend.sdk.config.ws.security.signature.SignatureResponseWrapper;
+import org.dpppt.switzerland.backend.sdk.config.ws.security.signature.SignatureResponseWrapper;
 
 public class ResponseWrapperFilter implements Filter {
 

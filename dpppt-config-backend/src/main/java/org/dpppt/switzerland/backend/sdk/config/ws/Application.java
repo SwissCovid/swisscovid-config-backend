@@ -4,7 +4,7 @@
  * Copyright (c) 2020. All rights reserved.
  */
 
-package org.dpppt.backend.sdk.config.ws;
+package org.dpppt.switzerland.backend.sdk.config.ws;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@ComponentScan(basePackages = {"org.dpppt.backend.sdk.config.ws.config"})
+@ComponentScan(basePackages = {"org.dpppt.switzerland.backend.sdk.config.ws.config"})
 @EnableAutoConfiguration
 @EnableWebMvc
 public class Application {
