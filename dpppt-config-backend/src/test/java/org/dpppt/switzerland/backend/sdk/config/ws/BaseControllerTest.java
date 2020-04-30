@@ -27,7 +27,7 @@ import java.security.PublicKey;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles({ "dev" })
+@ActiveProfiles({ "cloud-dev" })
 public abstract class BaseControllerTest {
 
 	protected MockMvc mockMvc;

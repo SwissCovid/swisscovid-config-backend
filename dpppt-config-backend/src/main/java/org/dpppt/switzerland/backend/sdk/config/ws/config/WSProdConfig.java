@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 @Configuration
-@Profile("prod")
+@Profile("cloud-prod")
 public class WSProdConfig extends WSBaseConfig {
 	@Value("${vcap.services.ecdsa_prod.credentials.privateKey}")
 	private String privateKey;
