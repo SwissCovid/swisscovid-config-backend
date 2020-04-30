@@ -17,9 +17,9 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 @Profile("cloud-dev")
 public class WSDevConfig extends WSBaseConfig {
 	
-	@Value("${vcap.services.ecdsa_dev.credentials.privateKey}")
+	@Value("${vcap.services.ecdsa_cs_dev.credentials.privateKey}")
 	private String privateKey;
-	@Value("${vcap.services.ecdsa_dev.credentials.publicKey}")
+	@Value("${vcap.services.ecdsa_cs_dev.credentials.publicKey}")
     public String publicKey;
 
 	@Override
