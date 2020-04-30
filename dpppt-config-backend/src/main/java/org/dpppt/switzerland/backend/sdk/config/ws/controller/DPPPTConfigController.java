@@ -1,9 +1,9 @@
-package org.dpppt.backend.sdk.config.ws.controller;
+package org.dpppt.switzerland.backend.sdk.config.ws.controller;
 
-import org.dpppt.backend.sdk.config.ws.model.ConfigResponse;
-import org.dpppt.backend.sdk.config.ws.model.InfoBox;
-import org.dpppt.backend.sdk.config.ws.model.InfoBoxCollection;
-import org.dpppt.backend.sdk.config.ws.model.SDKConfig;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.SDKConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;

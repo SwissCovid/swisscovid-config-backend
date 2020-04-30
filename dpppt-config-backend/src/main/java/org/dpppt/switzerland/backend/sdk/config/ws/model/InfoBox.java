@@ -1,4 +1,4 @@
-package org.dpppt.backend.sdk.config.ws.model;
+package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 /**
  * @author bachmann

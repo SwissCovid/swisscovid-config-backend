@@ -4,7 +4,7 @@
  * Copyright (c) 2020. All rights reserved.
  */
 
-package org.dpppt.backend.sdk.config.ws.security.signature;
+package org.dpppt.switzerland.backend.sdk.config.ws.security.signature;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
