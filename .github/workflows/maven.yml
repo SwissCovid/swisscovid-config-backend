@@ -34,7 +34,7 @@ jobs:
       id: create_release
       with:
         name: Snapshot Release ${{ github.ref }}
-        tag: ${{ github.ref }}
+        tag: SNAPSHOT
         artifacts: "dpppt-config-backend/target/dpppt-config-backend-*-SNAPSHOT.jar"
         body: |
             Changes in this Release
