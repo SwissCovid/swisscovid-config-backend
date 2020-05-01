@@ -39,44 +39,50 @@ public class DPPPTConfigController {
 	@GetMapping(value = "/config")
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
 			@RequestParam(required = true) String osversion) {
-		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(30))).body(new ConfigResponse());
+		ConfigResponse config = mockConfigResponseWithInfoBox();
+		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(30))).body(config);
 	}
+
 	@CrossOrigin(origins = { "https://editor.swagger.io" })
 	@GetMapping(value = "/testinfobox/config")
-	public @ResponseBody ResponseEntity<ConfigResponse> getGhettoboxConfig(@RequestParam(required = true) String appversion,
-			@RequestParam(required = true) String osversion) {
-		ConfigResponse body = new ConfigResponse();
+	public @ResponseBody ResponseEntity<ConfigResponse> getGhettoboxConfig(
+			@RequestParam(required = true) String appversion, @RequestParam(required = true) String osversion) {
+		ConfigResponse body = mockConfigResponseWithInfoBox();
+		return ResponseEntity.ok(body);
+	}
+
+	private ConfigResponse mockConfigResponseWithInfoBox() {
+		ConfigResponse configResponse = new ConfigResponse();
 
 		InfoBox infoBoxde = new InfoBox();
-		infoBoxde.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz");
-		infoBoxde.setTitle("Hinweis");
-		infoBoxde.setUrlTitle("Und ein externer Link");
-		infoBoxde.setUrl("https://www.bag.admin.ch/");
+		infoBoxde.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz DE");
+		infoBoxde.setTitle("Hinweis DE");
+		infoBoxde.setUrlTitle("Und ein externer Link DE");
+		infoBoxde.setUrl("https://www.bag.admin.ch/bag/de/home.html");
 		InfoBox infoBoxfr = new InfoBox();
-		infoBoxfr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz");
-		infoBoxfr.setTitle("Hinweis");
-		infoBoxfr.setUrlTitle("Und ein externer Link");
-		infoBoxfr.setUrl("https://www.bag.admin.ch/");
+		infoBoxfr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz FR");
+		infoBoxfr.setTitle("Hinweis FR");
+		infoBoxfr.setUrlTitle("Und ein externer Link FR");
+		infoBoxfr.setUrl("https://www.bag.admin.ch/bag/fr/home.html");
 		InfoBox infoBoxit = new InfoBox();
-		infoBoxit.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz");
-		infoBoxit.setTitle("Hinweis");
-		infoBoxit.setUrlTitle("Und ein externer Link");
-		infoBoxit.setUrl("https://www.bag.admin.ch/");
+		infoBoxit.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz IT");
+		infoBoxit.setTitle("Hinweis IT");
+		infoBoxit.setUrlTitle("Und ein externer Link IT");
+		infoBoxit.setUrl("https://www.bag.admin.ch/bag/it/home.html");
 		InfoBox infoBoxen = new InfoBox();
-		infoBoxen.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz");
-		infoBoxen.setTitle("Hinweis");
-		infoBoxen.setUrlTitle("Und ein externer Link");
-		infoBoxen.setUrl("https://www.bag.admin.ch/");
+		infoBoxen.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz EN");
+		infoBoxen.setTitle("Hinweis EN");
+		infoBoxen.setUrlTitle("Und ein externer Link EN");
+		infoBoxen.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		InfoBoxCollection collection = new InfoBoxCollection();
 		collection.setDeInfoBox(infoBoxde);
 		collection.setEnInfoBox(infoBoxen);
 		collection.setFrInfoBox(infoBoxfr);
 		collection.setItInfoBox(infoBoxit);
-		body.setInfoBox(collection);
+		configResponse.setInfoBox(collection);
 
 		SDKConfig config = new SDKConfig();
-		body.setSdkConfig(config);
-		
-		return ResponseEntity.ok(body);
+		configResponse.setSdkConfig(config);
+		return configResponse;
 	}
 }
