@@ -8,7 +8,7 @@ package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 public class ConfigResponse {
 
-	private boolean forceUpdate = false;
+	private boolean forceUpdate = true;
 
 	private InfoBoxCollection infoBox = null;
 
