@@ -6,12 +6,15 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.controller;
 
+import java.time.Duration;
+
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.SDKConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,7 +39,7 @@ public class DPPPTConfigController {
 	@GetMapping(value = "/config")
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
 			@RequestParam(required = true) String osversion) {
-		return ResponseEntity.ok(new ConfigResponse());
+		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(30))).body(new ConfigResponse());
 	}
 	@CrossOrigin(origins = { "https://editor.swagger.io" })
 	@GetMapping(value = "/testinfobox/config")
