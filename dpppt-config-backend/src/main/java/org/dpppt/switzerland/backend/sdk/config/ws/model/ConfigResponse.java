@@ -9,6 +9,7 @@ package org.dpppt.switzerland.backend.sdk.config.ws.model;
 public class ConfigResponse {
 
 	private boolean forceUpdate = false;
+	private boolean forceTraceShutdown = false;
 
 	private InfoBoxCollection infoBox = null;
 
@@ -36,6 +37,14 @@ public class ConfigResponse {
 
 	public void setInfoBox(InfoBoxCollection infoBox) {
 		this.infoBox = infoBox;
+	}
+
+	public boolean isForceTraceShutdown() {
+		return forceTraceShutdown;
+	}
+
+	public void setForceTraceShutdown(boolean forceTraceShutdown) {
+		this.forceTraceShutdown = forceTraceShutdown;
 	}
 
 }
