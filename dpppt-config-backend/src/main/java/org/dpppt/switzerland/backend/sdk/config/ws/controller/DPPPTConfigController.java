@@ -38,7 +38,7 @@ public class DPPPTConfigController {
 	@CrossOrigin(origins = { "https://editor.swagger.io" })
 	@GetMapping(value = "/config")
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
-			@RequestParam(required = true) String osversion) {
+			@RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {
 		ConfigResponse config = new ConfigResponse();
 		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(30))).body(config);
 	}
@@ -46,7 +46,8 @@ public class DPPPTConfigController {
 	@CrossOrigin(origins = { "https://editor.swagger.io" })
 	@GetMapping(value = "/testinfobox/config")
 	public @ResponseBody ResponseEntity<ConfigResponse> getGhettoboxConfig(
-			@RequestParam(required = true) String appversion, @RequestParam(required = true) String osversion) {
+			@RequestParam(required = true) String appversion, @RequestParam(required = true) String osversion,
+			@RequestParam(required = true) String buildnr) {
 		ConfigResponse body = mockConfigResponseWithInfoBox();
 		return ResponseEntity.ok(body);
 	}
