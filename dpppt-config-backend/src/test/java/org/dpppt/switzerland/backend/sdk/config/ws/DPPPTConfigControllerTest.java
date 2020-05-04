@@ -32,7 +32,7 @@ public class DPPPTConfigControllerTest extends BaseControllerTest {
 		mockMvc.perform(get("/v1/config"))
 				.andExpect(status().is4xxClientError());
 		MockHttpServletResponse result = mockMvc.perform(
-				get("/v1/config").param("osversion", "ios12").param("appversion", "1.0"))
+				get("/v1/config").param("osversion", "ios12").param("appversion", "1.0").param("buildnr", "2020.0145asdfa34"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		Jwts.parserBuilder().setSigningKey(this.publicKey).build().parse(result.getHeader("Signature"));
 	}
