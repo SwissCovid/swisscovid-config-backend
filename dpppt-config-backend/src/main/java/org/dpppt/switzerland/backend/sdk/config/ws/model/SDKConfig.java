@@ -11,7 +11,7 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 public class SDKConfig {
-    private Integer numberOfWindowsForExposure = 15;
+    private Integer numberOfWindowsForExposure = 3;
 
     @Deprecated
     private Float eventThreshold = 0.8f;
