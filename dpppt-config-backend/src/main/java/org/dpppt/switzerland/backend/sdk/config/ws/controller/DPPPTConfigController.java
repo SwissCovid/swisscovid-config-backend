@@ -43,7 +43,7 @@ public class DPPPTConfigController {
 	@GetMapping(value = "/config")
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
 			@RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {
-		ConfigResponse config = new ConfigResponse();
+		ConfigResponse config = mockConfigResponseWithInfoBox();
 		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(1))).body(config);
 	}
 
