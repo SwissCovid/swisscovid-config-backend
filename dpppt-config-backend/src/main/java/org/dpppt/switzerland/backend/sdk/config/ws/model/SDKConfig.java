@@ -11,45 +11,45 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 public class SDKConfig {
-    private Integer numberOfWindowsForExposure = 3;
+	private Integer numberOfWindowsForExposure = 3;
 
-    @Deprecated
-    private Float eventThreshold = 0.8f;
+	@Deprecated
+	private Float eventThreshold = 0.8f;
 
-    @Deprecated
-    private Float badAttenuationThreshold = 73.0f;
+	@Deprecated
+	private Float badAttenuationThreshold = 73.0f;
 
-    private Float contactAttenuationThreshold = 73.0f;
+	private Float contactAttenuationThreshold = 73.0f;
 
-    public Integer getNumberOfWindowsForExposure() {
-        return numberOfWindowsForExposure;
-    }
+	public Integer getNumberOfWindowsForExposure() {
+		return numberOfWindowsForExposure;
+	}
 
-    public Float getContactAttenuationThreshold() {
-        return contactAttenuationThreshold;
-    }
+	public Float getContactAttenuationThreshold() {
+		return contactAttenuationThreshold;
+	}
 
-    public void setContactAttenuationThreshold(Float contactAttenuationThreshold) {
-        this.contactAttenuationThreshold = contactAttenuationThreshold;
-    }
+	public void setContactAttenuationThreshold(Float contactAttenuationThreshold) {
+		this.contactAttenuationThreshold = contactAttenuationThreshold;
+	}
 
-    public Float getBadAttenuationThreshold() {
-        return badAttenuationThreshold;
-    }
+	public Float getBadAttenuationThreshold() {
+		return badAttenuationThreshold;
+	}
 
-    public void setBadAttenuationThreshold(Float badAttenuationThreshold) {
-        this.badAttenuationThreshold = badAttenuationThreshold;
-    }
+	public void setBadAttenuationThreshold(Float badAttenuationThreshold) {
+		this.badAttenuationThreshold = badAttenuationThreshold;
+	}
 
-    public Float getEventThreshold() {
-        return eventThreshold;
-    }
+	public Float getEventThreshold() {
+		return eventThreshold;
+	}
 
-    public void setEventThreshold(Float eventThreshold) {
-        this.eventThreshold = eventThreshold;
-    }
+	public void setEventThreshold(Float eventThreshold) {
+		this.eventThreshold = eventThreshold;
+	}
 
-    public void setNumberOfWindowsForExposure(Integer numberOfWindowsForExposure) {
-        this.numberOfWindowsForExposure = numberOfWindowsForExposure;
-    }
+	public void setNumberOfWindowsForExposure(Integer numberOfWindowsForExposure) {
+		this.numberOfWindowsForExposure = numberOfWindowsForExposure;
+	}
 }
