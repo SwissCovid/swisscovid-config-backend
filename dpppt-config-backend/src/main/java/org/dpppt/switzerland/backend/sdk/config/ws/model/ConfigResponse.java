@@ -12,7 +12,7 @@ package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 public class ConfigResponse {
 
-	private boolean forceUpdate = true;
+	private boolean forceUpdate = false;
 	private boolean forceTraceShutdown = false;
 
 	private InfoBoxCollection infoBox = null;
