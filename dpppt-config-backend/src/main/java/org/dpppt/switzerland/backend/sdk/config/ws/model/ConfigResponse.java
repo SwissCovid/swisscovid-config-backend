@@ -18,7 +18,8 @@ public class ConfigResponse {
 	private InfoBoxCollection infoBox = null;
 
 	private SDKConfig sdkConfig = new SDKConfig();
-	private GAENSDKConfig gaenSdkConfig = new GAENSDKConfig();
+	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
+	private GAENSDKConfig androidGaenSdkConfig = new GAENSDKConfig();
 
 	public boolean isForceUpdate() {
 		return forceUpdate;
@@ -51,13 +52,20 @@ public class ConfigResponse {
 	public void setForceTraceShutdown(boolean forceTraceShutdown) {
 		this.forceTraceShutdown = forceTraceShutdown;
 	}
-	
-	public GAENSDKConfig getGaenSdkConfig() {
-		return gaenSdkConfig;
-	}
-	
-	public void setGaenSdkConfig(GAENSDKConfig gaenSdkConfig) {
-		this.gaenSdkConfig = gaenSdkConfig;
+
+	public GAENSDKConfig getiOSGaenSdkConfig() {
+		return iOSGaenSdkConfig;
 	}
 
+	public void setiOSGaenSdkConfig(GAENSDKConfig iOSGaenSdkConfig) {
+		this.iOSGaenSdkConfig = iOSGaenSdkConfig;
+	}
+
+	public GAENSDKConfig getAndroidGaenSdkConfig() {
+		return androidGaenSdkConfig;
+	}
+
+	public void setAndroidGaenSdkConfig(GAENSDKConfig androidGaenSdkConfig) {
+		this.androidGaenSdkConfig = androidGaenSdkConfig;
+	}
 }
