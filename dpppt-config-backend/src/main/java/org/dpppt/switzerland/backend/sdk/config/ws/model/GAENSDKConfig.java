@@ -16,7 +16,7 @@ public class GAENSDKConfig {
 	private Integer higherThreshold = 60;
 	private Double factorLow = 1.0d;
 	private Double factorHigh = 0.5d;
-	private Integer triggerThreshold = 20;
+	private Integer triggerThreshold = 15;
 
 	public Integer getLowerThreshold() {
 		return lowerThreshold;
