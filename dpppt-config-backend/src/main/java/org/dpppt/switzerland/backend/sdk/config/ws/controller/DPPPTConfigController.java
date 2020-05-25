@@ -44,6 +44,12 @@ public class DPPPTConfigController {
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
 			@RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {
 		ConfigResponse config = new ConfigResponse();
+		// Build nr of the initial ios pilot test app. Contains bug, that factors are
+		// not used correctly in contact calculations. Set factorHigh to 0.0 for fixing
+		// calculation.
+		if (buildnr.equals("200524.1316.87")) {
+			config.getiOSGaenSdkConfig().setFactorHigh(0.0d);
+		}
 		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(10))).body(config);
 	}
 
