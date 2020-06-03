@@ -96,4 +96,10 @@ public class DPPPTConfigController {
 		configResponse.setSdkConfig(config);
 		return configResponse;
 	}
+	
+	private ConfigResponse mockConfigResponseWithForceTraceShutdown() {
+		ConfigResponse configResponse = new ConfigResponse();
+		configResponse.setForceTraceShutdown(true);
+		return configResponse;
+	}
 }
