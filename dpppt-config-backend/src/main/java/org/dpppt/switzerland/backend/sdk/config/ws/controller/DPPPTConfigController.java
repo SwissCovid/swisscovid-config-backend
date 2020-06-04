@@ -50,7 +50,7 @@ public class DPPPTConfigController {
 		if (buildnr.equals("ios-200524.1316.87")) {
 			config.getiOSGaenSdkConfig().setFactorHigh(0.0d);
 		}
-		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(1))).body(config);
+		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
 	}
 
 	@CrossOrigin(origins = { "https://editor.swagger.io" })
