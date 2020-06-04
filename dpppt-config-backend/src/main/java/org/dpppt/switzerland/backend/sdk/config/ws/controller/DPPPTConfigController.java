@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.micrometer.core.instrument.MockClock;
+
 @Controller
 @RequestMapping("/v1")
 public class DPPPTConfigController {
@@ -43,14 +45,14 @@ public class DPPPTConfigController {
 	@GetMapping(value = "/config")
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
 			@RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {
-		ConfigResponse config = new ConfigResponse();
+		ConfigResponse config = mockConfigResponseWithInfoBox();
 		// Build nr of the initial iOS pilot test app. Contains bug, that factors are
 		// not used correctly in contact calculations. Set factorHigh to 0.0 for
 		// improving the calculation.
 		if (buildnr.equals("ios-200524.1316.87")) {
 			config.getiOSGaenSdkConfig().setFactorHigh(0.0d);
 		}
-		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(10))).body(config);
+		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(1))).body(config);
 	}
 
 	@CrossOrigin(origins = { "https://editor.swagger.io" })
