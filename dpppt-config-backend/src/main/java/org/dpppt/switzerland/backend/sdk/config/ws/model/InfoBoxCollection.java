@@ -15,6 +15,69 @@ public class InfoBoxCollection {
     private InfoBox frInfoBox;
     private InfoBox itInfoBox;
     private InfoBox enInfoBox;
+    private InfoBox ptInfoBox;
+    private InfoBox esInfoBox;
+    private InfoBox sqInfoBox;
+    private InfoBox bsInfoBox;
+    private InfoBox hrInfoBox;
+    private InfoBox srInfoBox;
+    private InfoBox rmInfoBox;
+
+    public InfoBox getPtInfoBox() {
+        return this.ptInfoBox;
+    }
+
+    public void setPtInfoBox(InfoBox ptInfoBox) {
+        this.ptInfoBox = ptInfoBox;
+    }
+
+    public InfoBox getEsInfoBox() {
+        return this.esInfoBox;
+    }
+
+    public void setEsInfoBox(InfoBox esInfoBox) {
+        this.esInfoBox = esInfoBox;
+    }
+
+    public InfoBox getSqInfoBox() {
+        return this.sqInfoBox;
+    }
+
+    public void setSqInfoBox(InfoBox sqInfoBox) {
+        this.sqInfoBox = sqInfoBox;
+    }
+
+    public InfoBox getBsInfoBox() {
+        return this.bsInfoBox;
+    }
+
+    public void setBsInfoBox(InfoBox bsInfoBox) {
+        this.bsInfoBox = bsInfoBox;
+    }
+
+    public InfoBox getHrInfoBox() {
+        return this.hrInfoBox;
+    }
+
+    public void setHrInfoBox(InfoBox hrInfoBox) {
+        this.hrInfoBox = hrInfoBox;
+    }
+
+    public InfoBox getSrInfoBox() {
+        return this.srInfoBox;
+    }
+
+    public void setSrInfoBox(InfoBox srInfoBox) {
+        this.srInfoBox = srInfoBox;
+    }
+
+    public InfoBox getRmInfoBox() {
+        return this.rmInfoBox;
+    }
+
+    public void setRmInfoBox(InfoBox rmInfoBox) {
+        this.rmInfoBox = rmInfoBox;
+    }
 
     public InfoBox getDeInfoBox() {
         return deInfoBox;
