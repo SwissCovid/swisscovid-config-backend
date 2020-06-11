@@ -43,7 +43,7 @@ public class DPPPTConfigController {
 	@GetMapping(value = "/config")
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
 			@RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {
-		ConfigResponse config = mockConfigResponseWithInfoBox();
+		ConfigResponse config = new ConfigResponse();
 		// Build nr of the initial iOS pilot test app. Contains bug, that factors are
 		// not used correctly in contact calculations. Set factorHigh to 0.0 for
 		// improving the calculation.
