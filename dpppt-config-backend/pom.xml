@@ -156,6 +156,9 @@
     </repositories>
 
     <build>
+        <finalName>
+			dpppt-config-backend
+		</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
