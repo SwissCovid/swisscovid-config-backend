@@ -51,12 +51,15 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 	@Value("${ws.retentiondays: 21}")
 	int retentionDays;
 
+	@Value("${ws.security.secretForVerificationCodeGeneration}")
+	String secretForVerificationCodeGeneration;
+
 	abstract String getPublicKey();
 	abstract String getPrivateKey();
 
 	@Bean
 	public DPPPTConfigController dppptSDKController() {
-		return new DPPPTConfigController();
+		return new DPPPTConfigController(secretForVerificationCodeGeneration);
 	}
 
 	@Bean

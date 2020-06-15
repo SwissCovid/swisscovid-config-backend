@@ -30,7 +30,9 @@ import java.io.IOException;
 import java.security.PublicKey;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
+	"ws.security.secretForVerificationCodeGeneration=1234556"
+} )
 @ActiveProfiles({ "cloud-dev" })
 public abstract class BaseControllerTest {
 
