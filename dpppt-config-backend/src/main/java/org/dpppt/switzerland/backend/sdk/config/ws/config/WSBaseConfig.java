@@ -21,12 +21,14 @@ import java.security.Security;
 import java.security.cert.CertificateFactory;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.List;
+import java.util.Map;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.dpppt.switzerland.backend.sdk.config.ws.controller.DPPPTConfigController;
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
+import org.dpppt.switzerland.backend.sdk.config.ws.interceptor.HeaderInjector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +36,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -53,6 +56,10 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 
 	@Value("${ws.security.secretForVerificationCodeGeneration}")
 	String secretForVerificationCodeGeneration;
+	
+	@Value("#{${ws.security.headers: {'X-Content-Type-Options':'nosniff', 'X-Frame-Options':'DENY','X-Xss-Protection':'1; mode=block'}}}")
+	Map<String,String> additionalHeaders;
+
 
 	abstract String getPublicKey();
 	abstract String getPrivateKey();
@@ -65,6 +72,15 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 	@Bean
 	public ResponseWrapperFilter hashFilter() {
 		return new ResponseWrapperFilter(getKeyPair(algorithm), retentionDays, protectedHeaders);
+	}
+
+	@Bean
+	public HeaderInjector securityHeaderInjector(){
+		return new HeaderInjector(additionalHeaders);
+	}
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(securityHeaderInjector());
 	}
 
 	public KeyPair getKeyPair(SignatureAlgorithm algorithm) {
