@@ -32,6 +32,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DPPPTConfigController {
 
 	private static final Logger logger = LoggerFactory.getLogger(DPPPTConfigController.class);
+	private final String tweakCode;
+
+	public DPPPTConfigController(String tweakCode) {
+		this.tweakCode = tweakCode;
+	}
 
 	@CrossOrigin(origins = { "https://editor.swagger.io" })
 	@GetMapping(value = "")
@@ -50,6 +55,7 @@ public class DPPPTConfigController {
 		if (buildnr.equals("ios-200524.1316.87")) {
 			config.getiOSGaenSdkConfig().setFactorHigh(0.0d);
 		}
+		config.setTweakCode(this.tweakCode);
 		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
 	}
 
@@ -137,12 +143,14 @@ public class DPPPTConfigController {
 
 		SDKConfig config = new SDKConfig();
 		configResponse.setSdkConfig(config);
+		configResponse.setTweakCode(this.tweakCode);
 		return configResponse;
 	}
 	
 	public ConfigResponse mockConfigResponseWithForceUpdate() {
 		ConfigResponse configResponse = new ConfigResponse();
 		configResponse.setForceUpdate(true);
+		configResponse.setTweakCode(this.tweakCode);
 		return configResponse;
 	}
 }

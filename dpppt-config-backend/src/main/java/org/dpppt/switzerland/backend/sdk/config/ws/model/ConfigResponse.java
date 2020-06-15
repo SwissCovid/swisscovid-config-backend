@@ -21,6 +21,34 @@ public class ConfigResponse {
 	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
 	private GAENSDKConfig androidGaenSdkConfig = new GAENSDKConfig();
 
+	private String tweakCode;
+
+	public boolean getForceUpdate() {
+		return this.forceUpdate;
+	}
+
+
+	public boolean getForceTraceShutdown() {
+		return this.forceTraceShutdown;
+	}
+
+
+	public GAENSDKConfig getIOSGaenSdkConfig() {
+		return this.iOSGaenSdkConfig;
+	}
+
+	public void setIOSGaenSdkConfig(GAENSDKConfig iOSGaenSdkConfig) {
+		this.iOSGaenSdkConfig = iOSGaenSdkConfig;
+	}
+
+	public String getTweakCode() {
+		return this.tweakCode;
+	}
+
+	public void setTweakCode(String tweakCode) {
+		this.tweakCode = tweakCode;
+	}
+
 	public boolean isForceUpdate() {
 		return forceUpdate;
 	}
