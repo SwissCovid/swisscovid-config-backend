@@ -17,8 +17,11 @@ import io.jsonwebtoken.Jwts;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Map;
 
 
 public class DPPPTConfigControllerTest extends BaseControllerTest {
@@ -39,5 +42,16 @@ public class DPPPTConfigControllerTest extends BaseControllerTest {
 				get("/v1/config").param("osversion", "ios12").param("appversion", "1.0").param("buildnr", "2020.0145asdfa34"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		Jwts.parserBuilder().setSigningKey(this.publicKey).build().parse(result.getHeader("Signature"));
+	}
+	private Map<String, String> headers= Map.of("X-Content-Type-Options","nosniff", "X-Frame-Options", "DENY", "X-Xss-Protection", "1; mode=block");
+	@Test
+	public void testSecurityHeaders() throws Exception {
+		MockHttpServletResponse response = mockMvc.perform(get("/v1")).andExpect(status().is2xxSuccessful()).andReturn()
+		.getResponse();
+		for(var header : headers.keySet()) {
+			assertTrue(response.containsHeader(header));
+			assertEquals(headers.get(header), response.getHeader(header));
+		} 
+		
 	}
 }
