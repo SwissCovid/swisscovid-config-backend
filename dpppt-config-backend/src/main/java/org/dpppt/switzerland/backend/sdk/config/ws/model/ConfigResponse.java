@@ -30,15 +30,6 @@ public class ConfigResponse {
 		return this.forceTraceShutdown;
 	}
 
-
-	public GAENSDKConfig getIOSGaenSdkConfig() {
-		return this.iOSGaenSdkConfig;
-	}
-
-	public void setIOSGaenSdkConfig(GAENSDKConfig iOSGaenSdkConfig) {
-		this.iOSGaenSdkConfig = iOSGaenSdkConfig;
-	}
-
 	public boolean isForceUpdate() {
 		return forceUpdate;
 	}
