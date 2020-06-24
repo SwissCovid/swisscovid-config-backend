@@ -10,7 +10,7 @@ public class Version implements Comparable<Version> {
     private String preReleaseString = "";
     private String metaInfo = "";
 
-    private final Pattern semVerPattern = Pattern.compile("^(?<major>0|[1-9]\\d*)\\.(?<minor>0|[1-9]\\d*)\\.(?<patch>0|[1-9]\\d*)(?:-(?<prerelease>(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$");
+    private final Pattern semVerPattern = Pattern.compile("(?<major>0|[1-9]\\d*)\\.(?<minor>0|[1-9]\\d*)\\.(?<patch>0|[1-9]\\d*)(?:-(?<prerelease>(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$");
 
     public Version() {
     }
@@ -22,7 +22,7 @@ public class Version implements Comparable<Version> {
         }
 
         var matches = semVerPattern.matcher(versionString.trim());
-        if(matches.matches()) {
+        if(matches.find()) {
             this.major = Integer.parseInt(matches.group("major"));
             this.minor = Integer.parseInt(matches.group("minor"));
             this.patch = Integer.parseInt(matches.group("patch"));

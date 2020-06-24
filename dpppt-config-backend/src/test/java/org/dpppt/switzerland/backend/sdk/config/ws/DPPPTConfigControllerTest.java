@@ -67,19 +67,19 @@ public class DPPPTConfigControllerTest extends BaseControllerTest {
 	@Test
 	public void testForUpdateNote() throws Exception {
 		MockHttpServletResponse result = mockMvc.perform(
-				get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.0").param("buildnr", "ios-2020.0145asdfa34"))
+				get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.0").param("buildnr", "ios-2020.0145asdfa34"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		assertTestNormalUpdate(result);
 		result = mockMvc.perform(
-				get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.1").param("buildnr", "ios-2020.0145asdfa34"))
+				get("/v1/config").param("osversion", "ios12").param("appversion", "android-1.0.1").param("buildnr", "ios-2020.0145asdfa34"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		assertTestNormalUpdate(result);
 		result = mockMvc.perform(
-			get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.2").param("buildnr", "ios-2020.0145asdfa34"))
+			get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.2").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		assertTestNormalUpdate(result);
 		result = mockMvc.perform(
-			get("/v1/config").param("osversion", "ios12").param("appversion", "1.0").param("buildnr", "ios-2020.0145asdfa34"))
+			get("/v1/config").param("osversion", "ios12").param("appversion", "android-1.0").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		assertTestNormalUpdate(result);
 		result = mockMvc.perform(
@@ -87,7 +87,7 @@ public class DPPPTConfigControllerTest extends BaseControllerTest {
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		assertTestNormalUpdate(result);
 		result = mockMvc.perform(
-			get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.4").param("buildnr", "ios-2020.0145asdfa34"))
+			get("/v1/config").param("osversion", "ios12").param("appversion", "android-1.0.4").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		assertTestNormalUpdate(result);
 		result = mockMvc.perform(
@@ -95,7 +95,7 @@ public class DPPPTConfigControllerTest extends BaseControllerTest {
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		assertTestNoUpdate(result);
 		result = mockMvc.perform(
-			get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.6").param("buildnr", "ios-2020.0145asdfa34"))
+			get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.6").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		assertTestNoUpdate(result);
 	}
