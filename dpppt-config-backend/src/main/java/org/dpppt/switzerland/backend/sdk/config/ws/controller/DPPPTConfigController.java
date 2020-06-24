@@ -58,7 +58,7 @@ public class DPPPTConfigController {
 		ConfigResponse config = new ConfigResponse();
 		//update message for various old builds
 		var appVersion = new Version(appversion);
-		if(appVersion.isSmallerVersionThan(initialReleaseVersion)) {
+		if(!appVersion.isValid() || appVersion.isSmallerVersionThan(initialReleaseVersion)) {
 			config = generalUpdateRelease1(buildnr.toLowerCase().startsWith("ios"));
 		}
 		//if we have testflight builds suggest to switch to store version
