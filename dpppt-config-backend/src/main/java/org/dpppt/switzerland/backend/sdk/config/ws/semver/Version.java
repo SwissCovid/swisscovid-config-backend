@@ -16,7 +16,12 @@ public class Version implements Comparable<Version> {
     }
 
     public Version(String versionString) {
-        var matches = semVerPattern.matcher(versionString);
+        if(versionString == null) {
+            this.setInvalidValue();
+            return;
+        }
+
+        var matches = semVerPattern.matcher(versionString.trim());
         if(matches.matches()) {
             this.major = Integer.parseInt(matches.group("major"));
             this.minor = Integer.parseInt(matches.group("minor"));
@@ -28,11 +33,7 @@ public class Version implements Comparable<Version> {
                 this.metaInfo = matches.group("buildmetadata");
             }
         } else {
-            this.major = -1;
-            this.minor = -1;
-            this.patch = -1;
-            this.preReleaseString = "";
-            this.metaInfo = "";
+           this.setInvalidValue();
         }
     }
 
@@ -52,6 +53,13 @@ public class Version implements Comparable<Version> {
         this.metaInfo = metaInfo;
     }
 
+    private void setInvalidValue() {
+        this.major = -1;
+        this.minor = -1;
+        this.patch = -1;
+        this.preReleaseString = "";
+        this.metaInfo = "";
+    }
     public boolean isValid() {
         return major.compareTo(Integer.valueOf(0)) >= 0
             && minor.compareTo(Integer.valueOf(0)) >= 0
