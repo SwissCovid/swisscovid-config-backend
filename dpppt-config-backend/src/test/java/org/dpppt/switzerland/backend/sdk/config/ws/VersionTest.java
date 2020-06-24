@@ -27,11 +27,26 @@ public class VersionTest {
         var sameIosVersion = new Version("1.0.0+ios");
         assertTrue( metaInfoVersion.equals(sameIosVersion));
     }
-    // @Test
-    // public void testInvalidVersion() throws Exception {
-    //     var invalid = new Version("ios-1.0.0");
-    //     assertFalse(invalid.isValid());
-    // }
+    @Test
+    public void testPlatform() throws Exception {
+        var iosNonStandard = new Version("ios-1.0.0");
+        var iosStandard = new Version("1.0.0+ios");
+        assertTrue(iosNonStandard.isIOS());
+        assertTrue(iosStandard.isIOS());
+        assertFalse(iosNonStandard.isAndroid());
+        assertFalse(iosStandard.isAndroid());
+
+        var androidNonStandard = new Version("android-1.0.0");
+        var androidStandard = new Version("1.0.0+android");
+        assertFalse(androidNonStandard.isIOS());
+        assertFalse(androidStandard.isIOS());
+        assertTrue(androidNonStandard.isAndroid());
+        assertTrue(androidStandard.isAndroid());
+
+        var random = new Version("1.0.0");
+        assertFalse( random.isAndroid());
+        assertFalse( random.isIOS());
+    }
     @Test
     public void testVersionFromExplicit() throws Exception {
         var cases = List.of(new Version(0,1,0),new Version(0,1,1),new Version(0,2,0),new Version(1,0,0,"prerelease", ""),new Version(1,0,0),new Version(1,0,1,"", "ios"));

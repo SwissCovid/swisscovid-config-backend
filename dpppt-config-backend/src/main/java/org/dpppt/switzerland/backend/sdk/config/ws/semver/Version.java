@@ -9,8 +9,9 @@ public class Version implements Comparable<Version> {
     private Integer patch;
     private String preReleaseString = "";
     private String metaInfo = "";
+    private String platform = "";
 
-    private final Pattern semVerPattern = Pattern.compile("(?<major>0|[1-9]\\d*)\\.(?<minor>0|[1-9]\\d*)\\.(?<patch>0|[1-9]\\d*)(?:-(?<prerelease>(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$");
+    private final Pattern semVerPattern = Pattern.compile("^(?:(?<platform>ios|android)-)?(?<major>0|[1-9]\\d*)\\.(?<minor>0|[1-9]\\d*)\\.(?<patch>0|[1-9]\\d*)(?:-(?<prerelease>(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$");
 
     public Version() {
     }
@@ -26,6 +27,9 @@ public class Version implements Comparable<Version> {
             this.major = Integer.parseInt(matches.group("major"));
             this.minor = Integer.parseInt(matches.group("minor"));
             this.patch = Integer.parseInt(matches.group("patch"));
+            if(matches.group("platform") != null) {
+                this.platform = matches.group("platform");
+            }
             if(matches.group("prerelease") != null) {
                 this.preReleaseString = matches.group("prerelease");
             }
@@ -105,6 +109,13 @@ public class Version implements Comparable<Version> {
     public void setMetaInfo(String metaInfo) {
         this.metaInfo = metaInfo;
     }
+    public String getPlatform() {
+        return this.platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
 
     public Version major(Integer major) {
         this.major = major;
@@ -135,6 +146,13 @@ public class Version implements Comparable<Version> {
         return !preReleaseString.isEmpty();
     }
 
+    public boolean isAndroid() {
+        return platform.contains("android") || metaInfo.contains("android");
+    }
+    public boolean isIOS() {
+        return platform.contains("ios") || metaInfo.contains("ios");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -143,7 +161,7 @@ public class Version implements Comparable<Version> {
             return false;
         }
         Version version = (Version) o;
-        return Objects.equals(major, version.major) && Objects.equals(minor, version.minor) && Objects.equals(patch, version.patch) && Objects.equals(preReleaseString, version.preReleaseString) && Objects.equals(metaInfo, version.metaInfo);
+        return Objects.equals(major, version.major) && Objects.equals(minor, version.minor) && Objects.equals(patch, version.patch) && Objects.equals(preReleaseString, version.preReleaseString) && Objects.equals(metaInfo, version.metaInfo) && Objects.equals(platform, version.platform);
     }
 
     @Override

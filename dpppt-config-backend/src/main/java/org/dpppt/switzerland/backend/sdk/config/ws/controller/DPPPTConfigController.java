@@ -59,7 +59,7 @@ public class DPPPTConfigController {
 		//update message for various old builds
 		var appVersion = new Version(appversion);
 		if(!appVersion.isValid() || appVersion.isSmallerVersionThan(initialReleaseVersion)) {
-			config = generalUpdateRelease1(buildnr.toLowerCase().startsWith("ios"));
+			config = generalUpdateRelease1(appVersion.isIOS());
 		}
 		//if we have testflight builds suggest to switch to store version
 		if(testflightVersions.contains(buildnr)) {
@@ -166,6 +166,7 @@ public class DPPPTConfigController {
 		String appstoreUrl = isIos? "https://apps.apple.com/ch/app/id1509275381" : "https://play.google.com/store/apps/details?id=ch.admin.bag.dp3t";
 
 		String store = isIos? "App Store" : "Play Store";
+		String storeFr = isIos? "l'App Store" : "le Play Store";
 
 		InfoBox infoBoxde = new InfoBox();
 		infoBoxde.setMsg("Es ist eine neuere Version von SwissCovid verfügbar. Um die bestmögliche Funktionsweise der App zu erhalten, laden Sie die neuste Version vom " + store);
@@ -173,7 +174,7 @@ public class DPPPTConfigController {
 		infoBoxde.setUrlTitle("Aktualisieren");
 		infoBoxde.setUrl(appstoreUrl);
 		InfoBox infoBoxfr = new InfoBox();
-		infoBoxfr.setMsg("Une nouvelle version de SwissCovid est disponible. Afin que l'application fonctionne au mieux, téléchargez la dernière version sur " + store);
+		infoBoxfr.setMsg("Une nouvelle version de SwissCovid est disponible. Afin que l'application fonctionne au mieux, téléchargez la dernière version sur " + storeFr);
 		infoBoxfr.setTitle("Mise à jour disponible");
 		infoBoxfr.setUrlTitle("Mettre à jour");
 		infoBoxfr.setUrl(appstoreUrl);
