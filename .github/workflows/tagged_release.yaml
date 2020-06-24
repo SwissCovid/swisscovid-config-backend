@@ -32,6 +32,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
         TESTCONTAINERS_RYUK_DISABLED: true
+    - name: shasum
+      run: shasum -a 256 dpppt-config-backend/target/dpppt-config-backend.jar > dpppt-config-backend/target/dpppt-config-backend.jar.sha256
+      shell: bash
     - name: "Create new release"
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
@@ -40,3 +43,4 @@ jobs:
         files: |
           dpppt-config-backend/target/dpppt-config-backend.jar
           dpppt-config-backend/generated/swagger/swagger.yaml
+          dpppt-config-backend/target/dpppt-config-backend.jar.sha256
