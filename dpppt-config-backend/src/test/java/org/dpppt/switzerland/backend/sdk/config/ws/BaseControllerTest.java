@@ -29,6 +29,8 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.IOException;
 import java.security.PublicKey;
 
+import javax.servlet.Filter;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
 	"ws.security.secretForVerificationCodeGeneration=1234556"
@@ -40,6 +42,8 @@ public abstract class BaseControllerTest {
 	protected ObjectMapper objectMapper;
 	@Autowired
 	private WebApplicationContext webApplicationContext;
+	@Autowired
+	private Filter springSecurityFilterChain;
 
 	@Autowired
 	private ResponseWrapperFilter filter;
@@ -48,7 +52,7 @@ public abstract class BaseControllerTest {
 	@Before
 	public void setup() throws Exception {
 		this.publicKey = filter.getPublicKey();
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(filter, "/*").build();
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).addFilter(filter, "/*").build();
 		this.objectMapper = new ObjectMapper(new JsonFactory());
 		this.objectMapper.registerModule(new JavaTimeModule());
 		this.objectMapper.registerModule(new JodaModule());
