@@ -13,7 +13,9 @@ package org.dpppt.switzerland.backend.sdk.config.ws;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.ActiveProfiles;
 
 import io.jsonwebtoken.Jwts;
 
@@ -30,7 +32,13 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+@ActiveProfiles({"actuator-security"})
+@SpringBootTest(properties = {
+	"ws.monitor.prometheus.user=prometheus",
+	"vcap.services.ha_prometheus_dev.credentials.password=prometheus",
+	"management.endpoints.enabled-by-default=true",
+	"management.endpoints.web.exposure.include=*"
+ })
 public class DPPPTConfigControllerTest extends BaseControllerTest {
 	@Autowired
 	ObjectMapper objectMapper;
@@ -135,5 +143,19 @@ public class DPPPTConfigControllerTest extends BaseControllerTest {
 		assertNotNull(resp.getInfoBox());
 		assertNotNull(resp.getInfoBox().getDeInfoBox());
 		assertEquals("App-Update im App Store", resp.getInfoBox().getDeInfoBox().getTitle());
+	}
+
+	@Test
+	public void testActuatorSecurity() throws Exception {
+		var response = mockMvc.perform(get("/actuator/health")).andExpect(status().is2xxSuccessful()).andReturn()
+				.getResponse();
+		response = mockMvc.perform(get("/actuator/loggers")).andExpect(status().is(401)).andReturn()
+		.getResponse();
+		response = mockMvc.perform(get("/actuator/loggers").header("Authorization", "Basic cHJvbWV0aGV1czpwcm9tZXRoZXVz")).andExpect(status().isOk()).andReturn()
+		.getResponse();
+		response = mockMvc.perform(get("/actuator/prometheus")).andExpect(status().is(401)).andReturn()
+		.getResponse();
+		response = mockMvc.perform(get("/actuator/prometheus").header("Authorization", "Basic cHJvbWV0aGV1czpwcm9tZXRoZXVz")).andExpect(status().isOk()).andReturn()
+		.getResponse();
 	}
 }
