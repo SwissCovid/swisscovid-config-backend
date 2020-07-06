@@ -21,15 +21,6 @@ public class ConfigResponse {
 	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
 	private GAENSDKConfig androidGaenSdkConfig = new GAENSDKConfig();
 
-	public boolean getForceUpdate() {
-		return this.forceUpdate;
-	}
-
-
-	public boolean getForceTraceShutdown() {
-		return this.forceTraceShutdown;
-	}
-
 	public boolean isForceUpdate() {
 		return forceUpdate;
 	}
