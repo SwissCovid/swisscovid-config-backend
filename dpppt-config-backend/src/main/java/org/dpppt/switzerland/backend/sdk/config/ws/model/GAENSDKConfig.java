@@ -12,8 +12,8 @@ package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 public class GAENSDKConfig {
 
-	private Integer lowerThreshold = 50;
-	private Integer higherThreshold = 55;
+	private Integer lowerThreshold = 53;
+	private Integer higherThreshold = 60;
 	private Double factorLow = 1.0d;
 	private Double factorHigh = 0.5d;
 	private Integer triggerThreshold = 15;
