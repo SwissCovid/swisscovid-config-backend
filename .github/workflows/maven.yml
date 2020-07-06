@@ -28,6 +28,9 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
     - name: Echo current ref
       run: echo "${{ github.ref }}"
+    - name: shasum
+      run: shasum -a 256 dpppt-config-backend/target/dpppt-config-backend.jar > dpppt-config-backend/target/dpppt-config-backend.jar.sha256
+      shell: bash
     - name: Create Snapshot Release
       uses: ncipollo/release-action@v1
       if: github.ref == 'refs/heads/develop'
@@ -35,7 +38,7 @@ jobs:
       with:
         name: Snapshot Release ${{ github.ref }}
         tag: SNAPSHOT
-        artifacts: "dpppt-config-backend/target/dpppt-config-backend.jar"
+        artifacts: "dpppt-config-backend/target/dpppt-config-backend.jar,dpppt-config-backend/target/dpppt-config-backend.jar.sha256"
         body: |
             Changes in this Release
             - Snapshot release

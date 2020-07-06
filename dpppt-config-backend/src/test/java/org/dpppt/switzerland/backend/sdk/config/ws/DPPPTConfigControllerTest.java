@@ -10,7 +10,9 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws;
 
+import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import io.jsonwebtoken.Jwts;
@@ -18,13 +20,20 @@ import io.jsonwebtoken.Jwts;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class DPPPTConfigControllerTest extends BaseControllerTest {
+	@Autowired
+	ObjectMapper objectMapper;
 	@Test
 	public void testHello() throws Exception {
 		MockHttpServletResponse response = mockMvc.perform(get("/v1"))
@@ -53,5 +62,78 @@ public class DPPPTConfigControllerTest extends BaseControllerTest {
 			assertEquals(headers.get(header), response.getHeader(header));
 		} 
 		
+	}
+
+	@Test
+	public void testForUpdateNote() throws Exception {
+		MockHttpServletResponse result = mockMvc.perform(
+				get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.0").param("buildnr", "ios-2020.0145asdfa34"))
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		assertTestNormalUpdate(result);
+		result = mockMvc.perform(
+				get("/v1/config").param("osversion", "ios12").param("appversion", "android-1.0.1").param("buildnr", "ios-2020.0145asdfa34"))
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		assertTestNormalUpdate(result);
+		result = mockMvc.perform(
+			get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.2").param("buildnr", "ios-2020.0145asdfa34"))
+			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		assertTestNormalUpdate(result);
+		result = mockMvc.perform(
+			get("/v1/config").param("osversion", "ios12").param("appversion", "android-1.0").param("buildnr", "ios-2020.0145asdfa34"))
+			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		assertTestNormalUpdate(result);
+		result = mockMvc.perform(
+			get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.3").param("buildnr", "ios-2020.0145asdfa34"))
+			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		assertTestNormalUpdate(result);
+		result = mockMvc.perform(
+			get("/v1/config").param("osversion", "ios12").param("appversion", "android-1.0.4").param("buildnr", "ios-2020.0145asdfa34"))
+			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		assertTestNormalUpdate(result);
+		result = mockMvc.perform(
+			get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.5").param("buildnr", "ios-2020.0145asdfa34"))
+			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		assertTestNoUpdate(result);
+		result = mockMvc.perform(
+			get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.6").param("buildnr", "ios-2020.0145asdfa34"))
+			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		assertTestNoUpdate(result);
+	}
+	@Test
+	public void testForTestflight() throws Exception {
+		List<String> testflightVersions = List.of("ios-200619.2333.175", 
+												"ios-200612.2347.141",
+												"ios-200528.2230.100",
+												"ios-200524.1316.87",
+												"ios-200521.2320.79");
+		for(var buildnr : testflightVersions) {
+			MockHttpServletResponse result = mockMvc.perform(
+				get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.0").param("buildnr", buildnr))
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+			assertTestTestflightUpdate(result);
+		}
+		MockHttpServletResponse result = mockMvc.perform(
+				get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.5").param("buildnr", "ios-200521.2320.80"))
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		assertTestNoUpdate(result);
+	}
+
+	private void assertTestNoUpdate(MockHttpServletResponse result) throws Exception {
+		ConfigResponse resp = objectMapper.readValue(result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+		assertNull(resp.getInfoBox());
+	}
+	private void assertTestNormalUpdate(MockHttpServletResponse result) throws Exception{
+		ConfigResponse resp = objectMapper.readValue(result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+		assertNotNull(resp);
+		assertNotNull(resp.getInfoBox());
+		assertNotNull(resp.getInfoBox().getDeInfoBox());
+		assertEquals("App-Update verfügbar", resp.getInfoBox().getDeInfoBox().getTitle());
+	}
+	private void assertTestTestflightUpdate(MockHttpServletResponse result) throws Exception{
+		ConfigResponse resp = objectMapper.readValue(result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+		assertNotNull(resp);
+		assertNotNull(resp.getInfoBox());
+		assertNotNull(resp.getInfoBox().getDeInfoBox());
+		assertEquals("App-Update im App Store", resp.getInfoBox().getDeInfoBox().getTitle());
 	}
 }
