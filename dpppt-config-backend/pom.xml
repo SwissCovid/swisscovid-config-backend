@@ -189,7 +189,7 @@
                 </configuration>
             </plugin>
             <!--reproducible builds -->
-        <!-- <plugin>
+        <plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
 				<executions>
@@ -208,7 +208,7 @@
 				  <dateFormat>yyyyMMddHHmmss</dateFormat>
 				  <dateFormatTimeZone>UTC</dateFormatTimeZone>
 				</configuration>
-			  </plugin> -->
+			  </plugin>
 			  
 			  <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
