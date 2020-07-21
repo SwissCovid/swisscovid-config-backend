@@ -32,15 +32,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/v1")
 public class DPPPTConfigController {
+	
+	private static final Version INITIAL_RELEASE_VERSIONS = new Version("1.0.5");
+	private static final String IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO = "ios13.6";
+	private static final List<String> TESTFLIGHT_VERSIONS = List.of("ios-200619.2333.175", 
+			   "ios-200612.2347.141",
+			   "ios-200528.2230.100",
+			   "ios-200524.1316.87",
+			   "ios-200521.2320.79");
 
+	
 	private static final Logger logger = LoggerFactory.getLogger(DPPPTConfigController.class);
-	private static final Version initialReleaseVersion = new Version("1.0.5");
-	private static final Version latestVersion = new Version("1.0.5");
-	private static final List<String> testflightVersions = List.of("ios-200619.2333.175", 
-																   "ios-200612.2347.141",
-																   "ios-200528.2230.100",
-																   "ios-200524.1316.87",
-																   "ios-200521.2320.79");
+
 
 	public DPPPTConfigController() {
 	}
@@ -56,15 +59,23 @@ public class DPPPTConfigController {
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
 			@RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {
 		ConfigResponse config = new ConfigResponse();
-		//update message for various old builds
+		// For iOS 13.6 users with language DE show information about weekly
+		// notification
+		if (osversion.equals(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
+			setInfoTextForiOS136DE(config);
+		}
+
+		// update message for various old builds
 		var appVersion = new Version(appversion);
-		if(!appVersion.isValid() || appVersion.isSmallerVersionThan(initialReleaseVersion)) {
+		if (!appVersion.isValid() || appVersion.isSmallerVersionThan(INITIAL_RELEASE_VERSIONS)) {
 			config = generalUpdateRelease1(appVersion.isIOS());
 		}
-		//if we have testflight builds suggest to switch to store version
-		if(testflightVersions.contains(buildnr)) {
+
+		// if we have testflight builds suggest to switch to store version
+		if (TESTFLIGHT_VERSIONS.contains(buildnr)) {
 			config = testFlightUpdate();
 		}
+		
 		// Build nr of the initial iOS pilot test app. Contains bug, that factors are
 		// not used correctly in contact calculations. Set factorHigh to 0.0 for
 		// improving the calculation.
@@ -83,7 +94,22 @@ public class DPPPTConfigController {
 		return ResponseEntity.ok(body);
 	}
 
-	private ConfigResponse testFlightUpdate(){
+	private void setInfoTextForiOS136DE(ConfigResponse configResponse) {
+		InfoBox infoBoxDe = new InfoBox();
+		infoBoxDe.setMsg(
+				"Auf iOS 13.6 wird neu von Apple wöchentlich eine Benachrichtigung erscheinen, dass SwissCovid aktiv ist "
+						+ "und “0 mögliche Begegnungen identifiziert” hat. Dies ist ein Übersetzungsfehler, gemeint sind 0 Kontakte "
+						+ "zu positiv getesteten Personen. Die App funktioniert weiterhin und zeichnet alle Kontakte auf.");
+		infoBoxDe.setTitle("Hinweis");
+		infoBoxDe.setUrl(
+				"https://www.bag.admin.ch/bag/de/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/de/categories/swisscovid-app");
+		infoBoxDe.setUrlTitle("Weitere Informationen");
+		InfoBoxCollection infoBoxCollection = new InfoBoxCollection();
+		infoBoxCollection.setDeInfoBox(infoBoxDe);
+		configResponse.setInfoBox(infoBoxCollection);
+	}
+
+	private ConfigResponse testFlightUpdate() {
 		ConfigResponse configResponse = new ConfigResponse();
 		String iosURL = "https://apps.apple.com/ch/app/id1509275381";
 		InfoBox infoBoxde = new InfoBox();
@@ -161,65 +187,88 @@ public class DPPPTConfigController {
 		return configResponse;
 
 	}
-	private ConfigResponse generalUpdateRelease1(boolean isIos){
-		ConfigResponse configResponse = new ConfigResponse();
-		String appstoreUrl = isIos? "https://apps.apple.com/ch/app/id1509275381" : "https://play.google.com/store/apps/details?id=ch.admin.bag.dp3t";
 
-		String store = isIos? "App Store" : "Play Store";
-		String storeFr = isIos? "l'App Store" : "le Play Store";
+	private ConfigResponse generalUpdateRelease1(boolean isIos) {
+		ConfigResponse configResponse = new ConfigResponse();
+		String appstoreUrl = isIos ? "https://apps.apple.com/ch/app/id1509275381"
+				: "https://play.google.com/store/apps/details?id=ch.admin.bag.dp3t";
+
+		String store = isIos ? "App Store" : "Play Store";
+		String storeFr = isIos ? "l'App Store" : "le Play Store";
 
 		InfoBox infoBoxde = new InfoBox();
-		infoBoxde.setMsg("Es ist eine neuere Version von SwissCovid verfügbar. Um die bestmögliche Funktionsweise der App zu erhalten, laden Sie die neuste Version vom " + store);
+		infoBoxde.setMsg(
+				"Es ist eine neuere Version von SwissCovid verfügbar. Um die bestmögliche Funktionsweise der App zu erhalten, laden Sie die neuste Version vom "
+						+ store);
 		infoBoxde.setTitle("App-Update verfügbar");
 		infoBoxde.setUrlTitle("Aktualisieren");
 		infoBoxde.setUrl(appstoreUrl);
 		InfoBox infoBoxfr = new InfoBox();
-		infoBoxfr.setMsg("Une nouvelle version de SwissCovid est disponible. Afin que l'application fonctionne au mieux, téléchargez la dernière version sur " + storeFr);
+		infoBoxfr.setMsg(
+				"Une nouvelle version de SwissCovid est disponible. Afin que l'application fonctionne au mieux, téléchargez la dernière version sur "
+						+ storeFr);
 		infoBoxfr.setTitle("Mise à jour disponible");
 		infoBoxfr.setUrlTitle("Mettre à jour");
 		infoBoxfr.setUrl(appstoreUrl);
 		InfoBox infoBoxit = new InfoBox();
-		infoBoxit.setMsg("È disponibile una versione più recente di SwissCovid. Per ottimizzare la funzionalità dell'app, scarica l'ultima versione da " + store);
+		infoBoxit.setMsg(
+				"È disponibile una versione più recente di SwissCovid. Per ottimizzare la funzionalità dell'app, scarica l'ultima versione da "
+						+ store);
 		infoBoxit.setTitle("È disponibile un aggiornamento dell'app");
 		infoBoxit.setUrlTitle("Aggiorna");
 		infoBoxit.setUrl(appstoreUrl);
 		InfoBox infoBoxen = new InfoBox();
-		infoBoxen.setMsg("An updated version of SwissCovid is available. To guarantee the app works as well as possible, download the latest version from the " + store);
+		infoBoxen.setMsg(
+				"An updated version of SwissCovid is available. To guarantee the app works as well as possible, download the latest version from the "
+						+ store);
 		infoBoxen.setTitle("App update available");
 		infoBoxen.setUrlTitle("Update");
 		infoBoxen.setUrl(appstoreUrl);
 		InfoBox infoBoxpt = new InfoBox();
-		infoBoxpt.setMsg("Está disponível uma nova versão da SwissCovid. Para que a app trabalhe com toda a eficiência, carregue a versão mais recente a partir da " + store);
+		infoBoxpt.setMsg(
+				"Está disponível uma nova versão da SwissCovid. Para que a app trabalhe com toda a eficiência, carregue a versão mais recente a partir da "
+						+ store);
 		infoBoxpt.setTitle("Atualização da app disponível");
 		infoBoxpt.setUrlTitle("Atualizar");
 		infoBoxpt.setUrl(appstoreUrl);
 		InfoBox infoBoxes = new InfoBox();
-		infoBoxes.setMsg("Hay una nueva versión de SwissCovid disponible. Para garantizar el mejor funcionamiento posible, descargue siempre la versión más nueva en el " + store);
+		infoBoxes.setMsg(
+				"Hay una nueva versión de SwissCovid disponible. Para garantizar el mejor funcionamiento posible, descargue siempre la versión más nueva en el "
+						+ store);
 		infoBoxes.setTitle("Actualización de la app disponible");
 		infoBoxes.setUrlTitle("Actualizar");
 		infoBoxes.setUrl(appstoreUrl);
 		InfoBox infoBoxsq = new InfoBox();
-		infoBoxsq.setMsg("Është i disponueshëm një version i ri nga SwissCovid. Për të marrë mënyrën më të mirë të mundshme të funksionit të aplikacionit, ngarkoni versionin më të ri nga " + store);
+		infoBoxsq.setMsg(
+				"Është i disponueshëm një version i ri nga SwissCovid. Për të marrë mënyrën më të mirë të mundshme të funksionit të aplikacionit, ngarkoni versionin më të ri nga "
+						+ store);
 		infoBoxsq.setTitle("Update i aplikacionit i disponueshëm");
 		infoBoxsq.setUrlTitle("Përditësimi");
 		infoBoxsq.setUrl(appstoreUrl);
 		InfoBox infoBoxbs = new InfoBox();
-		infoBoxbs.setMsg("Dostupna je novija verzija aplikacije SwissCovid. Da biste održavali najbolju moguću funkcionalnost aplikacije, preuzmite najnoviju verziju iz trgovine aplikacijama " + store);
+		infoBoxbs.setMsg(
+				"Dostupna je novija verzija aplikacije SwissCovid. Da biste održavali najbolju moguću funkcionalnost aplikacije, preuzmite najnoviju verziju iz trgovine aplikacijama "
+						+ store);
 		infoBoxbs.setTitle("Dostupno ažuriranje aplikacije");
 		infoBoxbs.setUrlTitle("Ažuriraj");
 		infoBoxbs.setUrl(appstoreUrl);
 		InfoBox infoBoxhr = new InfoBox();
-		infoBoxhr.setMsg("Dostupna je novija verzija aplikacije SwissCovid. Da biste održavali najbolju moguću funkcionalnost aplikacije, preuzmite najnoviju verziju iz trgovine aplikacijama " + store);
+		infoBoxhr.setMsg(
+				"Dostupna je novija verzija aplikacije SwissCovid. Da biste održavali najbolju moguću funkcionalnost aplikacije, preuzmite najnoviju verziju iz trgovine aplikacijama "
+						+ store);
 		infoBoxhr.setTitle("Dostupno ažuriranje aplikacije");
 		infoBoxhr.setUrlTitle("Ažuriraj");
 		infoBoxhr.setUrl(appstoreUrl);
 		InfoBox infoBoxrm = new InfoBox();
-		infoBoxrm.setMsg("Ina versiun pli nova da SwissCovid è a disposiziun. Chargiai la novissima versiun da " + store + " per che l'app funcziunia il meglier pussaivel.");
+		infoBoxrm.setMsg("Ina versiun pli nova da SwissCovid è a disposiziun. Chargiai la novissima versiun da " + store
+				+ " per che l'app funcziunia il meglier pussaivel.");
 		infoBoxrm.setTitle("Actualisaziun da l'app è disponibla");
 		infoBoxrm.setUrlTitle("Actualisar");
 		infoBoxrm.setUrl(appstoreUrl);
 		InfoBox infoBoxsr = new InfoBox();
-		infoBoxsr.setMsg("Dostupna je novija verzija aplikacije SwissCovid. Da biste održavali najbolju moguću funkcionalnost aplikacije, preuzmite najnoviju verziju iz trgovine aplikacijama " + store);
+		infoBoxsr.setMsg(
+				"Dostupna je novija verzija aplikacije SwissCovid. Da biste održavali najbolju moguću funkcionalnost aplikacije, preuzmite najnoviju verziju iz trgovine aplikacijama "
+						+ store);
 		infoBoxsr.setTitle("Dostupno ažuriranje aplikacije");
 		infoBoxsr.setUrlTitle("Ažuriraj");
 		infoBoxsr.setUrl(appstoreUrl);
@@ -320,7 +369,7 @@ public class DPPPTConfigController {
 		configResponse.setSdkConfig(config);
 		return configResponse;
 	}
-	
+
 	public ConfigResponse mockConfigResponseWithForceUpdate() {
 		ConfigResponse configResponse = new ConfigResponse();
 		configResponse.setForceUpdate(true);
