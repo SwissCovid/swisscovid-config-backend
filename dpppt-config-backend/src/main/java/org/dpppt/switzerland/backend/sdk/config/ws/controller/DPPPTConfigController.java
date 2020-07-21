@@ -97,9 +97,9 @@ public class DPPPTConfigController {
 	private void setInfoTextForiOS136DE(ConfigResponse configResponse) {
 		InfoBox infoBoxDe = new InfoBox();
 		infoBoxDe.setMsg(
-				"Auf iOS 13.6 wird neu von Apple wöchentlich eine Benachrichtigung erscheinen, dass SwissCovid aktiv ist "
-						+ "und “0 mögliche Begegnungen identifiziert” hat. Dies ist ein Übersetzungsfehler, gemeint sind 0 Kontakte "
-						+ "zu positiv getesteten Personen. Die App funktioniert weiterhin und zeichnet alle Kontakte auf.");
+				"Neu erscheint auf iOS 13.6 von Apple wöchentlich eine Benachrichtigung: «Dein Gerät hat 0 mögliche Begegnungen identifiziert.»."
+				+ " Dies ist ein Übersetzungsfehler. Es bedeutet, dass es null positiv getestete Kontakte gab."
+				+ " Die App funktioniert weiterhin und zeichnet alle Kontakte auf.");
 		infoBoxDe.setTitle("Hinweis");
 		infoBoxDe.setUrl(
 				"https://www.bag.admin.ch/bag/de/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/de/categories/swisscovid-app");

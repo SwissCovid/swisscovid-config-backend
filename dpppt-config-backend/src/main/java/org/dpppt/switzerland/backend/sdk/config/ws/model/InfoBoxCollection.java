@@ -10,104 +10,109 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(value = Include.NON_NULL)
 public class InfoBoxCollection {
-    private InfoBox deInfoBox;
-    private InfoBox frInfoBox;
-    private InfoBox itInfoBox;
-    private InfoBox enInfoBox;
-    private InfoBox ptInfoBox;
-    private InfoBox esInfoBox;
-    private InfoBox sqInfoBox;
-    private InfoBox bsInfoBox;
-    private InfoBox hrInfoBox;
-    private InfoBox srInfoBox;
-    private InfoBox rmInfoBox;
+	
+	private InfoBox deInfoBox;
+	private InfoBox frInfoBox;
+	private InfoBox itInfoBox;
+	private InfoBox enInfoBox;
+	private InfoBox ptInfoBox;
+	private InfoBox esInfoBox;
+	private InfoBox sqInfoBox;
+	private InfoBox bsInfoBox;
+	private InfoBox hrInfoBox;
+	private InfoBox srInfoBox;
+	private InfoBox rmInfoBox;
 
-    public InfoBox getPtInfoBox() {
-        return this.ptInfoBox;
-    }
+	public InfoBox getPtInfoBox() {
+		return this.ptInfoBox;
+	}
 
-    public void setPtInfoBox(InfoBox ptInfoBox) {
-        this.ptInfoBox = ptInfoBox;
-    }
+	public void setPtInfoBox(InfoBox ptInfoBox) {
+		this.ptInfoBox = ptInfoBox;
+	}
 
-    public InfoBox getEsInfoBox() {
-        return this.esInfoBox;
-    }
+	public InfoBox getEsInfoBox() {
+		return this.esInfoBox;
+	}
 
-    public void setEsInfoBox(InfoBox esInfoBox) {
-        this.esInfoBox = esInfoBox;
-    }
+	public void setEsInfoBox(InfoBox esInfoBox) {
+		this.esInfoBox = esInfoBox;
+	}
 
-    public InfoBox getSqInfoBox() {
-        return this.sqInfoBox;
-    }
+	public InfoBox getSqInfoBox() {
+		return this.sqInfoBox;
+	}
 
-    public void setSqInfoBox(InfoBox sqInfoBox) {
-        this.sqInfoBox = sqInfoBox;
-    }
+	public void setSqInfoBox(InfoBox sqInfoBox) {
+		this.sqInfoBox = sqInfoBox;
+	}
 
-    public InfoBox getBsInfoBox() {
-        return this.bsInfoBox;
-    }
+	public InfoBox getBsInfoBox() {
+		return this.bsInfoBox;
+	}
 
-    public void setBsInfoBox(InfoBox bsInfoBox) {
-        this.bsInfoBox = bsInfoBox;
-    }
+	public void setBsInfoBox(InfoBox bsInfoBox) {
+		this.bsInfoBox = bsInfoBox;
+	}
 
-    public InfoBox getHrInfoBox() {
-        return this.hrInfoBox;
-    }
+	public InfoBox getHrInfoBox() {
+		return this.hrInfoBox;
+	}
 
-    public void setHrInfoBox(InfoBox hrInfoBox) {
-        this.hrInfoBox = hrInfoBox;
-    }
+	public void setHrInfoBox(InfoBox hrInfoBox) {
+		this.hrInfoBox = hrInfoBox;
+	}
 
-    public InfoBox getSrInfoBox() {
-        return this.srInfoBox;
-    }
+	public InfoBox getSrInfoBox() {
+		return this.srInfoBox;
+	}
 
-    public void setSrInfoBox(InfoBox srInfoBox) {
-        this.srInfoBox = srInfoBox;
-    }
+	public void setSrInfoBox(InfoBox srInfoBox) {
+		this.srInfoBox = srInfoBox;
+	}
 
-    public InfoBox getRmInfoBox() {
-        return this.rmInfoBox;
-    }
+	public InfoBox getRmInfoBox() {
+		return this.rmInfoBox;
+	}
 
-    public void setRmInfoBox(InfoBox rmInfoBox) {
-        this.rmInfoBox = rmInfoBox;
-    }
+	public void setRmInfoBox(InfoBox rmInfoBox) {
+		this.rmInfoBox = rmInfoBox;
+	}
 
-    public InfoBox getDeInfoBox() {
-        return deInfoBox;
-    }
+	public InfoBox getDeInfoBox() {
+		return deInfoBox;
+	}
 
-    public InfoBox getEnInfoBox() {
-        return enInfoBox;
-    }
+	public InfoBox getEnInfoBox() {
+		return enInfoBox;
+	}
 
-    public void setEnInfoBox(InfoBox enInfoBox) {
-        this.enInfoBox = enInfoBox;
-    }
+	public void setEnInfoBox(InfoBox enInfoBox) {
+		this.enInfoBox = enInfoBox;
+	}
 
-    public InfoBox getItInfoBox() {
-        return itInfoBox;
-    }
+	public InfoBox getItInfoBox() {
+		return itInfoBox;
+	}
 
-    public void setItInfoBox(InfoBox itInfoBox) {
-        this.itInfoBox = itInfoBox;
-    }
+	public void setItInfoBox(InfoBox itInfoBox) {
+		this.itInfoBox = itInfoBox;
+	}
 
-    public InfoBox getFrInfoBox() {
-        return frInfoBox;
-    }
+	public InfoBox getFrInfoBox() {
+		return frInfoBox;
+	}
 
-    public void setFrInfoBox(InfoBox frInfoBox) {
-        this.frInfoBox = frInfoBox;
-    }
+	public void setFrInfoBox(InfoBox frInfoBox) {
+		this.frInfoBox = frInfoBox;
+	}
 
-    public void setDeInfoBox(InfoBox deInfoBox) {
-        this.deInfoBox = deInfoBox;
-    }
+	public void setDeInfoBox(InfoBox deInfoBox) {
+		this.deInfoBox = deInfoBox;
+	}
 }
