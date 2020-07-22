@@ -97,7 +97,7 @@ public class DPPPTConfigController {
 	private void setInfoTextForiOS136DE(ConfigResponse configResponse) {
 		InfoBox infoBoxDe = new InfoBox();
 		infoBoxDe.setMsg(
-				"Neu erscheint auf iOS 13.6 von Apple wöchentlich eine Benachrichtigung: «Dein Gerät hat 0 mögliche Begegnungen identifiziert.»."
+				"Neu erscheint auf iOS 13.6 von Apple wöchentlich eine Benachrichtigung: «Dein Gerät hat 0 mögliche Begegnungen identifiziert.»"
 				+ " Dies ist ein Übersetzungsfehler. Es bedeutet, dass es null positiv getestete Kontakte gab."
 				+ " Die App funktioniert weiterhin und zeichnet alle Kontakte auf.");
 		infoBoxDe.setTitle("Hinweis");
