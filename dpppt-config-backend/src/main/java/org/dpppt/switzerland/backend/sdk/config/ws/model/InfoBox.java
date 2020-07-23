@@ -11,8 +11,7 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 /**
- * @author bachmann
- * created on 28.04.20
+ * @author bachmann created on 28.04.20
  **/
 public class InfoBox {
 
@@ -20,6 +19,11 @@ public class InfoBox {
     private String msg;
     private String url;
     private String urlTitle;
+    private boolean isDismissible = false;
+
+    public String getInfoId() {
+        return Integer.toString(getTitle().hashCode() + getMsg().hashCode() + getUrl().hashCode() + getUrlTitle().hashCode());
+    }
 
     public String getTitle() {
         return title;
@@ -51,5 +55,13 @@ public class InfoBox {
 
     public void setUrlTitle(String urlTitle) {
         this.urlTitle = urlTitle;
+    }
+
+    public boolean isDismissible() {
+        return isDismissible;
+    }
+
+    public void setDismissible(boolean isDismissible) {
+        this.isDismissible = isDismissible;
     }
 }
