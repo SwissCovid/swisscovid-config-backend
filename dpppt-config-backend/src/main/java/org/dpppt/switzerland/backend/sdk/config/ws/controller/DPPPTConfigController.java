@@ -32,18 +32,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/v1")
 public class DPPPTConfigController {
-	
+
 	private static final Version INITIAL_RELEASE_VERSIONS = new Version("1.0.5");
 	private static final String IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO = "ios13.6";
-	private static final List<String> TESTFLIGHT_VERSIONS = List.of("ios-200619.2333.175", 
-			   "ios-200612.2347.141",
-			   "ios-200528.2230.100",
-			   "ios-200524.1316.87",
-			   "ios-200521.2320.79");
+	private static final List<String> TESTFLIGHT_VERSIONS = List.of("ios-200619.2333.175", "ios-200612.2347.141",
+			"ios-200528.2230.100", "ios-200524.1316.87", "ios-200521.2320.79");
 
-	
 	private static final Logger logger = LoggerFactory.getLogger(DPPPTConfigController.class);
-
 
 	public DPPPTConfigController() {
 	}
@@ -57,7 +52,7 @@ public class DPPPTConfigController {
 	@CrossOrigin(origins = { "https://editor.swagger.io" })
 	@GetMapping(value = "/config")
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
-			@RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {		
+			@RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {
 		ConfigResponse config = new ConfigResponse();
 		// For iOS 13.6 users with language DE show information about weekly
 		// notification
@@ -75,16 +70,16 @@ public class DPPPTConfigController {
 		if (TESTFLIGHT_VERSIONS.contains(buildnr)) {
 			config = testFlightUpdate();
 		}
-		
+
 		// Build nr of the initial iOS pilot test app. Contains bug, that factors are
 		// not used correctly in contact calculations. Set factorHigh to 0.0 for
 		// improving the calculation.
 		if (buildnr.equals("ios-200524.1316.87")) {
 			config.getiOSGaenSdkConfig().setFactorHigh(0.0d);
 		}
-		
+
 		config = mockConfigResponseWithInfoBox(true);
-		
+
 		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
 	}
 
@@ -101,8 +96,8 @@ public class DPPPTConfigController {
 		InfoBox infoBoxDe = new InfoBox();
 		infoBoxDe.setMsg(
 				"Neu erscheint auf iOS 13.6 von Apple wöchentlich eine Benachrichtigung: «Dein Gerät hat 0 mögliche Begegnungen identifiziert.»"
-				+ " Dies ist ein Übersetzungsfehler. Es bedeutet, dass es null positiv getestete Kontakte gab."
-				+ " Die App funktioniert weiterhin und zeichnet alle Kontakte auf.");
+						+ " Dies ist ein Übersetzungsfehler. Es bedeutet, dass es null positiv getestete Kontakte gab."
+						+ " Die App funktioniert weiterhin und zeichnet alle Kontakte auf.");
 		infoBoxDe.setTitle("Hinweis");
 		infoBoxDe.setUrl(
 				"https://www.bag.admin.ch/bag/de/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/de/categories/swisscovid-app");
@@ -299,69 +294,71 @@ public class DPPPTConfigController {
 	private ConfigResponse mockConfigResponseWithInfoBox(boolean isDismissible) {
 		ConfigResponse configResponse = new ConfigResponse();
 
+		String isDismissibleText = isDismissible ? " (dismissible)" : "";
+
 		InfoBox infoBoxde = new InfoBox();
 		infoBoxde.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz DE");
-		infoBoxde.setTitle("Hinweis DE");
+		infoBoxde.setTitle("Hinweis DE" + isDismissibleText);
 		infoBoxde.setUrlTitle("Und ein externer Link DE");
 		infoBoxde.setUrl("https://www.bag.admin.ch/bag/de/home.html");
 		infoBoxde.setIsDismissible(isDismissible);
 		InfoBox infoBoxfr = new InfoBox();
 		infoBoxfr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz FR");
-		infoBoxfr.setTitle("Hinweis FR");
+		infoBoxfr.setTitle("Hinweis FR" + isDismissibleText);
 		infoBoxfr.setUrlTitle("Und ein externer Link FR");
 		infoBoxfr.setUrl("https://www.bag.admin.ch/bag/fr/home.html");
 		infoBoxfr.setIsDismissible(isDismissible);
 		InfoBox infoBoxit = new InfoBox();
 		infoBoxit.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz IT");
-		infoBoxit.setTitle("Hinweis IT");
+		infoBoxit.setTitle("Hinweis IT" + isDismissibleText);
 		infoBoxit.setUrlTitle("Und ein externer Link IT");
 		infoBoxit.setUrl("https://www.bag.admin.ch/bag/it/home.html");
 		infoBoxit.setIsDismissible(isDismissible);
 		InfoBox infoBoxen = new InfoBox();
 		infoBoxen.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz EN");
-		infoBoxen.setTitle("Hinweis EN");
+		infoBoxen.setTitle("Hinweis EN" + isDismissibleText);
 		infoBoxen.setUrlTitle("Und ein externer Link EN");
 		infoBoxen.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxen.setIsDismissible(isDismissible);
 		InfoBox infoBoxpt = new InfoBox();
 		infoBoxpt.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz PT");
-		infoBoxpt.setTitle("Hinweis PT");
+		infoBoxpt.setTitle("Hinweis PT" + isDismissibleText);
 		infoBoxpt.setUrlTitle("Und ein externer Link PT");
 		infoBoxpt.setUrl("https://www.bag.admin.ch/bag/pt/home.html");
 		infoBoxpt.setIsDismissible(isDismissible);
 		InfoBox infoBoxes = new InfoBox();
 		infoBoxes.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz ES");
-		infoBoxes.setTitle("Hinweis ES");
+		infoBoxes.setTitle("Hinweis ES" + isDismissibleText);
 		infoBoxes.setUrlTitle("Und ein externer Link ES");
 		infoBoxes.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxes.setIsDismissible(isDismissible);
 		InfoBox infoBoxsq = new InfoBox();
 		infoBoxsq.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz SQ");
-		infoBoxsq.setTitle("Hinweis SQ");
+		infoBoxsq.setTitle("Hinweis SQ" + isDismissibleText);
 		infoBoxsq.setUrlTitle("Und ein externer Link SQ");
 		infoBoxsq.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxsq.setIsDismissible(isDismissible);
 		InfoBox infoBoxbs = new InfoBox();
 		infoBoxbs.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz BS");
-		infoBoxbs.setTitle("Hinweis BS");
+		infoBoxbs.setTitle("Hinweis BS" + isDismissibleText);
 		infoBoxbs.setUrlTitle("Und ein externer Link BS");
 		infoBoxbs.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxbs.setIsDismissible(isDismissible);
 		InfoBox infoBoxhr = new InfoBox();
 		infoBoxhr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz HR");
-		infoBoxhr.setTitle("Hinweis HR");
+		infoBoxhr.setTitle("Hinweis HR" + isDismissibleText);
 		infoBoxhr.setUrlTitle("Und ein externer Link HR");
 		infoBoxhr.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxhr.setIsDismissible(isDismissible);
 		InfoBox infoBoxrm = new InfoBox();
 		infoBoxrm.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz RM");
-		infoBoxrm.setTitle("Hinweis RM");
+		infoBoxrm.setTitle("Hinweis RM" + isDismissibleText);
 		infoBoxrm.setUrlTitle("Und ein externer Link RM");
 		infoBoxrm.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxrm.setIsDismissible(isDismissible);
 		InfoBox infoBoxsr = new InfoBox();
 		infoBoxsr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz SR");
-		infoBoxsr.setTitle("Hinweis SR");
+		infoBoxsr.setTitle("Hinweis SR" + isDismissibleText);
 		infoBoxsr.setUrlTitle("Und ein externer Link SR");
 		infoBoxsr.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxsr.setIsDismissible(isDismissible);
