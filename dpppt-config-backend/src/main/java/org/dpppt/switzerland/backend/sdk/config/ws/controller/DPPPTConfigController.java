@@ -104,7 +104,7 @@ public class DPPPTConfigController {
 		infoBoxDe.setUrl(
 				"https://www.bag.admin.ch/bag/de/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/de/categories/swisscovid-app");
 		infoBoxDe.setUrlTitle("Weitere Informationen");
-		infoBoxDe.setDismissible(true);
+		infoBoxDe.setIsDismissible(true);
 		InfoBoxCollection infoBoxCollection = new InfoBoxCollection();
 		infoBoxCollection.setDeInfoBox(infoBoxDe);
 		configResponse.setInfoBox(infoBoxCollection);

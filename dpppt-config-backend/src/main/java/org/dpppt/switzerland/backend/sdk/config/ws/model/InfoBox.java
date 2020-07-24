@@ -61,11 +61,11 @@ public class InfoBox {
 		this.urlTitle = urlTitle;
 	}
 
-	public boolean isDismissible() {
+	public boolean getIsDismissible() {
 		return isDismissible;
 	}
 
-	public void setDismissible(boolean isDismissible) {
+	public void setIsDismissible(boolean isDismissible) {
 		this.isDismissible = isDismissible;
 	}
 }
