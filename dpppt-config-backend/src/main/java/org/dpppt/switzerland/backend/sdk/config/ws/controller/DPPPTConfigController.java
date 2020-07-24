@@ -83,7 +83,7 @@ public class DPPPTConfigController {
 			config.getiOSGaenSdkConfig().setFactorHigh(0.0d);
 		}
 		
-		config = mockConfigResponseWithInfoBox(false);
+		config = mockConfigResponseWithInfoBox(true);
 		
 		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
 	}
