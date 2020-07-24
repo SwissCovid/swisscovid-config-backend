@@ -10,58 +10,62 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * @author bachmann created on 28.04.20
  **/
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InfoBox {
 
-    private String title;
-    private String msg;
-    private String url;
-    private String urlTitle;
-    private boolean isDismissible = false;
+	private String title;
+	private String msg;
+	private String url;
+	private String urlTitle;
+	private boolean isDismissible = false;
 
-    public String getInfoId() {
-        return Integer.toString(getTitle().hashCode() + getMsg().hashCode() + getUrl().hashCode() + getUrlTitle().hashCode());
-    }
+	public String getInfoId() {
+		return Integer
+				.toString(getTitle().hashCode() + getMsg().hashCode() + getUrl().hashCode() + getUrlTitle().hashCode());
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getMsg() {
-        return msg;
-    }
+	public String getMsg() {
+		return msg;
+	}
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public String getUrlTitle() {
-        return urlTitle;
-    }
+	public String getUrlTitle() {
+		return urlTitle;
+	}
 
-    public void setUrlTitle(String urlTitle) {
-        this.urlTitle = urlTitle;
-    }
+	public void setUrlTitle(String urlTitle) {
+		this.urlTitle = urlTitle;
+	}
 
-    public boolean isDismissible() {
-        return isDismissible;
-    }
+	public boolean isDismissible() {
+		return isDismissible;
+	}
 
-    public void setDismissible(boolean isDismissible) {
-        this.isDismissible = isDismissible;
-    }
+	public void setDismissible(boolean isDismissible) {
+		this.isDismissible = isDismissible;
+	}
 }
