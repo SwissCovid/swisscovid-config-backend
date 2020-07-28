@@ -25,8 +25,8 @@ public class InfoBox {
 	private boolean isDismissible = false;
 
 	public String getInfoId() {
-		return Integer
-				.toString(getTitle().hashCode() + getMsg().hashCode() + getUrl().hashCode() + getUrlTitle().hashCode());
+		return Integer.toString(getTitle().hashCode() + getMsg().hashCode() + getUrl().hashCode()
+				+ getUrlTitle().hashCode() + Boolean.hashCode(getIsDismissible()));
 	}
 
 	public String getTitle() {
