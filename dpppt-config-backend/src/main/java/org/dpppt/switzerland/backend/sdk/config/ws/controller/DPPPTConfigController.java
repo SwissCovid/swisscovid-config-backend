@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/v1")
 public class DPPPTConfigController {
 	
-	private static final Version CURRENT_RELEASE_VERSION = new Version("1.0.7");
+	private static final Version CURRENT_RELEASE_VERSION = new Version("1.0.5");
 	private static final String IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO = "ios13.6";
 	private static final List<String> TESTFLIGHT_VERSIONS = List.of("ios-200619.2333.175", 
 			   "ios-200612.2347.141",

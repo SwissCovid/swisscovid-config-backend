@@ -135,11 +135,11 @@ public abstract class BaseControllerTest {
 		result = mockMvc.perform(
 			get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.5").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-		assertTestNormalUpdate(result);
+			assertTestNoUpdate(result);
 		result = mockMvc.perform(
 			get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.6").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-		assertTestNormalUpdate(result);
+			assertTestNoUpdate(result);
 		
 		result = mockMvc.perform(
 				get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.7").param("buildnr", "ios-2020.0145asdfa34"))
