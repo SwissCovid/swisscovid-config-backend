@@ -3,6 +3,9 @@ package org.dpppt.switzerland.backend.sdk.config.ws.model;
 public class Country {
     private String isoCountryCode;
 
+    public Country(){
+        this.isoCountryCode = "";
+    }
     public Country(String isoCountryCode) {
         this.isoCountryCode = isoCountryCode;
     }
