@@ -111,35 +111,35 @@ public abstract class BaseControllerTest {
 		MockHttpServletResponse result = mockMvc.perform(
 				get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.0").param("buildnr", "ios-2020.0145asdfa34"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-		assertTestNormalUpdate(result);
+			assertTestNoUpdate(result);
 		result = mockMvc.perform(
 				get("/v1/config").param("osversion", "ios12").param("appversion", "android-1.0.1").param("buildnr", "ios-2020.0145asdfa34"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-		assertTestNormalUpdate(result);
+			assertTestNoUpdate(result);
 		result = mockMvc.perform(
 			get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.2").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-		assertTestNormalUpdate(result);
+			assertTestNoUpdate(result);
 		result = mockMvc.perform(
 			get("/v1/config").param("osversion", "ios12").param("appversion", "android-1.0").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-		assertTestNormalUpdate(result);
+			assertTestNoUpdate(result);
 		result = mockMvc.perform(
 			get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.3").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-		assertTestNormalUpdate(result);
+			assertTestNoUpdate(result);
 		result = mockMvc.perform(
 			get("/v1/config").param("osversion", "ios12").param("appversion", "android-1.0.4").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-		assertTestNormalUpdate(result);
+			assertTestNoUpdate(result);
 		result = mockMvc.perform(
 			get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.5").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-		assertTestNormalUpdate(result);
+			assertTestNoUpdate(result);
 		result = mockMvc.perform(
 			get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.6").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-		assertTestNormalUpdate(result);
+			assertTestNoUpdate(result);
 		
 		result = mockMvc.perform(
 				get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.7").param("buildnr", "ios-2020.0145asdfa34"))

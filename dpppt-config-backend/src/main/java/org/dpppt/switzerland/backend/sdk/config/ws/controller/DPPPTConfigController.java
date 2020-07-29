@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/v1")
 public class DPPPTConfigController {
 	
-	private static final Version CURRENT_RELEASE_VERSION = new Version("1.0.7");
 	private static final String IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO = "ios13.6";
 	private static final List<String> TESTFLIGHT_VERSIONS = List.of("ios-200619.2333.175", 
 			   "ios-200612.2347.141",
@@ -63,12 +62,6 @@ public class DPPPTConfigController {
 		// notification
 		if (osversion.equals(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
 			setInfoTextForiOS136DE(config);
-		}
-
-		// update message for various old builds
-		var appVersion = new Version(appversion);
-		if (!appVersion.isValid() || appVersion.isSmallerVersionThan(CURRENT_RELEASE_VERSION)) {
-			config = generalUpdateRelease1(appVersion.isIOS());
 		}
 
 		// if we have testflight builds suggest to switch to store version
