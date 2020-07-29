@@ -66,10 +66,10 @@ public class DPPPTConfigController {
 		}
 
 		// update message for various old builds
-		var appVersion = new Version(appversion);
-		if (!appVersion.isValid() || appVersion.isSmallerVersionThan(CURRENT_RELEASE_VERSION)) {
-			config = generalUpdateRelease1(appVersion.isIOS());
-		}
+		// var appVersion = new Version(appversion);
+		// if (!appVersion.isValid() || appVersion.isSmallerVersionThan(CURRENT_RELEASE_VERSION)) {
+		// 	config = generalUpdateRelease1(appVersion.isIOS());
+		// }
 
 		// if we have testflight builds suggest to switch to store version
 		if (TESTFLIGHT_VERSIONS.contains(buildnr)) {
