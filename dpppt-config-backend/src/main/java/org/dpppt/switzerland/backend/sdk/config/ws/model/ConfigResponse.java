@@ -10,6 +10,10 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class ConfigResponse {
 
 	private boolean forceUpdate = false;
@@ -20,6 +24,14 @@ public class ConfigResponse {
 	private SDKConfig sdkConfig = new SDKConfig();
 	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
 	private GAENSDKConfig androidGaenSdkConfig = new GAENSDKConfig();
+
+	private List<Country> supportedCountries = Stream.of(new Country("DE"), 
+														 new Country("IT"), 
+														 new Country("AT"),
+														 new Country("DK"), 
+														 new Country("IE"), 
+														 new Country("LV"), 
+														 new Country("PT")).collect(Collectors.toList());
 
 	public boolean isForceUpdate() {
 		return forceUpdate;
@@ -67,5 +79,13 @@ public class ConfigResponse {
 
 	public void setAndroidGaenSdkConfig(GAENSDKConfig androidGaenSdkConfig) {
 		this.androidGaenSdkConfig = androidGaenSdkConfig;
+	}
+
+	public List<Country> getSupportedCountries() {
+		return supportedCountries;
+	}
+
+	public void setSupportedCountries(List<Country> supportedCountries) {
+		this.supportedCountries = supportedCountries;
 	}
 }
