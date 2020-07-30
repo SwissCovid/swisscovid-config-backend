@@ -189,6 +189,7 @@ public class DPPPTConfigController {
 
 		String store = isIos ? "App Store" : "Play Store";
 		String storeFr = isIos ? "l'App Store" : "le Play Store";
+        String storeRm = isIos ? "da l'App Store" : "dal Play Store";
 
 		InfoBox infoBoxde = new InfoBox();
 		infoBoxde.setMsg(
@@ -254,8 +255,8 @@ public class DPPPTConfigController {
 		infoBoxhr.setUrlTitle("Ažuriraj");
 		infoBoxhr.setUrl(appstoreUrl);
 		InfoBox infoBoxrm = new InfoBox();
-		infoBoxrm.setMsg("Ina versiun pli nova da SwissCovid è a disposiziun. Chargiai la novissima versiun da " + store
-				+ " per che l'app funcziunia il meglier pussaivel.");
+		infoBoxrm.setMsg("Ina versiun pli nova da SwissCovid è disponibla. Chargiai giu l'ultima versiun " + storeRm
+				+ ", per che l'app funcziunia il meglier pussaivel.");
 		infoBoxrm.setTitle("Actualisaziun da l'app è disponibla");
 		infoBoxrm.setUrlTitle("Actualisar");
 		infoBoxrm.setUrl(appstoreUrl);
