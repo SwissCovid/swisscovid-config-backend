@@ -29,6 +29,61 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ch.ubique.openapi.docannotations.Documentation;
+
+/**
+
+ @CrossOrigin(origins = { "https://editor.swagger.io" })
+ @GetMapping(value = "")
+ public @ResponseBody String hello() {
+ return "Hello from DP3T Config WS";
+ }
+
+ @CrossOrigin(origins = { "https://editor.swagger.io" })
+ @GetMapping(value = "/config")
+ public @ResponseBody ResponseEntity<ConfigResponse> getConfig(
+ @RequestParam
+ String osversion,
+ @RequestParam
+ String appversion,
+ @RequestParam
+ String buildnr) {
+ ConfigResponse config = new ConfigResponse();
+ // For iOS 13.6 users with language DE show information about weekly
+ // notification
+ if (osversion.equals(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
+ setInfoTextForiOS136DE(config);
+ }
+
+ // if we have testflight builds suggest to switch to store version
+ if (TESTFLIGHT_VERSIONS.contains(buildnr)) {
+ config = testFlightUpdate();
+ }
+
+ // Build nr of the initial iOS pilot test app. Contains bug, that factors are
+ // not used correctly in contact calculations. Set factorHigh to 0.0 for
+ // improving the calculation.
+ if (buildnr.equals("ios-200524.1316.87")) {
+ config.getiOSGaenSdkConfig().setFactorHigh(0.0d);
+ }
+ return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
+ }
+
+ @Documentation(description = "Infobox testing endpoint", responses = {"200 => Infobox in all languages"})
+ @CrossOrigin(origins = { "https://editor.swagger.io" })
+ @GetMapping(value = "/testinfobox/config")
+ public @ResponseBody ResponseEntity<ConfigResponse> getGhettoboxConfig(
+ @RequestParam
+ String osversion,
+ @RequestParam
+ String appversion,
+ @RequestParam
+ String buildnr) {
+ ConfigResponse body = mockConfigResponseWithInfoBox();
+ return ResponseEntity.ok(body);
+ }
+
+ */
 
 @Controller
 @RequestMapping("/v1")
@@ -53,6 +108,8 @@ public class GaenConfigController {
         this.messages = messages;
     }
 
+    @Documentation(description = "Echo endpoint",
+            responses = {"200 => Hello from DP3T Config WS"})
     @CrossOrigin(origins = {"https://editor.swagger.io"})
     @GetMapping(value = "")
     public @ResponseBody
@@ -60,11 +117,19 @@ public class GaenConfigController {
         return "Hello from DP3T Config WS";
     }
 
+    @Documentation(description="Read latest configuration and messages, depending on the version of the phone and the" +
+            " app.",
+            responses = {"200 => ConfigResponse structure with eventual notifications and epidemic parameters"})
     @CrossOrigin(origins = {"https://editor.swagger.io"})
     @GetMapping(value = "/config")
     public @ResponseBody
-    ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
-                                             @RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {
+    ResponseEntity<ConfigResponse> getConfig(
+            @Documentation(description = "Version of the App installed", example = "ios-1.0.7")
+            @RequestParam String appversion,
+            @Documentation(description = "Version of the OS", example = "ios13.6")
+            @RequestParam String osversion,
+            @Documentation(description = "Build number of the app", example = "ios-200619.2333.175")
+            @RequestParam String buildnr) {
         ConfigResponse config = new ConfigResponse();
         config.setWhatToDoPositiveTestTexts(whatToDoPositiveTestTexts(messages));
 
@@ -117,8 +182,12 @@ public class GaenConfigController {
     @GetMapping(value = "/testinfobox/config")
     public @ResponseBody
     ResponseEntity<ConfigResponse> getGhettoboxConfig(
-            @RequestParam(required = true) String appversion, @RequestParam(required = true) String osversion,
-            @RequestParam(required = true) String buildnr) {
+            @Documentation(description = "Version of the App installed", example = "ios-1.0.7")
+            @RequestParam String appversion,
+            @Documentation(description = "Version of the OS", example = "ios13.6")
+            @RequestParam String osversion,
+            @Documentation(description = "Build number of the app", example = "ios-200619.2333.175")
+            @RequestParam String buildnr) {
         ConfigResponse body = mockConfigResponseWithInfoBox();
         return ResponseEntity.ok(body);
     }

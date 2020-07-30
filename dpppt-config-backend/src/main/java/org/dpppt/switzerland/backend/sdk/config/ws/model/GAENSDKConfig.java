@@ -10,12 +10,29 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
+import ch.ubique.openapi.docannotations.Documentation;
+
 public class GAENSDKConfig {
 
+	@Documentation(description = "Lower threshold that is sent to the GAEN to count encounters with other devices. It" +
+			" is expressed in dB attenuation from the Bluetooth chip.",
+			example="53")
 	private Integer lowerThreshold = 55;
+	@Documentation(description = "Higher threshold that is sent to the GAEN to count encounters with other devices " +
+			".It is expressed in dB attenuation from the Bluetooth chip.",
+			example="60")
 	private Integer higherThreshold = 63;
+	@Documentation(description = "Multiplication factor used to weigh the return value of the GAEN in " +
+			"attenuationDuration[0]",
+			example = "1.0d")
 	private Double factorLow = 1.0d;
+	@Documentation(description = "Multiplication factor used to weigh the return value of the GAEN in " +
+			"attenuationDuration[1]",
+			example = "0.5d")
 	private Double factorHigh = 0.5d;
+	@Documentation(description = "Minimum duration of exposure during one day reported by the GAEN before the user " +
+			"is alerted of an exposure risk",
+			example = "15")
 	private Integer triggerThreshold = 15;
 
 	public Integer getLowerThreshold() {
