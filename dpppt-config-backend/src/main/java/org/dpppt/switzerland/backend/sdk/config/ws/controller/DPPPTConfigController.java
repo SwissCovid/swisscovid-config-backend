@@ -95,7 +95,7 @@ public class DPPPTConfigController {
 				+ " Die App funktioniert weiterhin und zeichnet alle Kontakte auf.");
 		infoBoxDe.setTitle("Hinweis");
 		infoBoxDe.setUrl(
-				"https://www.bag.admin.ch/bag/de/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/de/categories/swisscovid-app");
+				"https://www.bag.admin.ch/bag/de/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/de/technik/wieso-erscheint-auf-ios-136-w%C3%B6chtlich-eine-benachrichtigung-dein-ger%C3%A4t-hat-%C2%AB0-m%C3%B6gliche");
 		infoBoxDe.setUrlTitle("Weitere Informationen");
 		infoBoxDe.setIsDismissible(true);
 		InfoBoxCollection infoBoxCollection = new InfoBoxCollection();
