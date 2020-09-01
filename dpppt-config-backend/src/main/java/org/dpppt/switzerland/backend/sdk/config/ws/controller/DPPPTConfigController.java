@@ -39,7 +39,16 @@ public class DPPPTConfigController {
 			   "ios-200528.2230.100",
 			   "ios-200524.1316.87",
 			   "ios-200521.2320.79");
-
+	private static final String IOS_VERSION_13_7 = "ios13.7";
+	private static final String IOS_VERSION_14 = "ios14";
+	private static final List<String> APP_VERSIONS_BEFORE_1_0_9 = List.of("ios-1.0", 
+				"ios-1.0.2",
+				"ios-1.0.3",
+				"ios-1.0.4",
+				"ios-1.0.5",
+				"ios-1.0.6",
+				"ios-1.0.7",
+				"ios-1.0.8");
 	
 	private static final Logger logger = LoggerFactory.getLogger(DPPPTConfigController.class);
 
@@ -74,6 +83,12 @@ public class DPPPTConfigController {
 		// improving the calculation.
 		if (buildnr.equals("ios-200524.1316.87")) {
 			config.getiOSGaenSdkConfig().setFactorHigh(0.0d);
+		}
+
+		// Show popup to iOS 13.7/14 users who have not yet updated to SwissCovid 1.0.9 (which fixes compatibility issues)
+		if ((osversion.equals(IOS_VERSION_13_7) || osversion.equals(IOS_VERSION_14)) 
+			&& APP_VERSIONS_BEFORE_1_0_9.contains(appversion)) {
+			config.setForceUpdate(true);
 		}
 		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
 	}
