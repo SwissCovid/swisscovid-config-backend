@@ -3,7 +3,12 @@ package org.dpppt.switzerland.backend.sdk.config.ws.semver;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+/**
+ * Semver implementation to allow for some special cases in the android/ios world: - platform is
+ * prepended to version - minor and patch are optional - if missing, they are set to 0.
+ */
 public class Version implements Comparable<Version> {
+
     private Integer major;
     private Integer minor;
     private Integer patch;
@@ -11,33 +16,45 @@ public class Version implements Comparable<Version> {
     private String metaInfo = "";
     private String platform = "";
 
-    private final Pattern semVerPattern = Pattern.compile("^(?:(?<platform>ios|android)-)?(?<major>0|[1-9]\\d*)\\.(?<minor>0|[1-9]\\d*)\\.(?<patch>0|[1-9]\\d*)(?:-(?<prerelease>(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$");
+    // Pattern copied from
+    // https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+    // and adapted for the mobile strings.
+    private final Pattern semVerPattern =
+            Pattern.compile(
+                    "^(?:(?<platform>ios|android)-)?(?<major>0|[1-9]\\d*)(\\.(?<minor>0|[1-9]\\d*))?(\\.(?<patch>0|[1-9]\\d*))?(?:-(?<prerelease>(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$");
 
     public Version() {
     }
 
     public Version(String versionString) {
-        if(versionString == null) {
+        if (versionString == null) {
             this.setInvalidValue();
             return;
         }
+        this.major = -1;
+        this.minor = 0;
+        this.patch = 0;
 
         var matches = semVerPattern.matcher(versionString.trim());
-        if(matches.find()) {
+        if (matches.find()) {
             this.major = Integer.parseInt(matches.group("major"));
-            this.minor = Integer.parseInt(matches.group("minor"));
-            this.patch = Integer.parseInt(matches.group("patch"));
-            if(matches.group("platform") != null) {
+            if (matches.group("minor") != null) {
+                this.minor = Integer.parseInt(matches.group("minor"));
+            }
+            if (matches.group("patch") != null) {
+                this.patch = Integer.parseInt(matches.group("patch"));
+            }
+            if (matches.group("platform") != null) {
                 this.platform = matches.group("platform");
             }
-            if(matches.group("prerelease") != null) {
+            if (matches.group("prerelease") != null) {
                 this.preReleaseString = matches.group("prerelease");
             }
-            if(matches.group("buildmetadata") != null) {
+            if (matches.group("buildmetadata") != null) {
                 this.metaInfo = matches.group("buildmetadata");
             }
         } else {
-           this.setInvalidValue();
+            this.setInvalidValue();
         }
     }
 
@@ -49,7 +66,24 @@ public class Version implements Comparable<Version> {
         this.metaInfo = "";
     }
 
-    public Version(Integer major, Integer minor, Integer patch, String preReleaseString, String metaInfo) {
+    public Version(Integer major, Integer minor) {
+        this.major = major;
+        this.minor = minor;
+        this.patch = 0;
+        this.preReleaseString = "";
+        this.metaInfo = "";
+    }
+
+    public Version(Integer major) {
+        this.major = major;
+        this.minor = 0;
+        this.patch = 0;
+        this.preReleaseString = "";
+        this.metaInfo = "";
+    }
+
+    public Version(
+            Integer major, Integer minor, Integer patch, String preReleaseString, String metaInfo) {
         this.major = major;
         this.minor = minor;
         this.patch = patch;
@@ -64,10 +98,11 @@ public class Version implements Comparable<Version> {
         this.preReleaseString = "";
         this.metaInfo = "";
     }
+
     public boolean isValid() {
         return major.compareTo(Integer.valueOf(0)) >= 0
-            && minor.compareTo(Integer.valueOf(0)) >= 0
-            && patch.compareTo(Integer.valueOf(0)) >= 0;
+                && minor.compareTo(Integer.valueOf(0)) >= 0
+                && patch.compareTo(Integer.valueOf(0)) >= 0;
     }
 
     public Integer getMajor() {
@@ -109,6 +144,7 @@ public class Version implements Comparable<Version> {
     public void setMetaInfo(String metaInfo) {
         this.metaInfo = metaInfo;
     }
+
     public String getPlatform() {
         return this.platform;
     }
@@ -149,19 +185,26 @@ public class Version implements Comparable<Version> {
     public boolean isAndroid() {
         return platform.contains("android") || metaInfo.contains("android");
     }
+
     public boolean isIOS() {
         return platform.contains("ios") || metaInfo.contains("ios");
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == this)
+        if (o == this) {
             return true;
+        }
         if (!(o instanceof Version)) {
             return false;
         }
         Version version = (Version) o;
-        return Objects.equals(major, version.major) && Objects.equals(minor, version.minor) && Objects.equals(patch, version.patch) && Objects.equals(preReleaseString, version.preReleaseString) && Objects.equals(metaInfo, version.metaInfo) && Objects.equals(platform, version.platform);
+        return Objects.equals(major, version.major)
+                && Objects.equals(minor, version.minor)
+                && Objects.equals(patch, version.patch)
+                && Objects.equals(preReleaseString, version.preReleaseString)
+                && Objects.equals(metaInfo, version.metaInfo)
+                && Objects.equals(platform, version.platform);
     }
 
     @Override
@@ -171,33 +214,33 @@ public class Version implements Comparable<Version> {
 
     @Override
     public String toString() {
-        return "{" +
-            " major='" + getMajor() + "'" +
-            ", minor='" + getMinor() + "'" +
-            ", patch='" + getPatch() + "'" +
-            ", preReleaseString='" + getPreReleaseString() + "'" +
-            ", metaInfo='" + getMetaInfo() + "'" +
-            "}";
+        return getMajor()
+                + "."
+                + getMinor()
+                + "."
+                + getPatch()
+                + (getPreReleaseString().isEmpty() ? "" : "-" + getPreReleaseString())
+                + (getMetaInfo().isEmpty() ? "" : "+" + getMetaInfo());
     }
 
     @Override
     public int compareTo(Version o) {
-        if(this.major.compareTo(o.major) != 0) {
+        if (this.major.compareTo(o.major) != 0) {
             return this.major.compareTo(o.major);
         }
-        if(this.minor.compareTo(o.minor) != 0) {
+        if (this.minor.compareTo(o.minor) != 0) {
             return this.minor.compareTo(o.minor);
         }
-        if(this.patch.compareTo(o.patch) != 0) {
+        if (this.patch.compareTo(o.patch) != 0) {
             return this.patch.compareTo(o.patch);
         }
-        if(this.isPrerelease() && o.isPrerelease()) {
-            if(this.preReleaseString.compareTo(o.preReleaseString) != 0) {
+        if (this.isPrerelease() && o.isPrerelease()) {
+            if (this.preReleaseString.compareTo(o.preReleaseString) != 0) {
                 return this.preReleaseString.compareTo(o.preReleaseString);
             }
-        } else if(this.isPrerelease() && !o.isPrerelease()) {
+        } else if (this.isPrerelease() && !o.isPrerelease()) {
             return -1;
-        } else if(!this.isPrerelease() && o.isPrerelease()) {
+        } else if (!this.isPrerelease() && o.isPrerelease()) {
             return 1;
         }
         return 0;
@@ -206,11 +249,12 @@ public class Version implements Comparable<Version> {
     public boolean isSmallerVersionThan(Version other) {
         return this.compareTo(other) < 0;
     }
+
     public boolean isLargerVersionThan(Version other) {
         return this.compareTo(other) > 0;
     }
+
     public boolean isSameVersionAs(Version other) {
         return this.compareTo(other) == 0;
     }
-
 }
