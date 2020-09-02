@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(value = Include.NON_NULL)
 public class InfoBoxCollection {
-	
+
 	private InfoBox deInfoBox;
 	private InfoBox frInfoBox;
 	private InfoBox itInfoBox;
@@ -27,6 +27,8 @@ public class InfoBoxCollection {
 	private InfoBox hrInfoBox;
 	private InfoBox srInfoBox;
 	private InfoBox rmInfoBox;
+	private InfoBox trInfobox;
+	private InfoBox tiInfobox;
 
 	public InfoBox getPtInfoBox() {
 		return this.ptInfoBox;
@@ -114,5 +116,21 @@ public class InfoBoxCollection {
 
 	public void setDeInfoBox(InfoBox deInfoBox) {
 		this.deInfoBox = deInfoBox;
+	}
+
+	public InfoBox getTrInfobox() {
+		return trInfobox;
+	}
+
+	public void setTrInfobox(InfoBox trInfobox) {
+		this.trInfobox = trInfobox;
+	}
+
+	public InfoBox getTiInfobox() {
+		return tiInfobox;
+	}
+
+	public void setTiInfobox(InfoBox tiInfobox) {
+		this.tiInfobox = tiInfobox;
 	}
 }
