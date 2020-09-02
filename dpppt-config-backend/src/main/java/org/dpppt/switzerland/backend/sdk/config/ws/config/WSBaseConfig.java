@@ -37,6 +37,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -60,6 +61,11 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 
 	abstract String getPublicKey();
 	abstract String getPrivateKey();
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+	}
 
 	@Bean
 	public DPPPTConfigController dppptSDKController() {
