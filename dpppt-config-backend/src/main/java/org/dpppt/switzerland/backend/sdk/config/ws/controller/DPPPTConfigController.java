@@ -40,7 +40,7 @@ public class DPPPTConfigController {
 			   "ios-200524.1316.87",
 			   "ios-200521.2320.79");
 	private static final String IOS_VERSION_13_7 = "ios13.7";
-	private static final String IOS_VERSION_14 = "ios14";
+	private static final String IOS_VERSION_14 = "ios14.0";
 	private static final Version APP_VERSION_1_0_9 = new Version("ios-1.0.9");
 
 	private static final Logger logger = LoggerFactory.getLogger(DPPPTConfigController.class);

@@ -164,7 +164,7 @@ public abstract class BaseControllerTest {
 	@Test
 	public void testForceUpdate() throws Exception {
 		MockHttpServletResponse result = mockMvc.perform(
-				get("/v1/config").param("osversion", "ios14").param("appversion", "ios-1.0.8").param("buildnr", "ios-2020.0145asdfa34"))
+				get("/v1/config").param("osversion", "ios14.0").param("appversion", "ios-1.0.8").param("buildnr", "ios-2020.0145asdfa34"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 			assertIsForceUpdate(result);	
 			
