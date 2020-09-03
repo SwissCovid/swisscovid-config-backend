@@ -81,14 +81,7 @@ public class DPPPTConfigController {
 		// Check for old app Versions, iOS only
 		Version userAppVersion = new Version(appversion);
 		if (userAppVersion.isIOS() && APP_VERSION_1_0_9.isLargerVersionThan(userAppVersion)) {
-			// Show popup to iOS 13.7/14 users who have not yet updated to SwissCovid 1.0.9
-			// (which fixes compatibility issues)
-			if ((osversion.equals(IOS_VERSION_13_7) || osversion.equals(IOS_VERSION_14))) {
-				config.setForceUpdate(true);
-			} else {
-				// For < 13.7 users show info that new update is available
-				config = generalUpdateRelease(true);
-			}
+			config = generalUpdateRelease(true);
 		}
 		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
 	}
