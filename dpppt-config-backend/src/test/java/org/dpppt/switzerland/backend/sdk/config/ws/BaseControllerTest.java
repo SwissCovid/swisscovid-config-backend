@@ -10,7 +10,20 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.security.PublicKey;
+import java.util.List;
+import java.util.Map;
+
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.junit.Test;
@@ -23,19 +36,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.security.PublicKey;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
 
@@ -76,9 +77,9 @@ public abstract class BaseControllerTest {
 		assertEquals("App-Update im App Store", resp.getInfoBox().getDeInfoBox().getTitle());
 	}
 	
-	private void assertIsForceUpdate(MockHttpServletResponse result) throws Exception {
+	private void assertIsNoForceUpdate(MockHttpServletResponse result) throws Exception {
 		ConfigResponse resp = objectMapper.readValue(result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
-		assertTrue(resp.isForceUpdate());
+		assertFalse(resp.isForceUpdate());
 	}
 
 	@Test
@@ -162,16 +163,16 @@ public abstract class BaseControllerTest {
 	}
 	
 	@Test
-	public void testForceUpdate() throws Exception {
+	public void testNoForceUpdate() throws Exception {
 		MockHttpServletResponse result = mockMvc.perform(
 				get("/v1/config").param("osversion", "ios14.0").param("appversion", "ios-1.0.8").param("buildnr", "ios-2020.0145asdfa34"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-			assertIsForceUpdate(result);	
+			assertIsNoForceUpdate(result);	
 			
 		result = mockMvc.perform(
 					get("/v1/config").param("osversion", "ios13.7").param("appversion", "ios-1.0.7").param("buildnr", "ios-2020.0145asdfa34"))
 					.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-				assertIsForceUpdate(result);			
+				assertIsNoForceUpdate(result);			
 	}
 
 
