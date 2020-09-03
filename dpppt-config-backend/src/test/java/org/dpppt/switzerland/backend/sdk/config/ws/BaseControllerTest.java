@@ -75,6 +75,11 @@ public abstract class BaseControllerTest {
 		assertNotNull(resp.getInfoBox().getDeInfoBox());
 		assertEquals("App-Update im App Store", resp.getInfoBox().getDeInfoBox().getTitle());
 	}
+	
+	private void assertIsForceUpdate(MockHttpServletResponse result) throws Exception {
+		ConfigResponse resp = objectMapper.readValue(result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+		assertTrue(resp.isForceUpdate());
+	}
 
 	@Test
 	public void testHello() throws Exception {
@@ -109,7 +114,7 @@ public abstract class BaseControllerTest {
 	@Test
 	public void testForUpdateNote() throws Exception {
 		MockHttpServletResponse result = mockMvc.perform(
-				get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.0").param("buildnr", "ios-2020.0145asdfa34"))
+				get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.9").param("buildnr", "ios-2020.0145asdfa34"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 			assertTestNoUpdate(result);
 		result = mockMvc.perform(
@@ -117,9 +122,9 @@ public abstract class BaseControllerTest {
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 			assertTestNoUpdate(result);
 		result = mockMvc.perform(
-			get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.2").param("buildnr", "ios-2020.0145asdfa34"))
+			get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.8").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-			assertTestNoUpdate(result);
+			assertTestNormalUpdate(result);
 		result = mockMvc.perform(
 			get("/v1/config").param("osversion", "ios12").param("appversion", "android-1.0").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
@@ -139,13 +144,37 @@ public abstract class BaseControllerTest {
 		result = mockMvc.perform(
 			get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.6").param("buildnr", "ios-2020.0145asdfa34"))
 			.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
-			assertTestNoUpdate(result);
+			assertTestNormalUpdate(result);
 		
 		result = mockMvc.perform(
 				get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.7").param("buildnr", "ios-2020.0145asdfa34"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+			assertTestNormalUpdate(result);				
+	
+		result = mockMvc.perform(
+				get("/v1/config").param("osversion", "ios13.7").param("appversion", "ios-1.0.9").param("buildnr", "ios-2020.0145asdfa34"))
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 			assertTestNoUpdate(result);
+		result = mockMvc.perform(
+					get("/v1/config").param("osversion", "ios14").param("appversion", "ios-1.0.9").param("buildnr", "ios-2020.0145asdfa34"))
+					.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+				assertTestNoUpdate(result);			
 	}
+	
+	@Test
+	public void testForceUpdate() throws Exception {
+		MockHttpServletResponse result = mockMvc.perform(
+				get("/v1/config").param("osversion", "ios14.0").param("appversion", "ios-1.0.8").param("buildnr", "ios-2020.0145asdfa34"))
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+			assertIsForceUpdate(result);	
+			
+		result = mockMvc.perform(
+					get("/v1/config").param("osversion", "ios13.7").param("appversion", "ios-1.0.7").param("buildnr", "ios-2020.0145asdfa34"))
+					.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+				assertIsForceUpdate(result);			
+	}
+
+
 	@Test
 	public void testForTestflight() throws Exception {
 		final List<String> testflightVersions = List.of("ios-200619.2333.175", 
