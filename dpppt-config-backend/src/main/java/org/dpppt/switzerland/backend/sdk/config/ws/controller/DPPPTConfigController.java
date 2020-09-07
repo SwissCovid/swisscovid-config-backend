@@ -299,20 +299,17 @@ public class DPPPTConfigController {
 		
 		InfoBox infoBoxtr = new InfoBox();
 		infoBoxtr.setMsg(
-				"An updated version of SwissCovid is available. To guarantee the app works as well as possible, download the latest version from the "
-						+ store);
-		infoBoxtr.setTitle("App update available");
-		infoBoxtr.setUrlTitle("Update");
+				"SwissCovid uygulamasının yeni sürümü bulunuyor. Uygulamayı en iyi şekilde kullanabilmek için AppStore'dan uygulamanın son sürümünü yükleyin.");
+		infoBoxtr.setTitle("Güncelleştirme mevcut");
+		infoBoxtr.setUrlTitle("Güncelle");
 		infoBoxtr.setUrl(appstoreUrl);
 		infoBoxtr.setIsDismissible(false);
 		
-		
 		InfoBox infoBoxti = new InfoBox();
 		infoBoxti.setMsg(
-				"An updated version of SwissCovid is available. To guarantee the app works as well as possible, download the latest version from the "
-						+ store);
-		infoBoxti.setTitle("App update available");
-		infoBoxti.setUrlTitle("Update");
+				"ሓድሽ ቨርዝዮን ናይ SwissCovid ተቐሪቡ። ዝበለጸ ኣሰራርሓ ናይቲ ኤፕ መታን ክወሃበኩም፣ እቲ ሓድሽ ቨርዝዮን ካብ AppStore ብዳውንሎድ ኣምጽኡ ኢኹም።");
+		infoBoxti.setTitle("ሓድሽ ኤፕ-ኣፕደይት ኣሎ");
+		infoBoxti.setUrlTitle("ምምሕዳስ");
 		infoBoxti.setUrl(appstoreUrl);
 		infoBoxti.setIsDismissible(false);
 
