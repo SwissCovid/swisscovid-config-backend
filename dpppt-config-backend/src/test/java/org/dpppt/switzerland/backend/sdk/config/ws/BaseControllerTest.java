@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.security.PublicKey;
 import java.util.List;
@@ -36,6 +37,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
@@ -80,6 +83,14 @@ public abstract class BaseControllerTest {
 	private void assertIsNoForceUpdate(MockHttpServletResponse result) throws Exception {
 		ConfigResponse resp = objectMapper.readValue(result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
 		assertFalse(resp.isForceUpdate());
+	}
+	
+	private void assertThresholds(MockHttpServletResponse result) throws JsonMappingException, JsonProcessingException, UnsupportedEncodingException {
+		ConfigResponse resp = objectMapper.readValue(result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+		assertEquals(63, (int) resp.getiOSGaenSdkConfig().getHigherThreshold());
+		assertEquals(55, (int) resp.getiOSGaenSdkConfig().getLowerThreshold());
+		assertEquals(63, (int) resp.getAndroidGaenSdkConfig().getHigherThreshold());
+		assertEquals(55, (int) resp.getAndroidGaenSdkConfig().getLowerThreshold());
 	}
 
 	@Test
@@ -193,5 +204,14 @@ public abstract class BaseControllerTest {
 				get("/v1/config").param("osversion", "ios12").param("appversion", "1.0.7").param("buildnr", "ios-200521.2320.80"))
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		assertTestNoUpdate(result);
+	}
+	
+	@Test
+	public void testThreshold() throws Exception {
+		MockHttpServletResponse result = mockMvc.perform(
+				get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.9").param("buildnr", "ios-2020.0145asdfa34"))
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+		
+		assertThresholds(result);
 	}
 }
