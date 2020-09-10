@@ -13,6 +13,7 @@ package org.dpppt.switzerland.backend.sdk.config.ws.controller;
 import java.time.Duration;
 import java.util.List;
 
+import org.dpppt.switzerland.backend.sdk.config.ws.helper.IOS136InfoBoxHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection;
@@ -60,10 +61,9 @@ public class DPPPTConfigController {
 	public @ResponseBody ResponseEntity<ConfigResponse> getConfig(@RequestParam(required = true) String appversion,
 			@RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {
 		ConfigResponse config = new ConfigResponse();
-		// For iOS 13.6 users with language DE show information about weekly
-		// notification
+		// For iOS 13.6 users show information about weekly notification
 		if (osversion.equals(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
-			setInfoTextForiOS136DE(config);
+			IOS136InfoBoxHelper.setInfoTextForiOS136(config);
 		}
 
 		// if we have testflight builds suggest to switch to store version
@@ -93,22 +93,6 @@ public class DPPPTConfigController {
 			@RequestParam(required = true) String buildnr) {
 		ConfigResponse body = mockConfigResponseWithInfoBox();
 		return ResponseEntity.ok(body);
-	}
-
-	private void setInfoTextForiOS136DE(ConfigResponse configResponse) {
-		InfoBox infoBoxDe = new InfoBox();
-		infoBoxDe.setMsg(
-				"Neu erscheint auf iOS 13.6 von Apple wöchentlich eine Benachrichtigung: «Dein Gerät hat 0 mögliche Begegnungen identifiziert.»"
-				+ " Dies ist ein Übersetzungsfehler. Es bedeutet, dass es null positiv getestete Kontakte gab."
-				+ " Die App funktioniert weiterhin und zeichnet alle Kontakte auf.");
-		infoBoxDe.setTitle("Hinweis");
-		infoBoxDe.setUrl(
-				"https://www.bag.admin.ch/bag/de/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/de/technik/wieso-erscheint-auf-ios-136-w%C3%B6chtlich-eine-benachrichtigung-dein-ger%C3%A4t-hat-%C2%AB0-m%C3%B6gliche");
-		infoBoxDe.setUrlTitle("Weitere Informationen");
-		infoBoxDe.setIsDismissible(true);
-		InfoBoxCollection infoBoxCollection = new InfoBoxCollection();
-		infoBoxCollection.setDeInfoBox(infoBoxDe);
-		configResponse.setInfoBox(infoBoxCollection);
 	}
 
 	private ConfigResponse testFlightUpdate() {
