@@ -51,7 +51,7 @@ public class IOS136InfoBoxHelper {
 		infoBoxEn.setMsg(
 				"Your mobile phone's operating system will give you a weekly update of the number of identified encounters. You can ignore this message. This information is no longer shown as of  iOS 13.7. We recommend you to update your mobile phone.\n"
 						+ "\n"
-						+ "You will receive relevant notifications about possible infections in the form of a message from the SwissCovid App. You will find the overview in the app, under \"Notifications\".");
+						+ "You will receive relevant notifications about possible infections in the form of a message from the SwissCovid App. You will find the overview in the app, under \"Reports\".");
 		infoBoxEn.setTitle("Note");
 		infoBoxEn.setUrl(
 				"https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/en/swisscovid-app-how-it-works-technology/why-do-i-not-receive-warning-swisscovid-app-about-possible");
@@ -99,7 +99,7 @@ public class IOS136InfoBoxHelper {
 		infoBoxSq.setMsg(
 				"Në përditësimin javor sistemi operativ i celularit tuaj ju informon për numrin e kontakteve të identifikuara. Mund ta shpërfillni këtë njoftim. Duke nisur nga versioni iOS 13.7 ky informacion nuk shfaqet më; ju rekomandojmë që ta përditësoni celularin tuaj.\n"
 						+ "\n"
-						+ "Mesazhet përkatëse për infektimet e mundshme i merrni si njoftime nga aplikacioni \"SwissCovid\". Pamjen e përgjithshme mund ta gjeni në seksionin \"Meldungen\" (Mesazhet) në aplikacion.");
+						+ "Mesazhet përkatëse për infektimet e mundshme i merrni si njoftime nga aplikacioni \"SwissCovid\". Pamjen e përgjithshme mund ta gjeni në seksionin \"Njoftimet\" në aplikacion.");
 		infoBoxSq.setTitle("Shënim");
 		infoBoxSq.setUrl(
 				"https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/en/swisscovid-app-how-it-works-technology/why-do-i-not-receive-warning-swisscovid-app-about-possible");
@@ -109,7 +109,9 @@ public class IOS136InfoBoxHelper {
 		InfoBox infoBoxRm = new InfoBox();
 		infoBoxCollection.setRmInfoBox(infoBoxRm);
 		infoBoxRm.setMsg(
-				"Il sistem operativ da Voss telefonin As infurmescha cun l'update emnil davart il dumber da scuntradas identifitgadas. Vus pudais ignorar questa infurmaziun. A partir dad iOS 13.7 na vegn questa infurmaziun betg pli inditgada. Nus As recumandain, d'actualisar Voss telefonin. Annunzias relevantas davart infecziuns pussaivlas survegnis Vus sco communicaziun da l'app SwissCovid. La survista chattais Vus en l'app en la part «Avis».");
+				"Il sistem operativ da Voss telefonin As infurmescha cun l'update emnil davart il dumber da scuntradas identifitgadas. Vus pudais ignorar questa infurmaziun. A partir dad iOS 13.7 na vegn questa infurmaziun betg pli inditgada. Nus As recumandain, d'actualisar Voss telefonin.\n"
+						+ "\n"
+						+"Annunzias relevantas davart infecziuns pussaivlas survegnis Vus sco communicaziun da l'app SwissCovid. La survista chattais Vus en l'app en la part «Avis».");
 		infoBoxRm.setTitle("Indicaziun");
 		infoBoxRm.setUrl(
 				"https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/en/swisscovid-app-how-it-works-technology/why-do-i-not-receive-warning-swisscovid-app-about-possible");
@@ -133,7 +135,7 @@ public class IOS136InfoBoxHelper {
 		infoBoxTi.setMsg(
 				"እቲ ስርዓተ መስርሕ ኣብ ሞባይልኩም ኩሉ ሰሙን ምስቲ ዝመጽእ ኣፕደይት ብዛዕባ መጠን ዝተረጋገጸ ምንቅስቓስ ይሕብረኩም። እዚ ምልክት ከተስተውዕሉ ኣየድልየኩምን። ካብ ቨርዝዮን iOS 13.7 ንየው እዚ ሓበሬታ ኣይክረአን እዩ፤ ሞባይላትኩም ከተሕድስዎም ንመኽረኩም ኢና።\n"
 						+ "\n"
-						+ "ካብ SwissCovid ኤፕ ኣገደስቲ ሓበሬታታት ብዛዕባ ዝኾኑ ልበዳታት ክትወሃቡ ኢኹም። ሓፈሻዊ ሓበሬታ ኣብቲ ኤፕ ኣብ «ሓበሬታታት» ዝብሃል ክፋል ክትረኽቡ ኢኹም።");
+						+ "ካብ SwissCovid ኤፕ ኣገደስቲ ሓበሬታታት ብዛዕባ ዝኾኑ ልበዳታት ክትወሃቡ ኢኹም። ሓፈሻዊ ሓበሬታ ኣብቲ ኤፕ ኣብ «ሓበሬታ» ዝብሃል ክፋል ክትረኽቡ ኢኹም።");
 		infoBoxTi.setTitle("ምልክታ");
 		infoBoxTi.setUrl(
 				"https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/faq-kontakte-downloads/haeufig-gestellte-fragen.html?faq-url=/en/swisscovid-app-how-it-works-technology/why-do-i-not-receive-warning-swisscovid-app-about-possible");
