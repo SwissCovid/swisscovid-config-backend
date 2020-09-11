@@ -62,7 +62,7 @@ public class DPPPTConfigController {
 			@RequestParam(required = true) String osversion, @RequestParam(required = true) String buildnr) {
 		ConfigResponse config = new ConfigResponse();
 		// For iOS 13.6 users show information about weekly notification
-		if (osversion.equals(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
+		if (osversion.startsWith(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
 			IOS136InfoBoxHelper.setInfoTextForiOS136(config);
 		}
 
