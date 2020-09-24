@@ -81,7 +81,7 @@ public class DPPPTConfigController {
 		}
 
 		if (APP_VERSION_1_0_9.isSameVersionAs(userAppVersion)) {
-			config = mockConfigResponseWithInfoBox(false);
+			config = mockConfigResponseWithForceUpdate();
 		}
 
 		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
