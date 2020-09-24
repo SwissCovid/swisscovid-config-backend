@@ -33,19 +33,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/v1")
 public class DPPPTConfigController {
-	
+
 	private static final String IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO = "ios13.6";
-	private static final List<String> TESTFLIGHT_VERSIONS = List.of("ios-200619.2333.175", 
-			   "ios-200612.2347.141",
-			   "ios-200528.2230.100",
-			   "ios-200524.1316.87",
-			   "ios-200521.2320.79");
+	private static final List<String> TESTFLIGHT_VERSIONS = List.of("ios-200619.2333.175", "ios-200612.2347.141",
+			"ios-200528.2230.100", "ios-200524.1316.87", "ios-200521.2320.79");
 	private static final String IOS_VERSION_13_7 = "ios13.7";
 	private static final String IOS_VERSION_14 = "ios14.0";
 	private static final Version APP_VERSION_1_0_9 = new Version("ios-1.0.9");
 
 	private static final Logger logger = LoggerFactory.getLogger(DPPPTConfigController.class);
-
 
 	public DPPPTConfigController() {
 	}
@@ -70,7 +66,7 @@ public class DPPPTConfigController {
 		if (TESTFLIGHT_VERSIONS.contains(buildnr)) {
 			config = testFlightUpdate();
 		}
-		
+
 		// Build nr of the initial iOS pilot test app. Contains bug, that factors are
 		// not used correctly in contact calculations. Set factorHigh to 0.0 for
 		// improving the calculation.
@@ -83,6 +79,11 @@ public class DPPPTConfigController {
 		if (userAppVersion.isIOS() && APP_VERSION_1_0_9.isLargerVersionThan(userAppVersion)) {
 			config = generalUpdateRelease(true);
 		}
+
+		if (APP_VERSION_1_0_9.isSameVersionAs(userAppVersion)) {
+			config = mockConfigResponseWithInfoBox(false);
+		}
+
 		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
 	}
 
@@ -91,7 +92,7 @@ public class DPPPTConfigController {
 	public @ResponseBody ResponseEntity<ConfigResponse> getGhettoboxConfig(
 			@RequestParam(required = true) String appversion, @RequestParam(required = true) String osversion,
 			@RequestParam(required = true) String buildnr) {
-		ConfigResponse body = mockConfigResponseWithInfoBox();
+		ConfigResponse body = mockConfigResponseWithInfoBox(true);
 		return ResponseEntity.ok(body);
 	}
 
@@ -181,7 +182,7 @@ public class DPPPTConfigController {
 
 		String store = isIos ? "App Store" : "Play Store";
 		String storeFr = isIos ? "l'App Store" : "le Play Store";
-        String storeRm = isIos ? "da l'App Store" : "dal Play Store";
+		String storeRm = isIos ? "da l'App Store" : "dal Play Store";
 
 		InfoBox infoBoxde = new InfoBox();
 		infoBoxde.setMsg(
@@ -191,7 +192,7 @@ public class DPPPTConfigController {
 		infoBoxde.setUrlTitle("Aktualisieren");
 		infoBoxde.setUrl(appstoreUrl);
 		infoBoxde.setIsDismissible(false);
-		
+
 		InfoBox infoBoxfr = new InfoBox();
 		infoBoxfr.setMsg(
 				"Une nouvelle version de SwissCovid est disponible. Afin que l'application fonctionne au mieux, téléchargez la dernière version sur "
@@ -200,7 +201,7 @@ public class DPPPTConfigController {
 		infoBoxfr.setUrlTitle("Mettre à jour");
 		infoBoxfr.setUrl(appstoreUrl);
 		infoBoxfr.setIsDismissible(false);
-		
+
 		InfoBox infoBoxit = new InfoBox();
 		infoBoxit.setMsg(
 				"È disponibile una versione più recente di SwissCovid. Per ottimizzare la funzionalità dell'app, scarica l'ultima versione da "
@@ -209,7 +210,7 @@ public class DPPPTConfigController {
 		infoBoxit.setUrlTitle("Aggiorna");
 		infoBoxit.setUrl(appstoreUrl);
 		infoBoxit.setIsDismissible(false);
-		
+
 		InfoBox infoBoxen = new InfoBox();
 		infoBoxen.setMsg(
 				"An updated version of SwissCovid is available. To guarantee the app works as well as possible, download the latest version from the "
@@ -218,7 +219,7 @@ public class DPPPTConfigController {
 		infoBoxen.setUrlTitle("Update");
 		infoBoxen.setUrl(appstoreUrl);
 		infoBoxen.setIsDismissible(false);
-		
+
 		InfoBox infoBoxpt = new InfoBox();
 		infoBoxpt.setMsg(
 				"Está disponível uma nova versão da SwissCovid. Para que a app trabalhe com toda a eficiência, carregue a versão mais recente a partir da "
@@ -227,7 +228,7 @@ public class DPPPTConfigController {
 		infoBoxpt.setUrlTitle("Atualizar");
 		infoBoxpt.setUrl(appstoreUrl);
 		infoBoxpt.setIsDismissible(false);
-		
+
 		InfoBox infoBoxes = new InfoBox();
 		infoBoxes.setMsg(
 				"Hay una nueva versión de SwissCovid disponible. Para garantizar el mejor funcionamiento posible, descargue siempre la versión más nueva en el "
@@ -236,7 +237,7 @@ public class DPPPTConfigController {
 		infoBoxes.setUrlTitle("Actualizar");
 		infoBoxes.setUrl(appstoreUrl);
 		infoBoxes.setIsDismissible(false);
-		
+
 		InfoBox infoBoxsq = new InfoBox();
 		infoBoxsq.setMsg(
 				"Është i disponueshëm një version i ri nga SwissCovid. Për të marrë mënyrën më të mirë të mundshme të funksionit të aplikacionit, ngarkoni versionin më të ri nga "
@@ -245,7 +246,7 @@ public class DPPPTConfigController {
 		infoBoxsq.setUrlTitle("Përditësimi");
 		infoBoxsq.setUrl(appstoreUrl);
 		infoBoxsq.setIsDismissible(false);
-		
+
 		InfoBox infoBoxbs = new InfoBox();
 		infoBoxbs.setMsg(
 				"Dostupna je novija verzija aplikacije SwissCovid. Da biste održavali najbolju moguću funkcionalnost aplikacije, preuzmite najnoviju verziju iz trgovine aplikacijama "
@@ -254,7 +255,7 @@ public class DPPPTConfigController {
 		infoBoxbs.setUrlTitle("Ažuriraj");
 		infoBoxbs.setUrl(appstoreUrl);
 		infoBoxbs.setIsDismissible(false);
-		
+
 		InfoBox infoBoxhr = new InfoBox();
 		infoBoxhr.setMsg(
 				"Dostupna je novija verzija aplikacije SwissCovid. Da biste održavali najbolju moguću funkcionalnost aplikacije, preuzmite najnoviju verziju iz trgovine aplikacijama "
@@ -263,7 +264,7 @@ public class DPPPTConfigController {
 		infoBoxhr.setUrlTitle("Ažuriraj");
 		infoBoxhr.setUrl(appstoreUrl);
 		infoBoxhr.setIsDismissible(false);
-		
+
 		InfoBox infoBoxrm = new InfoBox();
 		infoBoxrm.setMsg("Ina versiun pli nova da SwissCovid è disponibla. Chargiai giu l'ultima versiun " + storeRm
 				+ ", per che l'app funcziunia il meglier pussaivel.");
@@ -280,7 +281,7 @@ public class DPPPTConfigController {
 		infoBoxsr.setUrlTitle("Ažuriraj");
 		infoBoxsr.setUrl(appstoreUrl);
 		infoBoxsr.setIsDismissible(false);
-		
+
 		InfoBox infoBoxtr = new InfoBox();
 		infoBoxtr.setMsg(
 				"SwissCovid uygulamasının yeni sürümü bulunuyor. Uygulamayı en iyi şekilde kullanabilmek için AppStore'dan uygulamanın son sürümünü yükleyin.");
@@ -288,7 +289,7 @@ public class DPPPTConfigController {
 		infoBoxtr.setUrlTitle("Güncelle");
 		infoBoxtr.setUrl(appstoreUrl);
 		infoBoxtr.setIsDismissible(false);
-		
+
 		InfoBox infoBoxti = new InfoBox();
 		infoBoxti.setMsg(
 				"ሓድሽ ቨርዝዮን ናይ SwissCovid ተቐሪቡ። ዝበለጸ ኣሰራርሓ ናይቲ ኤፕ መታን ክወሃበኩም፣ እቲ ሓድሽ ቨርዝዮን ካብ AppStore ብዳውንሎድ ኣምጽኡ ኢኹም።");
@@ -311,7 +312,7 @@ public class DPPPTConfigController {
 		collection.setSrInfoBox(infoBoxsr);
 		collection.setTiInfobox(infoBoxti);
 		collection.setTrInfobox(infoBoxtr);
-		
+
 		configResponse.setInfoBox(collection);
 
 		SDKConfig config = new SDKConfig();
@@ -319,7 +320,7 @@ public class DPPPTConfigController {
 		return configResponse;
 	}
 
-	private ConfigResponse mockConfigResponseWithInfoBox() {
+	private ConfigResponse mockConfigResponseWithInfoBox(boolean dismissible) {
 		ConfigResponse configResponse = new ConfigResponse();
 
 		InfoBox infoBoxde = new InfoBox();
@@ -327,56 +328,91 @@ public class DPPPTConfigController {
 		infoBoxde.setTitle("Hinweis DE");
 		infoBoxde.setUrlTitle("Und ein externer Link DE");
 		infoBoxde.setUrl("https://www.bag.admin.ch/bag/de/home.html");
+		infoBoxde.setIsDismissible(dismissible);
+
 		InfoBox infoBoxfr = new InfoBox();
 		infoBoxfr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz FR");
 		infoBoxfr.setTitle("Hinweis FR");
 		infoBoxfr.setUrlTitle("Und ein externer Link FR");
 		infoBoxfr.setUrl("https://www.bag.admin.ch/bag/fr/home.html");
+		infoBoxfr.setIsDismissible(dismissible);
+
 		InfoBox infoBoxit = new InfoBox();
 		infoBoxit.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz IT");
 		infoBoxit.setTitle("Hinweis IT");
 		infoBoxit.setUrlTitle("Und ein externer Link IT");
 		infoBoxit.setUrl("https://www.bag.admin.ch/bag/it/home.html");
+		infoBoxit.setIsDismissible(dismissible);
+
 		InfoBox infoBoxen = new InfoBox();
 		infoBoxen.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz EN");
 		infoBoxen.setTitle("Hinweis EN");
 		infoBoxen.setUrlTitle("Und ein externer Link EN");
 		infoBoxen.setUrl("https://www.bag.admin.ch/bag/en/home.html");
+		infoBoxen.setIsDismissible(dismissible);
+
 		InfoBox infoBoxpt = new InfoBox();
 		infoBoxpt.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz PT");
 		infoBoxpt.setTitle("Hinweis PT");
 		infoBoxpt.setUrlTitle("Und ein externer Link PT");
 		infoBoxpt.setUrl("https://www.bag.admin.ch/bag/pt/home.html");
+		infoBoxpt.setIsDismissible(dismissible);
+
 		InfoBox infoBoxes = new InfoBox();
 		infoBoxes.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz ES");
 		infoBoxes.setTitle("Hinweis ES");
 		infoBoxes.setUrlTitle("Und ein externer Link ES");
 		infoBoxes.setUrl("https://www.bag.admin.ch/bag/en/home.html");
+		infoBoxes.setIsDismissible(dismissible);
+
 		InfoBox infoBoxsq = new InfoBox();
 		infoBoxsq.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz SQ");
 		infoBoxsq.setTitle("Hinweis SQ");
 		infoBoxsq.setUrlTitle("Und ein externer Link SQ");
 		infoBoxsq.setUrl("https://www.bag.admin.ch/bag/en/home.html");
+		infoBoxsq.setIsDismissible(dismissible);
+
 		InfoBox infoBoxbs = new InfoBox();
 		infoBoxbs.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz BS");
 		infoBoxbs.setTitle("Hinweis BS");
 		infoBoxbs.setUrlTitle("Und ein externer Link BS");
 		infoBoxbs.setUrl("https://www.bag.admin.ch/bag/en/home.html");
+		infoBoxbs.setIsDismissible(dismissible);
+
 		InfoBox infoBoxhr = new InfoBox();
 		infoBoxhr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz HR");
 		infoBoxhr.setTitle("Hinweis HR");
 		infoBoxhr.setUrlTitle("Und ein externer Link HR");
 		infoBoxhr.setUrl("https://www.bag.admin.ch/bag/en/home.html");
+		infoBoxhr.setIsDismissible(dismissible);
+
 		InfoBox infoBoxrm = new InfoBox();
 		infoBoxrm.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz RM");
 		infoBoxrm.setTitle("Hinweis RM");
 		infoBoxrm.setUrlTitle("Und ein externer Link RM");
 		infoBoxrm.setUrl("https://www.bag.admin.ch/bag/en/home.html");
+		infoBoxrm.setIsDismissible(dismissible);
+
 		InfoBox infoBoxsr = new InfoBox();
 		infoBoxsr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz SR");
 		infoBoxsr.setTitle("Hinweis SR");
 		infoBoxsr.setUrlTitle("Und ein externer Link SR");
 		infoBoxsr.setUrl("https://www.bag.admin.ch/bag/en/home.html");
+		infoBoxsr.setIsDismissible(dismissible);
+
+		InfoBox Infoboxtr = new InfoBox();
+		Infoboxtr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz TR");
+		Infoboxtr.setTitle("Hinweis TR");
+		Infoboxtr.setUrlTitle("Und ein externer Link TR");
+		Infoboxtr.setUrl("https://www.bag.admin.ch/bag/en/home.html");
+		Infoboxtr.setIsDismissible(dismissible);
+
+		InfoBox infoBoxti = new InfoBox();
+		infoBoxti.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz TI");
+		infoBoxti.setTitle("Hinweis TI");
+		infoBoxti.setUrlTitle("Und ein externer Link TI");
+		infoBoxti.setUrl("https://www.bag.admin.ch/bag/en/home.html");
+		infoBoxti.setIsDismissible(dismissible);
 
 		InfoBoxCollection collection = new InfoBoxCollection();
 		collection.setDeInfoBox(infoBoxde);
@@ -390,6 +426,9 @@ public class DPPPTConfigController {
 		collection.setBsInfoBox(infoBoxbs);
 		collection.setRmInfoBox(infoBoxrm);
 		collection.setSrInfoBox(infoBoxsr);
+		collection.setTrInfobox(Infoboxtr);
+		collection.setTiInfobox(infoBoxti);
+
 		configResponse.setInfoBox(collection);
 
 		SDKConfig config = new SDKConfig();
