@@ -219,7 +219,19 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
                                         setIconAndroid("ic_key");
                                         setIconIos("ic-key");
                                     }
-                                }));
+                                },
+								new FaqEntry() {
+									{
+										setTitle(
+												messages.getNullableMessage(
+														"inform_detail_faq3_title", locale));
+										setText(
+												messages.getNullableMessage(
+														"inform_detail_faq3_text", locale));
+										setIconAndroid("ic_person");
+										setIconIos("ic-person");
+									}
+								}));
             }
         };
     }
