@@ -10,6 +10,9 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ConfigResponse {
 
 	private boolean forceUpdate = false;
