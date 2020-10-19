@@ -171,14 +171,10 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
             Messages messages, Locale locale) {
         return new WhatToDoPositiveTestTexts() {
             {
-                setEnterCovidcodeBoxSupertitle(
-                        messages.getNullableMessage("inform_detail_box_subtitle", locale));
-                setEnterCovidcodeBoxTitle(
-                        messages.getNullableMessage("inform_detail_box_title", locale));
-                setEnterCovidcodeBoxText(
-                        messages.getNullableMessage("inform_detail_box_text", locale));
-                setEnterCovidcodeBoxButtonTitle(
-                        messages.getNullableMessage("inform_detail_box_button", locale));
+                setEnterCovidcodeBoxSupertitle("TEST");
+                setEnterCovidcodeBoxTitle("TEST");
+                setEnterCovidcodeBoxText("TEST");
+                setEnterCovidcodeBoxButtonTitle("TEST");
 
                 setInfoBox(
                         new InfoBox() {
@@ -195,51 +191,36 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
                         Arrays.asList(
                                 new FaqEntry() {
                                     {
-                                        setTitle(
-                                                messages.getNullableMessage(
-                                                        "inform_detail_faq1_title", locale));
-                                        setText(
-                                                messages.getNullableMessage(
-                                                        "inform_detail_faq1_text", locale));
-                                        setLinkTitle(
-                                                messages.getNullableMessage(
-                                                        "infoline_coronavirus_number", locale));
-                                        setLinkUrl("tel://"+messages.getNullableMessage(
-												"infoline_coronavirus_number", locale).replace(" ", ""));
+                                        setTitle("TEST");
+                                        setText("TEST");
+                                        setLinkTitle("TEST");
+                                        setLinkUrl("https://ubique.ch");
                                         setIconAndroid("ic_verified_user");
                                         setIconIos("ic-verified-user");
                                     }
                                 },
                                 new FaqEntry() {
                                     {
-                                        setTitle(
-                                                messages.getNullableMessage(
-                                                        "inform_detail_faq2_title", locale));
-                                        setText(
-                                                messages.getNullableMessage(
-                                                        "inform_detail_faq2_text", locale));
+                                        setTitle("TEST");
+                                        setText("TEST");
                                         setIconAndroid("ic_key");
                                         setIconIos("ic-key");
                                     }
                                 },
 								new FaqEntry() {
 									{
-										setTitle(
-												messages.getNullableMessage(
-														"inform_detail_faq3_title", locale));
-										setText(
-												messages.getNullableMessage(
-														"inform_detail_faq3_text", locale));
+										setTitle("TEST");
+										setText("TEST");
 										setIconAndroid("ic_person");
 										setIconIos("ic-user");
 									}
 								},
                                 new FaqEntry() {
                                     {
-                                        setTitle("What is the new question?");
-                                        setText("This is the answer to the new question");
-                                        setLinkTitle("More information on Github");
-                                        setLinkUrl("https://github.com/DP-3T");
+                                        setTitle("TEST");
+                                        setText("TEST");
+                                        setLinkTitle("TEST");
+                                        setLinkUrl("https://ubique.ch");
                                         setIconAndroid("ic_new_icon");
                                         setIconIos("ic-new-icon");
                                     }
