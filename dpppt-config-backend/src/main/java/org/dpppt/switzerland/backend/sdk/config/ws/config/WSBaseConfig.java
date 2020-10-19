@@ -180,7 +180,14 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
                 setEnterCovidcodeBoxButtonTitle(
                         messages.getNullableMessage("inform_detail_box_button", locale));
 
-                setInfoBox(null); // no infobox needed at the moment
+				setInfoBox(
+						new InfoBox() {
+							{
+								setTitle("Important information without link");
+								setMsg("This is an Information without a link.");
+								setIsDismissible(false);
+							}
+						});
 
                 setFaqEntries(
                         Arrays.asList(
