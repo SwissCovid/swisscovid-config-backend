@@ -180,7 +180,16 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
                 setEnterCovidcodeBoxButtonTitle(
                         messages.getNullableMessage("inform_detail_box_button", locale));
 
-                setInfoBox(null); // no infobox needed at the moment
+                setInfoBox(
+                        new InfoBox() {
+                            {
+                                setTitle("Important information with more than 100 characters and a very long and confusing title");
+                                setMsg("This is an important test information. It has the goal to test if the infoxbox can also handle long text properly. Therefore it conatins a lot of sentences describing nothing but the testcase itself. We could also just repeat the same sentence over and over again, but this would be much less fun to read for the testers..."); // TODO
+                                setUrl("https://www.bag.admin.ch");
+                                setUrlTitle("Go to BAG website");
+                                setIsDismissible(false);
+                            }
+                        });
 
                 setFaqEntries(
                         Arrays.asList(
@@ -224,7 +233,17 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 										setIconAndroid("ic_person");
 										setIconIos("ic-user");
 									}
-								}));
+								},
+                                new FaqEntry() {
+                                    {
+                                        setTitle("What is the new question?");
+                                        setText("This is the answer to the new question");
+                                        setLinkTitle("More information on Github");
+                                        setLinkUrl("https://github.com/DP-3T");
+                                        setIconAndroid("ic_new_icon");
+                                        setIconIos("ic-new-icon");
+                                    }
+                                }));
             }
         };
     }
