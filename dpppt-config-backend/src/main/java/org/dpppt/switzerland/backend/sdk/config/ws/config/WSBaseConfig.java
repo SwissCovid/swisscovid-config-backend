@@ -184,7 +184,7 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
                             {
                                 setTitle("New Infobox title"); // TODO
                                 setMsg("infobox message that can be very long..."); // TODO
-                                setUrl("tel://+41 12 345 67 89");
+                                setUrl("tel://+41123456789");
                                 setUrlTitle("Call the number"); // TODO
                                 setIsDismissible(false);
                             }
@@ -202,7 +202,8 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
                                         setLinkTitle(
                                                 messages.getNullableMessage(
                                                         "infoline_coronavirus_number", locale));
-                                        setLinkUrl("tel://+41584630000");
+                                        setLinkUrl("tel://"+messages.getNullableMessage(
+												"infoline_coronavirus_number", locale).replace(" ", ""));
                                         setIconAndroid("ic_verified_user");
                                         setIconIos("ic-verified_user");
                                     }
