@@ -200,30 +200,8 @@
                     <target>${java-version}</target>
                 </configuration>
             </plugin>
-            <!-- poeditor -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <executable>python3</executable>
-                            <workingDirectory></workingDirectory>
-                            <arguments>
-                                <argument>getTranslations.py</argument>
-                            </arguments>
-                        </configuration>
-                        <id>get-translations</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <!--reproducible builds -->
-            <plugin>
+        <plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
 				<executions>
