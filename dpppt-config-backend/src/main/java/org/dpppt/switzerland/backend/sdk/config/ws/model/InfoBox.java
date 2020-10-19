@@ -24,10 +24,14 @@ public class InfoBox {
 	private String urlTitle;
 	private boolean isDismissible = false;
 
-	public String getInfoId() {
-		return Integer.toString(getTitle().hashCode() + getMsg().hashCode() + getUrl().hashCode()
-				+ getUrlTitle().hashCode() + Boolean.hashCode(getIsDismissible()));
-	}
+    public String getInfoId() {
+        return Integer.toString(
+				((getTitle() != null) ? getTitle().hashCode() : 0)
+                        + ((getMsg() != null) ? getMsg().hashCode() : 0)
+                        + ((getUrl() != null) ? getUrl().hashCode() : 0)
+                        + ((getUrlTitle() != null) ? getUrlTitle().hashCode() : 0)
+                        + (Boolean.hashCode(getIsDismissible())));
+    }
 
 	public String getTitle() {
 		return title;
