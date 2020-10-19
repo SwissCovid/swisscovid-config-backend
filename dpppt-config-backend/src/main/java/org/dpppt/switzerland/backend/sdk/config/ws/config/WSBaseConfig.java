@@ -10,6 +10,7 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.config;
 
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.ByteArrayInputStream;
 import java.io.Reader;
 import java.io.StringReader;
@@ -20,27 +21,34 @@ import java.security.PublicKey;
 import java.security.Security;
 import java.security.cert.CertificateFactory;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.dpppt.switzerland.backend.sdk.config.ws.controller.DPPPTConfigController;
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
 import org.dpppt.switzerland.backend.sdk.config.ws.interceptor.HeaderInjector;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.FaqEntry;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTextsCollection;
+import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import io.jsonwebtoken.SignatureAlgorithm;
 
 @Configuration
 @EnableScheduling
@@ -120,4 +128,98 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 			throw new RuntimeException();
 		}
 	}
+
+    @Bean
+    public Messages messages(MessageSource messageSource) {
+		Messages messages = new Messages(messageSource);
+		loadTexts(messages);
+		return messages;
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource =
+                new ReloadableResourceBundleMessageSource();
+
+        messageSource.setBasename("classpath:i18n/messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
+
+    public void loadTexts(Messages messages) {
+        ConfigResponse.setWhatToDoPositiveTestTexts(
+                new WhatToDoPositiveTestTextsCollection() {
+                    {
+						setDe(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("de")));
+						setFr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("fr")));
+						setIt(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("it")));
+						setEn(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("en")));
+						setPt(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("pt")));
+						setEs(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("es")));
+						setSq(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("sq")));
+						setBs(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("bs")));
+						setHr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("hr")));
+						setSr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("sr")));
+						setRm(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("rm")));
+						setTr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("tr")));
+						setTi(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("ti")));
+                    }
+                });
+    }
+
+    private WhatToDoPositiveTestTexts getWhatToDoPositiveTestText(
+            Messages messages, Locale locale) {
+        return new WhatToDoPositiveTestTexts() {
+            {
+                setEnterCovidcodeBoxSupertitle(
+                        messages.getNullableMessage("inform_detail_box_subtitle", locale));
+                setEnterCovidcodeBoxTitle(
+                        messages.getNullableMessage("inform_detail_box_title", locale));
+                setEnterCovidcodeBoxText(
+                        messages.getNullableMessage("inform_detail_box_text", locale));
+                setEnterCovidcodeBoxButtonTitle(
+                        messages.getNullableMessage("inform_detail_box_button", locale));
+                setInfoBox(
+                        new InfoBox() {
+                            {
+                                setTitle("New Infobox title"); // TODO
+                                setMsg("infobox message that can be very long..."); // TODO
+                                setUrl("tel://+41 12 345 67 89");
+                                setUrlTitle("Call the number"); // TODO
+                                setIsDismissible(false);
+                            }
+                        });
+                setFaqEntries(
+                        Arrays.asList(
+                                new FaqEntry() {
+                                    {
+                                        setTitle(
+                                                messages.getNullableMessage(
+                                                        "inform_detail_faq1_title", locale));
+                                        setText(
+                                                messages.getNullableMessage(
+                                                        "inform_detail_faq1_text", locale));
+                                        setLinkTitle(
+                                                messages.getNullableMessage(
+                                                        "infoline_coronavirus_number", locale));
+                                        setLinkUrl("tel://+41584630000");
+                                        setIconAndroid("ic_verified_user");
+                                        setIconIos("ic-verified_user");
+                                    }
+                                },
+                                new FaqEntry() {
+                                    {
+                                        setTitle(
+                                                messages.getNullableMessage(
+                                                        "inform_detail_faq2_title", locale));
+                                        setText(
+                                                messages.getNullableMessage(
+                                                        "inform_detail_faq2_text", locale));
+                                        setIconAndroid("ic_key");
+                                        setIconIos("ic-key");
+                                    }
+                                }));
+            }
+        };
+    }
 }
