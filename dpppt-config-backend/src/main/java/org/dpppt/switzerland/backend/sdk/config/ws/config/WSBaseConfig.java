@@ -179,16 +179,9 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
                         messages.getNullableMessage("inform_detail_box_text", locale));
                 setEnterCovidcodeBoxButtonTitle(
                         messages.getNullableMessage("inform_detail_box_button", locale));
-                setInfoBox(
-                        new InfoBox() {
-                            {
-                                setTitle("New Infobox title"); // TODO
-                                setMsg("infobox message that can be very long..."); // TODO
-                                setUrl("tel://+41123456789");
-                                setUrlTitle("Call the number"); // TODO
-                                setIsDismissible(false);
-                            }
-                        });
+
+                setInfoBox(null); // no infobox needed at the moment
+
                 setFaqEntries(
                         Arrays.asList(
                                 new FaqEntry() {
@@ -205,7 +198,7 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
                                         setLinkUrl("tel://"+messages.getNullableMessage(
 												"infoline_coronavirus_number", locale).replace(" ", ""));
                                         setIconAndroid("ic_verified_user");
-                                        setIconIos("ic-verified_user");
+                                        setIconIos("ic-verified-user");
                                     }
                                 },
                                 new FaqEntry() {
@@ -229,7 +222,7 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 												messages.getNullableMessage(
 														"inform_detail_faq3_text", locale));
 										setIconAndroid("ic_person");
-										setIconIos("ic-person");
+										setIconIos("ic-user");
 									}
 								}));
             }
