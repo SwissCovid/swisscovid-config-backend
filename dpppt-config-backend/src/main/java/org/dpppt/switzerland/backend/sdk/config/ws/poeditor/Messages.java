@@ -23,25 +23,22 @@ public class Messages {
     }
 
     /**
-     * returns message for the given message key and locale. fallback language: EN. returns message
-     * key if no such message exists
+     * returns message for the given message key and locale.
+     * throws a {@link NoSuchMessageException} if no such message exists
      *
      * @param messageKey
      * @param locale
      * @return
      */
-    public String getMessage(String messageKey, Locale locale) {
-        String message = getNullableMessage(messageKey, locale);
-        if (message == null) {
-            return messageKey;
-        }
-        return message;
+    public String getMessage(String messageKey, Locale locale) throws NoSuchMessageException {
+        return messageSource.getMessage(messageKey, null, locale);
     }
 
     /**
-     * returns message for the given messagekey and locale. fallback language: EN. returns null if
-     * no such message exists flag to disable error logging if the method call is only to check
-     * whether a message for the given key exists
+     * FOR USE DURING DEVELOPMENT WHEN NOT ALL TRANSLATIONS ARE PRESENT
+     * returns message for the given messagekey and locale.
+     * fallback language: EN
+     * returns null if no such message exists.
      *
      * @param messageKey
      * @param locale

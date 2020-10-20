@@ -33,7 +33,6 @@ import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
 import org.dpppt.switzerland.backend.sdk.config.ws.interceptor.HeaderInjector;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.FaqEntry;
-import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTextsCollection;
 import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
@@ -172,13 +171,11 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
         return new WhatToDoPositiveTestTexts() {
             {
                 setEnterCovidcodeBoxSupertitle(
-                        messages.getNullableMessage("inform_detail_box_subtitle", locale));
-                setEnterCovidcodeBoxTitle(
-                        messages.getNullableMessage("inform_detail_box_title", locale));
-                setEnterCovidcodeBoxText(
-                        messages.getNullableMessage("inform_detail_box_text", locale));
+                        messages.getMessage("inform_detail_box_subtitle", locale));
+                setEnterCovidcodeBoxTitle(messages.getMessage("inform_detail_box_title", locale));
+                setEnterCovidcodeBoxText(messages.getMessage("inform_detail_box_text", locale));
                 setEnterCovidcodeBoxButtonTitle(
-                        messages.getNullableMessage("inform_detail_box_button", locale));
+                        messages.getMessage("inform_detail_box_button", locale));
 
                 setInfoBox(null); // no infobox needed at the moment
 
@@ -187,16 +184,20 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
                                 new FaqEntry() {
                                     {
                                         setTitle(
-                                                messages.getNullableMessage(
+                                                messages.getMessage(
                                                         "inform_detail_faq1_title", locale));
                                         setText(
-                                                messages.getNullableMessage(
+                                                messages.getMessage(
                                                         "inform_detail_faq1_text", locale));
                                         setLinkTitle(
-                                                messages.getNullableMessage(
+                                                messages.getMessage(
                                                         "infoline_coronavirus_number", locale));
-                                        setLinkUrl("tel://"+messages.getNullableMessage(
-												"infoline_coronavirus_number", locale).replace(" ", ""));
+                                        setLinkUrl(
+                                                "tel://"
+                                                        + messages.getMessage(
+                                                                        "infoline_coronavirus_number",
+                                                                        locale)
+                                                                .replace(" ", ""));
                                         setIconAndroid("ic_verified_user");
                                         setIconIos("ic-verified-user");
                                     }
@@ -204,27 +205,27 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
                                 new FaqEntry() {
                                     {
                                         setTitle(
-                                                messages.getNullableMessage(
+                                                messages.getMessage(
                                                         "inform_detail_faq2_title", locale));
                                         setText(
-                                                messages.getNullableMessage(
+                                                messages.getMessage(
                                                         "inform_detail_faq2_text", locale));
                                         setIconAndroid("ic_key");
                                         setIconIos("ic-key");
                                     }
                                 },
-								new FaqEntry() {
-									{
-										setTitle(
-												messages.getNullableMessage(
-														"inform_detail_faq3_title", locale));
-										setText(
-												messages.getNullableMessage(
-														"inform_detail_faq3_text", locale));
-										setIconAndroid("ic_person");
-										setIconIos("ic-user");
-									}
-								}));
+                                new FaqEntry() {
+                                    {
+                                        setTitle(
+                                                messages.getMessage(
+                                                        "inform_detail_faq3_title", locale));
+                                        setText(
+                                                messages.getMessage(
+                                                        "inform_detail_faq3_text", locale));
+                                        setIconAndroid("ic_person");
+                                        setIconIos("ic-user");
+                                    }
+                                }));
             }
         };
     }
