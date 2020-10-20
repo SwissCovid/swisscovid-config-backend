@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
@@ -43,6 +44,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.CacheControl;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -71,7 +73,9 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/ios_agency_image")
+                .setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS));
 	}
 
 	@Bean
