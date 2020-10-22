@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTextsCollection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -213,5 +214,53 @@ public abstract class BaseControllerTest {
 				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
 		
 		assertThresholds(result);
+	}
+
+	@Test
+	public void testWhatToDoPositiveTestTextLanguage() throws Exception {
+		MockHttpServletResponse result = mockMvc.perform(
+				get("/v1/config").param("osversion", "ios12").param("appversion", "ios-1.0.9").param("buildnr", "ios-2020.0145asdfa34"))
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+
+		ConfigResponse resp = objectMapper.readValue(result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+
+		WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts = resp.getWhatToDoPositiveTestTexts();
+		assertEquals(
+				"Mit dem Covidcode...",
+				whatToDoPositiveTestTexts.getDe().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"Avec le code COVID…",
+				whatToDoPositiveTestTexts.getFr().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"Con il codice Covid...",
+				whatToDoPositiveTestTexts.getIt().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"With the Covidcode",
+				whatToDoPositiveTestTexts.getEn().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"Com o código COVID...",
+				whatToDoPositiveTestTexts.getPt().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"Con el código Covid…",
+				whatToDoPositiveTestTexts.getEs().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"Me kodin Covid...",
+				whatToDoPositiveTestTexts.getSq().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"Sa Covid šifrom...",
+				whatToDoPositiveTestTexts.getBs().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"Sa Covid šifrom...",
+				whatToDoPositiveTestTexts.getHr().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"Sa Covid šifrom...",
+				whatToDoPositiveTestTexts.getSr().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"Cun il code covid...",
+				whatToDoPositiveTestTexts.getRm().getEnterCovidcodeBoxSupertitle());
+		assertEquals(
+				"Kovid kodu ile...",
+				whatToDoPositiveTestTexts.getTr().getEnterCovidcodeBoxSupertitle());
+		assertEquals("ብኮቪድኮድ", whatToDoPositiveTestTexts.getTi().getEnterCovidcodeBoxSupertitle());
 	}
 }

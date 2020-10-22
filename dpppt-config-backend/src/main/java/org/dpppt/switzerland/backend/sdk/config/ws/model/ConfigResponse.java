@@ -19,7 +19,7 @@ public class ConfigResponse {
 	private boolean forceTraceShutdown = false;
 
 	private InfoBoxCollection infoBox = null;
-	private static WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts;
+	private WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts;
 
 	private SDKConfig sdkConfig = new SDKConfig();
 	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
@@ -53,8 +53,8 @@ public class ConfigResponse {
         return whatToDoPositiveTestTexts;
     }
 
-    public static void setWhatToDoPositiveTestTexts(WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts) {
-        ConfigResponse.whatToDoPositiveTestTexts = whatToDoPositiveTestTexts;
+    public void setWhatToDoPositiveTestTexts(WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts) {
+        this.whatToDoPositiveTestTexts = whatToDoPositiveTestTexts;
     }
 
     public boolean isForceTraceShutdown() {
