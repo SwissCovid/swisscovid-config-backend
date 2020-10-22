@@ -10,11 +10,7 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -93,6 +89,45 @@ public abstract class BaseControllerTest {
 		assertEquals(63, (int) resp.getAndroidGaenSdkConfig().getHigherThreshold());
 		assertEquals(55, (int) resp.getAndroidGaenSdkConfig().getLowerThreshold());
 	}
+
+	private void assertWhatToDoPositiveTestInfoBox(MockHttpServletResponse result) throws Exception {
+		ConfigResponse resp =
+				objectMapper.readValue(
+						result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getDe().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getFr().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getIt().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getEn().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getPt().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getEs().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getSq().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getBs().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getHr().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getSr().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getRm().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getTr().getInfoBox());
+		assertNotNull(resp.getWhatToDoPositiveTestTexts().getTi().getInfoBox());
+	}
+
+	private void assertEnterCovidcodeBoxText(MockHttpServletResponse result) throws Exception {
+		ConfigResponse resp =
+				objectMapper.readValue(
+						result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getDe().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getFr().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getIt().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getEn().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getPt().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getEs().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getSq().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getBs().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getHr().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getSr().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getRm().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getTr().getEnterCovidcodeBoxText());
+		assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getTi().getEnterCovidcodeBoxText());
+	}
+
 
 	@Test
 	public void testHello() throws Exception {
@@ -263,4 +298,32 @@ public abstract class BaseControllerTest {
 				whatToDoPositiveTestTexts.getTr().getEnterCovidcodeBoxSupertitle());
 		assertEquals("ብኮቪድኮድ", whatToDoPositiveTestTexts.getTi().getEnterCovidcodeBoxSupertitle());
 	}
+
+	@Test
+	public void testiOSInfoBoxWorkaround() throws Exception {
+		MockHttpServletResponse result =
+				mockMvc
+						.perform(
+								get("/v1/config")
+										.param("osversion", "ios14.0")
+										.param("appversion", "ios-1.1.2")
+										.param("buildnr", "ios-2020.0145asdfa34"))
+						.andExpect(status().is2xxSuccessful())
+						.andReturn()
+						.getResponse();
+		assertWhatToDoPositiveTestInfoBox(result);
+
+		result =
+				mockMvc
+						.perform(
+								get("/v1/config")
+										.param("osversion", "ios13.7")
+										.param("appversion", "ios-1.1.1")
+										.param("buildnr", "ios-2020.0145asdfa34"))
+						.andExpect(status().is2xxSuccessful())
+						.andReturn()
+						.getResponse();
+		assertEnterCovidcodeBoxText(result);
+	}
+
 }

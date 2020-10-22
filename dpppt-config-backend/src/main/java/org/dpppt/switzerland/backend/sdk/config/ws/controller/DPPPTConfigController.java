@@ -44,6 +44,7 @@ public class DPPPTConfigController {
     private static final String IOS_VERSION_13_7 = "ios13.7";
     private static final String IOS_VERSION_14 = "ios14.0";
     private static final Version APP_VERSION_1_0_9 = new Version("ios-1.0.9");
+    private static final Version IOS_APP_VERSION_1_1_2 = new Version("ios-1.1.2");
 
     private static final Logger logger = LoggerFactory.getLogger(DPPPTConfigController.class);
 
@@ -90,6 +91,26 @@ public class DPPPTConfigController {
         if (userAppVersion.isIOS() && APP_VERSION_1_0_9.isLargerVersionThan(userAppVersion)) {
             config = generalUpdateRelease(true);
         }
+
+        // Work around a limitation of SwissCovid 1.1.2 on iOS which requires an InfoBox to be set.
+        // For this specific version, move the text above the "Enter CovidCode" button, below into the
+        // InfoBox if no other InfoBox is present.
+        if (userAppVersion.isIOS() && IOS_APP_VERSION_1_1_2.isSameVersionAs(userAppVersion)) {
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getDe());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getFr());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getIt());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getEn());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getPt());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getEs());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getSq());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getBs());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getHr());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getSr());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getRm());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getTr());
+            moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getTi());
+        }
+
         return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
     }
 
@@ -411,6 +432,19 @@ public class DPPPTConfigController {
         return configResponse;
     }
 
+    private void moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(WhatToDoPositiveTestTexts texts) {
+        if (texts.getInfoBox() == null) {
+            texts.setInfoBox(
+                    new InfoBox() {
+                        {
+                            setTitle("");
+                            setMsg(texts.getEnterCovidcodeBoxText());
+                            setIsDismissible(false);
+                        }
+                    });
+            texts.setEnterCovidcodeBoxText("");
+        }
+    }
 
     private WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts(Messages messages) {
         return
