@@ -79,8 +79,8 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 	}
 
 	@Bean
-	public DPPPTConfigController dppptSDKController() {
-		return new DPPPTConfigController();
+	public DPPPTConfigController dppptSDKController(Messages messages) {
+		return new DPPPTConfigController(messages);
 	}
 
 	@Bean
@@ -135,7 +135,6 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
     @Bean
     public Messages messages(MessageSource messageSource) {
 		Messages messages = new Messages(messageSource);
-		loadTexts(messages);
 		return messages;
     }
 
@@ -146,91 +145,9 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 
         messageSource.setBasename("classpath:i18n/messages");
         messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setFallbackToSystemLocale(false);
+        messageSource.setDefaultLocale(null);
         return messageSource;
     }
 
-    public void loadTexts(Messages messages) {
-        ConfigResponse.setWhatToDoPositiveTestTexts(
-                new WhatToDoPositiveTestTextsCollection() {
-                    {
-						setDe(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("de")));
-						setFr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("fr")));
-						setIt(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("it")));
-						setEn(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("en")));
-						setPt(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("pt")));
-						setEs(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("es")));
-						setSq(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("sq")));
-						setBs(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("bs")));
-						setHr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("hr")));
-						setSr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("sr")));
-						setRm(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("rm")));
-						setTr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("tr")));
-						setTi(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("ti")));
-                    }
-                });
-    }
-
-    private WhatToDoPositiveTestTexts getWhatToDoPositiveTestText(
-            Messages messages, Locale locale) {
-        return new WhatToDoPositiveTestTexts() {
-            {
-                setEnterCovidcodeBoxSupertitle(
-                        messages.getMessage("inform_detail_box_subtitle", locale));
-                setEnterCovidcodeBoxTitle(messages.getMessage("inform_detail_box_title", locale));
-                setEnterCovidcodeBoxText(messages.getMessage("inform_detail_box_text", locale));
-                setEnterCovidcodeBoxButtonTitle(
-                        messages.getMessage("inform_detail_box_button", locale));
-
-                setInfoBox(null); // no infobox needed at the moment
-
-                setFaqEntries(
-                        Arrays.asList(
-                                new FaqEntry() {
-                                    {
-                                        setTitle(
-                                                messages.getMessage(
-                                                        "inform_detail_faq1_title", locale));
-                                        setText(
-                                                messages.getMessage(
-                                                        "inform_detail_faq1_text", locale));
-                                        setLinkTitle(
-                                                messages.getMessage(
-                                                        "infoline_coronavirus_number", locale));
-                                        setLinkUrl(
-                                                "tel://"
-                                                        + messages.getMessage(
-                                                                        "infoline_coronavirus_number",
-                                                                        locale)
-                                                                .replace(" ", ""));
-                                        setIconAndroid("ic_verified_user");
-                                        setIconIos("ic-verified-user");
-                                    }
-                                },
-                                new FaqEntry() {
-                                    {
-                                        setTitle(
-                                                messages.getMessage(
-                                                        "inform_detail_faq2_title", locale));
-                                        setText(
-                                                messages.getMessage(
-                                                        "inform_detail_faq2_text", locale));
-                                        setIconAndroid("ic_key");
-                                        setIconIos("ic-key");
-                                    }
-                                },
-                                new FaqEntry() {
-                                    {
-                                        setTitle(
-                                                messages.getMessage(
-                                                        "inform_detail_faq3_title", locale));
-                                        setText(
-                                                messages.getMessage(
-                                                        "inform_detail_faq3_text", locale));
-                                        setIconAndroid("ic_person");
-                                        setIconIos("ic-user");
-                                    }
-                                }));
-            }
-        };
-    }
 }
