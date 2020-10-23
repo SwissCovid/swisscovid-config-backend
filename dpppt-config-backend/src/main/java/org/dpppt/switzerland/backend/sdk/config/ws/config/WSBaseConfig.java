@@ -145,6 +145,8 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 
         messageSource.setBasename("classpath:i18n/messages");
         messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setFallbackToSystemLocale(false);
+        messageSource.setDefaultLocale(null);
         return messageSource;
     }
 
