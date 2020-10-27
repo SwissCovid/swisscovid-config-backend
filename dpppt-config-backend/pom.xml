@@ -30,6 +30,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>ch.ubique.openapi</groupId>
+            <artifactId>doc-annotations</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
@@ -170,7 +176,26 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>ubique-oss-springboot-swagger3</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/ubique-oss/springboot-swagger3</url>
+        </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>ubique-oss-springboot-swagger3</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/ubique-oss/springboot-swagger3</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
         <finalName>
@@ -198,6 +223,9 @@
                 <configuration>
                     <source>${java-version}</source>
                     <target>${java-version}</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <!--reproducible builds -->
@@ -260,6 +288,32 @@
 				  </execution>
 				</executions>
 			  </plugin>
+
+            <plugin>
+                <groupId>ch.ubique.openapi</groupId>
+                <artifactId>springboot-swagger-3</artifactId>
+                <version>1.2.8</version>
+                <configuration>
+                    <apiVersion>1.0-gapple</apiVersion>
+                    <basePackages>
+                        org.dpppt.switzerland.backend.sdk.config.ws.model
+                    </basePackages>
+                    <blackListedPackages>
+                        <blackListedPackage>com.google.protobuf</blackListedPackage>
+                    </blackListedPackages>
+                    <ignoredTypes>
+                        <ignoredType>byte</ignoredType>
+                    </ignoredTypes>
+                    <controllers>
+                        <controller>org.dpppt.switzerland.backend.sdk.config.ws.controller.DPPPTConfigController</controller>
+                    </controllers>
+                    <description>DP3T API</description>
+                    <apiUrls>
+                        <apiUrl>https://demo.dpppt.org</apiUrl>
+                    </apiUrls>
+                    <title>DP3T API</title>
+                </configuration>
+            </plugin>
 <!--            <plugin>-->
 <!--                <groupId>org.jacoco</groupId>-->
 <!--                <artifactId>jacoco-maven-plugin</artifactId>-->

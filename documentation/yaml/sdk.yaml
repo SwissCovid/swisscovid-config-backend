@@ -1,0 +1,198 @@
+openapi: 3.0.0
+servers:
+- url: https://demo.dpppt.org
+  description: ''
+info:
+  version: 1.0-gapple
+  description: DP3T API
+  title: DP3T API
+paths:
+  /v1/:
+    get:
+      summary: hello
+      description: Echo endpoint
+      responses:
+        '200':
+          description: Hello from DP3T Config WS
+          content:
+            application/json:
+              schema:
+                type: string
+  /v1/config:
+    get:
+      summary: getConfig
+      description: Read latest configuration and messages, depending on the version
+        of the phone and the app.
+      responses:
+        '200':
+          description: ConfigResponse structure with eventual notifications and epidemic
+            parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse'
+      parameters:
+      - name: osversion
+        in: query
+        description: Version of the OS
+        example: ios13.6
+        required: true
+        schema:
+          type: string
+      - name: buildnr
+        in: query
+        description: Build number of the app
+        example: ios-200619.2333.175
+        required: true
+        schema:
+          type: string
+  /v1/testinfobox/config:
+    get:
+      summary: getGhettoboxConfig
+      description: getGhettoboxConfig
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse'
+      parameters:
+      - name: appversion
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+      - name: osversion
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+      - name: buildnr
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse:
+      type: object
+      properties:
+        forceUpdate:
+          type: boolean
+        forceTraceShutdown:
+          type: boolean
+        infoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection'
+          description: Holds a message translated in different languages
+          example: ''
+        sdkConfig:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.SDKConfig'
+          description: Configuration of the epidemiological parameters for the pre-GAEN
+            DPPPT process
+          example: ''
+        iOSGaenSdkConfig:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.GAENSDKConfig'
+          description: GAEN epidemiological parameters for iOS
+          example: ''
+        androidGaenSdkConfig:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.GAENSDKConfig'
+          description: GAEN epidemiological parameters for Android
+          example: ''
+    org.dpppt.switzerland.backend.sdk.config.ws.model.GAENSDKConfig:
+      type: object
+      properties:
+        lowerThreshold:
+          type: integer
+          description: Lower threshold that is sent to the GAEN to count encounters
+            with other devices. It is expressed in dB attenuation from the Bluetooth
+            chip.
+          example: '53'
+        higherThreshold:
+          type: integer
+          description: Higher threshold that is sent to the GAEN to count encounters
+            with other devices It is expressed in dB attenuation from the Bluetooth
+            chip.
+          example: ''
+        factorLow:
+          type: number
+          format: double
+          description: Multiplication factor used to weigh the return value of the
+            GAEN in attenuationDuration[0]
+          example: 1.0d
+        factorHigh:
+          type: number
+          format: double
+          description: Multiplication factor used to weigh the return value of the
+            GAEN in attenuationDuration[1]
+          example: 0.5d
+        triggerThreshold:
+          type: integer
+          description: Minimum duration of exposure in minutes, before an encounter
+            is added to the attenuationDuration
+          example: '15'
+    org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the infobox
+          example: Alert
+        msg:
+          type: string
+          description: Message shown to the user
+          example: Please restart your phone
+        url:
+          type: string
+          description: If given, adds a url to the message
+          example: https://dp-3t.github.io/
+        urlTitle:
+          type: string
+          description: Title to be shown for the URL
+          example: DP3T page
+        isDismissible:
+          type: boolean
+          description: If true, the user can cancel the message
+          example: 'true'
+    org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection:
+      type: object
+      properties:
+        deInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        frInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        itInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        enInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        ptInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        esInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        sqInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        bsInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        hrInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        srInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        rmInfoBox:
+          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+    org.dpppt.switzerland.backend.sdk.config.ws.model.SDKConfig:
+      type: object
+      properties:
+        numberOfWindowsForExposure:
+          type: integer
+        eventThreshold:
+          type: number
+          format: float
+        badAttenuationThreshold:
+          type: number
+          format: float
+        contactAttenuationThreshold:
+          type: number
+          format: float

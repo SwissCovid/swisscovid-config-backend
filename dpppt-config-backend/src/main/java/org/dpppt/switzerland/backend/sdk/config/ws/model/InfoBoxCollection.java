@@ -10,6 +10,7 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
+import ch.ubique.openapi.docannotations.Documentation;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 

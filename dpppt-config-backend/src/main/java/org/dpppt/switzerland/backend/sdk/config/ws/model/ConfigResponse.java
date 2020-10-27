@@ -11,16 +11,24 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ch.ubique.openapi.docannotations.Documentation;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+
+@Documentation(description = "ConfigResponse description")
 public class ConfigResponse {
 
+	@Documentation(description = "Blocks the app and shows a link to the app-store. The user can only continue once " +
+			"she updated the app")
 	private boolean forceUpdate = false;
 
+	@Documentation(description = "Holds a message translated in different languages")
 	private InfoBoxCollection infoBox = null;
 	private WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts;
 
+	@Documentation(description = "GAEN epidemiological parameters for iOS")
 	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
+	@Documentation(description = "GAEN epidemiological parameters for Android")
 	private GAENSDKConfig androidGaenSdkConfig = new GAENSDKConfig();
 
 	public boolean isForceUpdate() {
