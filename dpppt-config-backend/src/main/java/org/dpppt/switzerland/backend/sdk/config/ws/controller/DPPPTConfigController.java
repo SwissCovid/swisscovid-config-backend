@@ -110,7 +110,9 @@ public class DPPPTConfigController {
             moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getTr());
             moveEnterCovidcodeBoxTextToInfoBoxIfNecessary(config.getWhatToDoPositiveTestTexts().getTi());
         }
-
+        
+        config.setForceUpdate(true);
+        
         return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(config);
     }
 
