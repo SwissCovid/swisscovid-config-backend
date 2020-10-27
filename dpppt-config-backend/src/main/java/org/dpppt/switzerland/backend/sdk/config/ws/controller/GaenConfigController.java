@@ -21,7 +21,6 @@ import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
 import org.dpppt.switzerland.backend.sdk.config.ws.semver.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/v1")
-public class DPPPTConfigController {
+public class GaenConfigController {
 
     private static final String IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO = "ios13.6";
     private static final List<String> TESTFLIGHT_VERSIONS = List.of("ios-200619.2333.175",
@@ -46,11 +45,11 @@ public class DPPPTConfigController {
     private static final Version APP_VERSION_1_0_9 = new Version("ios-1.0.9");
     private static final Version IOS_APP_VERSION_1_1_2 = new Version("ios-1.1.2");
 
-    private static final Logger logger = LoggerFactory.getLogger(DPPPTConfigController.class);
+    private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
 
     private static Messages messages;
 
-    public DPPPTConfigController(Messages messages) {
+    public GaenConfigController(Messages messages) {
         this.messages = messages;
     }
 
@@ -197,8 +196,6 @@ public class DPPPTConfigController {
         collection.setSrInfoBox(infoBoxsr);
         configResponse.setInfoBox(collection);
 
-        SDKConfig config = new SDKConfig();
-        configResponse.setSdkConfig(config);
         return configResponse;
 
     }
@@ -343,8 +340,6 @@ public class DPPPTConfigController {
 
         configResponse.setInfoBox(collection);
 
-        SDKConfig config = new SDKConfig();
-        configResponse.setSdkConfig(config);
         return configResponse;
     }
 
@@ -421,8 +416,6 @@ public class DPPPTConfigController {
         collection.setSrInfoBox(infoBoxsr);
         configResponse.setInfoBox(collection);
 
-        SDKConfig config = new SDKConfig();
-        configResponse.setSdkConfig(config);
         return configResponse;
     }
 

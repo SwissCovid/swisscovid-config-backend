@@ -18,7 +18,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 	"management.endpoints.enabled-by-default=true",
 	"management.endpoints.web.exposure.include=*"
  })
-public class DPPPTConfigControllerWithoutActuatorSecurityTest extends BaseControllerTest {
+public class GaenConfigControllerWithoutActuatorSecurityTest extends BaseControllerTest {
     @Autowired
     ObjectMapper objectMapper;
     

@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
-import org.dpppt.switzerland.backend.sdk.config.ws.controller.DPPPTConfigController;
+import org.dpppt.switzerland.backend.sdk.config.ws.controller.GaenConfigController;
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
 import org.dpppt.switzerland.backend.sdk.config.ws.interceptor.HeaderInjector;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
@@ -79,8 +79,8 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 	}
 
 	@Bean
-	public DPPPTConfigController dppptSDKController(Messages messages) {
-		return new DPPPTConfigController(messages);
+	public GaenConfigController gaenConfigController(Messages messages) {
+		return new GaenConfigController(messages);
 	}
 
 	@Bean
