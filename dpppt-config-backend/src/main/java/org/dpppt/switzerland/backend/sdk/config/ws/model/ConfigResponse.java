@@ -16,25 +16,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class ConfigResponse {
 
 	private boolean forceUpdate = false;
-	private boolean forceTraceShutdown = false;
 
 	private InfoBoxCollection infoBox = null;
 	private WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts;
 
-	private SDKConfig sdkConfig = new SDKConfig();
 	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
 	private GAENSDKConfig androidGaenSdkConfig = new GAENSDKConfig();
 
 	public boolean isForceUpdate() {
 		return forceUpdate;
-	}
-
-	public SDKConfig getSdkConfig() {
-		return sdkConfig;
-	}
-
-	public void setSdkConfig(SDKConfig sdkConfig) {
-		this.sdkConfig = sdkConfig;
 	}
 
 	public void setForceUpdate(boolean forceUpdate) {
@@ -56,14 +46,6 @@ public class ConfigResponse {
     public void setWhatToDoPositiveTestTexts(WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts) {
         this.whatToDoPositiveTestTexts = whatToDoPositiveTestTexts;
     }
-
-    public boolean isForceTraceShutdown() {
-		return forceTraceShutdown;
-	}
-
-	public void setForceTraceShutdown(boolean forceTraceShutdown) {
-		this.forceTraceShutdown = forceTraceShutdown;
-	}
 
 	public GAENSDKConfig getiOSGaenSdkConfig() {
 		return iOSGaenSdkConfig;
