@@ -10,6 +10,8 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ch.ubique.openapi.docannotations.Documentation;
 
@@ -18,13 +20,16 @@ import ch.ubique.openapi.docannotations.Documentation;
 @Documentation(description = "ConfigResponse description")
 public class ConfigResponse {
 
-	@Documentation(description = "Blocks the app and shows a link to the app-store. The user can only continue once " +
-			"she updated the app")
+	@Documentation(description = "Blocks the app and shows a link to the app-store. The user can only continue once "
+			+ "she updated the app")
 	private boolean forceUpdate = false;
 
 	@Documentation(description = "Holds a message translated in different languages")
 	private InfoBoxCollection infoBox = null;
 	private WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts;
+
+	@Documentation(description = "Holds a url for test locations for each canton and Liechtenstein")
+	private Map<String, String> testLocations;
 
 	@Documentation(description = "GAEN epidemiological parameters for iOS")
 	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
@@ -47,13 +52,13 @@ public class ConfigResponse {
 		this.infoBox = infoBox;
 	}
 
-    public WhatToDoPositiveTestTextsCollection getWhatToDoPositiveTestTexts() {
-        return whatToDoPositiveTestTexts;
-    }
+	public WhatToDoPositiveTestTextsCollection getWhatToDoPositiveTestTexts() {
+		return whatToDoPositiveTestTexts;
+	}
 
-    public void setWhatToDoPositiveTestTexts(WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts) {
-        this.whatToDoPositiveTestTexts = whatToDoPositiveTestTexts;
-    }
+	public void setWhatToDoPositiveTestTexts(WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts) {
+		this.whatToDoPositiveTestTexts = whatToDoPositiveTestTexts;
+	}
 
 	public GAENSDKConfig getiOSGaenSdkConfig() {
 		return iOSGaenSdkConfig;
@@ -70,4 +75,13 @@ public class ConfigResponse {
 	public void setAndroidGaenSdkConfig(GAENSDKConfig androidGaenSdkConfig) {
 		this.androidGaenSdkConfig = androidGaenSdkConfig;
 	}
+
+	public Map<String, String> getTestLocations() {
+		return testLocations;
+	}
+
+	public void setTestLocations(Map<String, String> testLocations) {
+		this.testLocations = testLocations;
+	}
+
 }
