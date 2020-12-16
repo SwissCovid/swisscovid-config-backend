@@ -88,17 +88,13 @@ public class GaenConfigController {
 	private static final Version APP_VERSION_1_0_9 = new Version("ios-1.0.9");
 	private static final Version IOS_APP_VERSION_1_1_2 = new Version("ios-1.1.2");
 
-	private static final Set<String> ALL_CANTONS_AND_LIECHTENSTEIN = Set.of("canton_graubuenden", "canton_zurich", "canton_berne", "canton_lucerne",
-			"canton_uri", "canton_schwyz", "canton_obwalden", "canton_nidwalden", "canton_glarus", "canton_zug", "canton_fribourg", "canton_solothurn", "canton_basel_city",
-			"canton_basel_country", "canton_schaffhausen", "canton_appenzell_ausserrhoden", "canton_appenzell_innerrhoden", "canton_st_gallen", "canton_aargau",
-			"canton_thurgovia", "canton_ticino", "Waadt", "canton_vaud", "canton_neuchatel", "canton_geneva", "canton_jura", "country_liechtenstein");
-
 	private static final Map<String, String> TEST_LOCATIONS = Map.ofEntries(
 			Map.entry("canton_graubuenden",
 					"https://www.gr.ch/DE/institutionen/verwaltung/djsg/ga/coronavirus/info/Seiten/Start.aspx"),
 			Map.entry("canton_zurich", "https://www.zh.ch/de/gesundheit/coronavirus.html"),
 			Map.entry("canton_berne", "http://www.be.ch/corona"),
-			Map.entry("canton_lucerne", "https://gesundheit.lu.ch/themen/Humanmedizin/Infektionskrankheiten/Coronavirus"),
+			Map.entry("canton_lucerne",
+					"https://gesundheit.lu.ch/themen/Humanmedizin/Infektionskrankheiten/Coronavirus"),
 			Map.entry("canton_uri", "https://www.ur.ch/themen/2962"),
 			Map.entry("canton_schwyz",
 					"https://www.sz.ch/behoerden/information-medien/medienmitteilungen/coronavirus.html/72-416-412-1379-6948"),
@@ -108,7 +104,8 @@ public class GaenConfigController {
 					"https://www.gl.ch/verwaltung/finanzen-und-gesundheit/gesundheit/coronavirus.html/4817"),
 			Map.entry("canton_zug", "https://www.zg.ch/behoerden/gesundheitsdirektion/amt-fuer-gesundheit/corona"),
 			Map.entry("canton_fribourg", "https://www.fr.ch/de/gesundheit/covid-19/coronavirus-aktuelle-informationen"),
-			Map.entry("canton_solothurn", "https://corona.so.ch/"), Map.entry("canton_basel_city", "https://www.coronavirus.bs.ch/"),
+			Map.entry("canton_solothurn", "https://corona.so.ch/"),
+			Map.entry("canton_basel_city", "https://www.coronavirus.bs.ch/"),
 			Map.entry("canton_basel_country",
 					"https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-gesundheit/medizinische-dienste/kantonsarztlicher-dienst/aktuelles"),
 			Map.entry("canton_schaffhausen",
@@ -121,7 +118,8 @@ public class GaenConfigController {
 			Map.entry("canton_aargau", "https://www.ag.ch/de/themen_1/coronavirus_2/coronavirus.jsp"),
 			Map.entry("canton_thurgovia", "https://www.tg.ch/news/fachdossier-coronavirus.html/10552"),
 			Map.entry("canton_ticino", "https://www4.ti.ch/dss/dsp/covid19/home/"),
-			Map.entry("canton_vaud", "https://www.vd.ch/toutes-les-actualites/hotline-et-informations-sur-le-coronavirus/"),
+			Map.entry("canton_vaud",
+					"https://www.vd.ch/toutes-les-actualites/hotline-et-informations-sur-le-coronavirus/"),
 			Map.entry("canton_valais", "https://www.vs.ch/de/web/coronavirus"),
 			Map.entry("canton_neuchatel",
 					"https://www.ne.ch/autorites/DFS/SCSP/medecin-cantonal/maladies-vaccinations/Pages/Coronavirus.aspx"),

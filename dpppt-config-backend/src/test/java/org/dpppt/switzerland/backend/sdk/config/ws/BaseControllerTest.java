@@ -20,6 +20,7 @@ import java.nio.charset.Charset;
 import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
@@ -324,6 +325,38 @@ public abstract class BaseControllerTest {
 						.andReturn()
 						.getResponse();
 		assertEnterCovidcodeBoxText(result);
+	}
+	
+	@Test
+	public void testTestLocations() throws Exception {
+		MockHttpServletResponse result =
+				mockMvc
+						.perform(
+								get("/v1/config")
+										.param("osversion", "ios14.2")
+										.param("appversion", "ios-1.1.2")
+										.param("buildnr", "ios-2020.0145asdfa34"))
+						.andExpect(status().is2xxSuccessful())
+						.andReturn()
+						.getResponse();
+		
+		ConfigResponse resp =
+				objectMapper.readValue(
+						result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+		// all cantons plus liechtenstein
+		assertEquals(27, resp.getTestLocations().size());
+		
+		Set<String> allCantonsAndLiechtenstein = Set.of("canton_graubuenden", "canton_zurich",
+				"canton_berne", "canton_lucerne", "canton_uri", "canton_schwyz", "canton_obwalden", "canton_nidwalden",
+				"canton_glarus", "canton_zug", "canton_fribourg", "canton_solothurn", "canton_basel_city",
+				"canton_basel_country", "canton_schaffhausen", "canton_appenzell_ausserrhoden",
+				"canton_appenzell_innerrhoden", "canton_st_gallen", "canton_aargau", "canton_thurgovia", "canton_ticino",
+				"canton_vaud", "canton_valais", "canton_neuchatel", "canton_geneva", "canton_jura", "country_liechtenstein");
+		
+		// check if all keys are included
+		for (String key: resp.getTestLocations().keySet()) {
+			assertTrue("key not found in test locations: " + key, allCantonsAndLiechtenstein.contains(key));
+		}		
 	}
 
 }
