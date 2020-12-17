@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.IOS136InfoBoxHelper;
+import org.dpppt.switzerland.backend.sdk.config.ws.helper.TestLocationHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.*;
 import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
 import org.dpppt.switzerland.backend.sdk.config.ws.semver.Version;
@@ -88,46 +89,6 @@ public class GaenConfigController {
 	private static final Version APP_VERSION_1_0_9 = new Version("ios-1.0.9");
 	private static final Version IOS_APP_VERSION_1_1_2 = new Version("ios-1.1.2");
 
-	private static final Map<String, String> TEST_LOCATIONS = Map.ofEntries(
-			Map.entry("canton_graubuenden",
-					"https://www.gr.ch/DE/institutionen/verwaltung/djsg/ga/coronavirus/info/Seiten/Start.aspx"),
-			Map.entry("canton_zurich", "https://www.zh.ch/de/gesundheit/coronavirus.html"),
-			Map.entry("canton_berne", "http://www.be.ch/corona"),
-			Map.entry("canton_lucerne",
-					"https://gesundheit.lu.ch/themen/Humanmedizin/Infektionskrankheiten/Coronavirus"),
-			Map.entry("canton_uri", "https://www.ur.ch/themen/2962"),
-			Map.entry("canton_schwyz",
-					"https://www.sz.ch/behoerden/information-medien/medienmitteilungen/coronavirus.html/72-416-412-1379-6948"),
-			Map.entry("canton_obwalden", "https://www.ow.ch/de/verwaltung/dienstleistungen/?dienst_id=5962"),
-			Map.entry("canton_nidwalden", "https://www.nw.ch/gesundheitsamtdienste/6044"),
-			Map.entry("canton_glarus",
-					"https://www.gl.ch/verwaltung/finanzen-und-gesundheit/gesundheit/coronavirus.html/4817"),
-			Map.entry("canton_zug", "https://www.zg.ch/behoerden/gesundheitsdirektion/amt-fuer-gesundheit/corona"),
-			Map.entry("canton_fribourg", "https://www.fr.ch/de/gesundheit/covid-19/coronavirus-aktuelle-informationen"),
-			Map.entry("canton_solothurn", "https://corona.so.ch/"),
-			Map.entry("canton_basel_city", "https://www.coronavirus.bs.ch/"),
-			Map.entry("canton_basel_country",
-					"https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-gesundheit/medizinische-dienste/kantonsarztlicher-dienst/aktuelles"),
-			Map.entry("canton_schaffhausen",
-					"https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Verwaltung/Departement-des-Innern/Gesundheitsamt-2954701-DE.html"),
-			Map.entry("canton_appenzell_ausserrhoden",
-					"https://www.ar.ch/verwaltung/departement-gesundheit-und-soziales/amt-fuer-gesundheit/informationsseite-coronavirus/"),
-			Map.entry("canton_appenzell_innerrhoden",
-					"https://www.ai.ch/themen/gesundheit-alter-und-soziales/gesundheitsfoerderung-und-praevention/uebertragbare-krankheiten/coronavirus"),
-			Map.entry("canton_st_gallen", "https://www.sg.ch/tools/informationen-coronavirus.html"),
-			Map.entry("canton_aargau", "https://www.ag.ch/de/themen_1/coronavirus_2/coronavirus.jsp"),
-			Map.entry("canton_thurgovia", "https://www.tg.ch/news/fachdossier-coronavirus.html/10552"),
-			Map.entry("canton_ticino", "https://www4.ti.ch/dss/dsp/covid19/home/"),
-			Map.entry("canton_vaud",
-					"https://www.vd.ch/toutes-les-actualites/hotline-et-informations-sur-le-coronavirus/"),
-			Map.entry("canton_valais", "https://www.vs.ch/de/web/coronavirus"),
-			Map.entry("canton_neuchatel",
-					"https://www.ne.ch/autorites/DFS/SCSP/medecin-cantonal/maladies-vaccinations/Pages/Coronavirus.aspx"),
-			Map.entry("canton_geneva", "https://www.ge.ch/covid-19-se-proteger-prevenir-nouvelle-vague"),
-			Map.entry("canton_jura",
-					"https://www.jura.ch/fr/Autorites/Coronavirus/Accueil/Coronavirus-Informations-officielles-a-la-population-jurassienne.html"),
-			Map.entry("country_liechtenstein", "https://www.llv.li/inhalt/118724/amtsstellen/coronavirus"));
-
 	private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
 
 	private static Messages messages;
@@ -154,7 +115,7 @@ public class GaenConfigController {
 			@Documentation(description = "Build number of the app", example = "ios-200619.2333.175") @RequestParam String buildnr) {
 		ConfigResponse config = new ConfigResponse();
 		config.setWhatToDoPositiveTestTexts(whatToDoPositiveTestTexts(messages));
-		config.setTestLocations(TEST_LOCATIONS);
+		config.setTestLocations(TestLocationHelper.getTestLocations());
 
 		// For iOS 13.6 users show information about weekly notification
 		if (osversion.startsWith(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
