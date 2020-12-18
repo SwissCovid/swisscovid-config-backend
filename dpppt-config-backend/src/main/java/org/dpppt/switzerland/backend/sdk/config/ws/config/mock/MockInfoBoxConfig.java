@@ -28,6 +28,11 @@ public class MockInfoBoxConfig {
 		public MockInfoBoxController(Messages messages) {
 			super(messages);
 		}
+		
+		@Override
+		public @Documentation(description = "Echo endpoint", responses = "200 => Hello from DP3T Config WS") String hello() {
+			return super.hello() + " (mock-infobox)";
+		}
 
 		@Override
 		public @Documentation(description = "Read latest configuration and messages, depending on the version of the phone and the app.", responses = "200 => ConfigResponse structure with eventual notifications and epidemic parameters") ResponseEntity<ConfigResponse> getConfig(

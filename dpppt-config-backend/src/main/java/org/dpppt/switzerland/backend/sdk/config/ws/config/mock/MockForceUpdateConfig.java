@@ -19,13 +19,18 @@ public class MockForceUpdateConfig {
 	@Bean
 	@Primary
 	public GaenConfigController gaenConfigController(Messages messages) {
-		return new MockInfoBoxController(messages);
+		return new MockForceUpdateController(messages);
 	}
 	
-	public class MockInfoBoxController extends GaenConfigController {
+	public class MockForceUpdateController extends GaenConfigController {
 
-		public MockInfoBoxController(Messages messages) {
+		public MockForceUpdateController(Messages messages) {
 			super(messages);
+		}
+		
+		@Override
+		public @Documentation(description = "Echo endpoint", responses = "200 => Hello from DP3T Config WS") String hello() {
+			return super.hello() + " (mock-forceupdate)";
 		}
 
 		@Override
