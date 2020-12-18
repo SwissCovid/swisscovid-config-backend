@@ -29,7 +29,7 @@ public class ConfigResponse {
 	private WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts;
 
 	@Documentation(description = "Holds a url for test locations for each canton and Liechtenstein")
-	private Map<String, String> testLocations;
+	private TestLocationCollection testLocations;
 
 	@Documentation(description = "GAEN epidemiological parameters for iOS")
 	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
@@ -76,11 +76,11 @@ public class ConfigResponse {
 		this.androidGaenSdkConfig = androidGaenSdkConfig;
 	}
 
-	public Map<String, String> getTestLocations() {
+	public TestLocationCollection getTestLocations() {
 		return testLocations;
 	}
 
-	public void setTestLocations(Map<String, String> testLocations) {
+	public void setTestLocations(TestLocationCollection testLocations) {
 		this.testLocations = testLocations;
 	}
 

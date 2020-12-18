@@ -95,10 +95,12 @@ public class GaenConfigController {
 
 	private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
 
-	private Messages messages;
+	private final Messages messages;
+	private final TestLocationHelper testLocationHelper;
 
 	public GaenConfigController(Messages messages) {
 		this.messages = messages;
+		this.testLocationHelper = new TestLocationHelper(messages);
 	}
 
 	@Documentation(description = "Echo endpoint", responses = { "200 => Hello from DP3T Config WS" })
@@ -119,7 +121,7 @@ public class GaenConfigController {
 			@Documentation(description = "Build number of the app", example = "ios-200619.2333.175") @RequestParam String buildnr) {
 		ConfigResponse config = new ConfigResponse();
 		config.setWhatToDoPositiveTestTexts(whatToDoPositiveTestTexts(messages));
-		config.setTestLocations(TestLocationHelper.getTestLocations());
+		config.setTestLocations(testLocationHelper.getTestLocations());
 
 		// For iOS 13.6 users show information about weekly notification
 		if (osversion.startsWith(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
