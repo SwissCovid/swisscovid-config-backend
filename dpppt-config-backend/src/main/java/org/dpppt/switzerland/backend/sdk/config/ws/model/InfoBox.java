@@ -10,6 +10,7 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
+import ch.ubique.openapi.docannotations.Documentation;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -18,10 +19,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InfoBox {
 
+	@Documentation(description = "Title of the infobox", example = "Alert")
 	private String title;
+	@Documentation(description = "Message shown to the user", example = "Please restart your phone")
 	private String msg;
+	@Documentation(description = "If given, adds a url to the message", example = "https://dp-3t.github.io/")
 	private String url;
+	@Documentation(description = "Title to be shown for the URL", example = "DP3T page")
 	private String urlTitle;
+	@Documentation(description = "If true, the user can dismiss the message", example = "true")
 	private boolean isDismissible = false;
 
 	public String getInfoId() {

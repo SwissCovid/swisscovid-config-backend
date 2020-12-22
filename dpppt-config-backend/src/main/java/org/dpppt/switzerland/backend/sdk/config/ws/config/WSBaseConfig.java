@@ -10,7 +10,6 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.config;
 
-import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.ByteArrayInputStream;
 import java.io.Reader;
 import java.io.StringReader;
@@ -21,21 +20,16 @@ import java.security.PublicKey;
 import java.security.Security;
 import java.security.cert.CertificateFactory;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
-import org.dpppt.switzerland.backend.sdk.config.ws.controller.DPPPTConfigController;
+import org.dpppt.switzerland.backend.sdk.config.ws.controller.GaenConfigController;
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
 import org.dpppt.switzerland.backend.sdk.config.ws.interceptor.HeaderInjector;
-import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
-import org.dpppt.switzerland.backend.sdk.config.ws.model.FaqEntry;
-import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts;
-import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTextsCollection;
 import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +44,8 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Configuration
 @EnableScheduling
@@ -79,8 +75,8 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 	}
 
 	@Bean
-	public DPPPTConfigController dppptSDKController(Messages messages) {
-		return new DPPPTConfigController(messages);
+	public GaenConfigController gaenConfigController(Messages messages) {
+		return new GaenConfigController(messages);
 	}
 
 	@Bean

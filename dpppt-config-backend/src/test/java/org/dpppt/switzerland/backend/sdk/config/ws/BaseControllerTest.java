@@ -10,7 +10,12 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -324,6 +329,43 @@ public abstract class BaseControllerTest {
 						.andReturn()
 						.getResponse();
 		assertEnterCovidcodeBoxText(result);
+	}
+	
+	@Test
+	public void testTestLocations() throws Exception {
+		MockHttpServletResponse result = mockMvc
+				.perform(get("/v1/config").param("osversion", "ios14.2").param("appversion", "ios-1.1.2")
+						.param("buildnr", "ios-2020.0145asdfa34"))
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+
+		ConfigResponse resp = objectMapper.readValue(result.getContentAsString(Charset.forName("utf-8")),
+				ConfigResponse.class);
+		// all cantons plus liechtenstein
+		assertEquals(27, resp.getTestLocations().getBs().size());
+		assertEquals(27, resp.getTestLocations().getDe().size());
+		assertEquals(27, resp.getTestLocations().getEn().size());
+		assertEquals(27, resp.getTestLocations().getEs().size());
+		assertEquals(27, resp.getTestLocations().getFr().size());
+		assertEquals(27, resp.getTestLocations().getHr().size());
+		assertEquals(27, resp.getTestLocations().getIt().size());
+		assertEquals(27, resp.getTestLocations().getPt().size());
+		assertEquals(27, resp.getTestLocations().getRm().size());
+		assertEquals(27, resp.getTestLocations().getSq().size());
+		assertEquals(27, resp.getTestLocations().getSr().size());
+		assertEquals(27, resp.getTestLocations().getTi().size());
+		assertEquals(27, resp.getTestLocations().getTr().size());
+
+		List<String> allCantonsAndLiechtenstein = List.of("canton_aargau", "canton_appenzell_ausserrhoden",
+				"canton_appenzell_innerrhoden", "canton_basel_country", "canton_basel_city", "canton_berne",
+				"canton_fribourg", "canton_geneva", "canton_glarus", "canton_graubuenden", "canton_jura",
+				"canton_lucerne", "canton_neuchatel", "canton_nidwalden", "canton_obwalden", "canton_st_gallen",
+				"canton_schaffhausen", "canton_schwyz", "canton_solothurn", "canton_thurgovia", "canton_ticino",
+				"canton_uri", "canton_valais", "canton_vaud", "canton_zug", "canton_zurich", "country_liechtenstein");
+
+		// check if all keys are included in order
+		for (int i = 0; i < allCantonsAndLiechtenstein.size(); i++) {
+			assertEquals(resp.getTestLocations().getRm().get(i).getRegion(), allCantonsAndLiechtenstein.get(i));
+		}
 	}
 
 }

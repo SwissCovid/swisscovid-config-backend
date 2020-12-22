@@ -38,7 +38,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 	"management.endpoints.enabled-by-default=true",
 	"management.endpoints.web.exposure.include=*"
  })
-public class DPPPTConfigControllerTest extends BaseControllerTest {
+public class GaenConfigControllerTest extends BaseControllerTest {
 	@Autowired
 	private Filter springSecurityFilterChain;
 
