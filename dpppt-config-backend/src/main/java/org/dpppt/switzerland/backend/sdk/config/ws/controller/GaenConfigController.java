@@ -449,7 +449,7 @@ public class GaenConfigController {
 						setText(messages.getMessage("inform_detail_faq1_text", locale));
 						setLinkTitle(messages.getMessage("infoline_coronavirus_number", locale));
 						setLinkUrl(
-								"tel://" + messages.getMessage("infoline_coronavirus_number", locale).replace(" ", ""));
+								"tel:" + messages.getMessage("infoline_coronavirus_number", locale).replace(" ", ""));
 						setIconAndroid("ic_verified_user");
 						setIconIos("ic-verified-user");
 					}
