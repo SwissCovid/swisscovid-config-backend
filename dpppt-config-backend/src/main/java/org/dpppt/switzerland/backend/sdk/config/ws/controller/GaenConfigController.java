@@ -95,7 +95,7 @@ public class GaenConfigController {
 
 	private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
 
-	private final Messages messages;
+	protected final Messages messages;
 	private final TestLocationHelper testLocationHelper;
 
 	public GaenConfigController(Messages messages) {
@@ -176,7 +176,7 @@ public class GaenConfigController {
 			@Documentation(description = "Version of the App installed", example = "ios-1.0.7") @RequestParam String appversion,
 			@Documentation(description = "Version of the OS", example = "ios13.6") @RequestParam String osversion,
 			@Documentation(description = "Build number of the app", example = "ios-200619.2333.175") @RequestParam String buildnr) {
-		ConfigResponse body = MockHelper.mockConfigResponseWithInfoBox(true);
+		ConfigResponse body = MockHelper.mockConfigResponseWithInfoBox(true, messages);
 		return ResponseEntity.ok(body);
 	}
 

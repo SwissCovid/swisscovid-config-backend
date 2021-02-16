@@ -40,7 +40,7 @@ public class MockInfoBoxConfig {
 				@Documentation(description = "Version of the OS", example = "ios13.6") String osversion,
 				@Documentation(description = "Build number of the app", example = "ios-200619.2333.175") String buildnr) {
 			ResponseEntity<ConfigResponse> response = super.getConfig(appversion, osversion, buildnr);
-			response.getBody().setInfoBox(MockHelper.mockConfigResponseWithInfoBox(true).getInfoBox());
+			response.getBody().setInfoBox(MockHelper.mockConfigResponseWithInfoBox(true, messages).getInfoBox());
 			return response;
 		}
 

@@ -29,6 +29,8 @@ public class InfoBox {
 	private String urlTitle;
 	@Documentation(description = "If true, the user can dismiss the message", example = "true")
 	private boolean isDismissible = false;
+	@Documentation(description = "Text to display in hearing impaired pop up")
+	private String hearingImpairedInfo;
 
 	public String getInfoId() {
 		return Integer.toString(
@@ -77,5 +79,13 @@ public class InfoBox {
 
 	public void setIsDismissible(boolean isDismissible) {
 		this.isDismissible = isDismissible;
+	}
+
+	public String getHearingImpairedInfo() {
+		return hearingImpairedInfo;
+	}
+
+	public void setHearingImpairedInfo(String hearingImpairedInfo) {
+		this.hearingImpairedInfo = hearingImpairedInfo;
 	}
 }
