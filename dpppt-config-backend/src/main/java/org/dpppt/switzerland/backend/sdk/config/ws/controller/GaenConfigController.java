@@ -10,11 +10,11 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.controller;
 
+import ch.ubique.openapi.docannotations.Documentation;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.IOS136InfoBoxHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.MockHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.TestLocationHelper;
@@ -36,8 +36,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import ch.ubique.openapi.docannotations.Documentation;
 
 /**
  * 
@@ -441,15 +439,12 @@ public class GaenConfigController {
 				setEnterCovidcodeBoxText(messages.getMessage("inform_detail_box_text", locale));
 				setEnterCovidcodeBoxButtonTitle(messages.getMessage("inform_detail_box_button", locale));
 
-				setInfoBox(null); // no infobox needed at the moment
+				setInfoBox(getWhatToDoPositiveTestTextInfoBox(messages, locale));
 
 				setFaqEntries(Arrays.asList(new FaqEntry() {
 					{
 						setTitle(messages.getMessage("inform_detail_faq1_title", locale));
 						setText(messages.getMessage("inform_detail_faq1_text", locale));
-						setLinkTitle(messages.getMessage("infoline_coronavirus_number", locale));
-						setLinkUrl(
-								"tel:" + messages.getMessage("infoline_coronavirus_number", locale).replace(" ", ""));
 						setIconAndroid("ic_verified_user");
 						setIconIos("ic-verified-user");
 					}
@@ -471,4 +466,27 @@ public class GaenConfigController {
 			}
 		};
 	}
+
+    private InfoBox getWhatToDoPositiveTestTextInfoBox(Messages messages, Locale locale) {
+        InfoBox infoBox = new InfoBox();
+        infoBox.setTitle(
+                messages.getMessage(
+                        "inform_detail_infobox1_title",
+                        Locale.forLanguageTag(
+                                "de"))); // TODO when all texts are translated use `locale`
+        infoBox.setMsg(
+                messages.getMessage("inform_detail_infobox1_text", Locale.forLanguageTag("de")));
+        infoBox.setUrlTitle(messages.getMessage("infoline_coronavirus_number", locale));
+        infoBox.setUrl(
+                "tel:"
+                        + messages.getMessage("infoline_coronavirus_number", locale)
+                                .replace(" ", ""));
+        infoBox.setIsDismissible(false);
+        infoBox.setHearingImpairedInfo(
+                messages.getMessage(
+                        "hearing_impaired_info",
+                        Locale.forLanguageTag(
+                                "de"))); // TODO when all texts are translated use `locale`
+        return infoBox;
+    }
 }
