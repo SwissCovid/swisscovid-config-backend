@@ -302,6 +302,33 @@ public abstract class BaseControllerTest {
 				"Kovid kodu ile...",
 				whatToDoPositiveTestTexts.getTr().getEnterCovidcodeBoxSupertitle());
 		assertEquals("ብኮቪድኮድ", whatToDoPositiveTestTexts.getTi().getEnterCovidcodeBoxSupertitle());
+		
+		assertTrue(whatToDoPositiveTestTexts.getDe().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getFr().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getIt().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getEn().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getPt().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getEs().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getSq().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getBs().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getHr().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getSr().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getRm().getInfoBox() != null);
+		assertTrue(whatToDoPositiveTestTexts.getTr().getInfoBox() != null);
+		
+		assertEquals("Noch keinen Covidcode?", whatToDoPositiveTestTexts.getDe().getInfoBox().getTitle());
+		assertEquals("Pas encore de code COVID ?", whatToDoPositiveTestTexts.getFr().getInfoBox().getTitle());
+		assertEquals("Non hai ancora un codice Covid?", whatToDoPositiveTestTexts.getIt().getInfoBox().getTitle());
+		assertEquals("Don’t have a Covidcode yet?", whatToDoPositiveTestTexts.getEn().getInfoBox().getTitle());
+		assertEquals("Ainda não recebeu um código COVID?", whatToDoPositiveTestTexts.getPt().getInfoBox().getTitle());
+		assertEquals("¿Aún no ha recibido el código Covid?", whatToDoPositiveTestTexts.getEs().getInfoBox().getTitle());
+		assertEquals("Nuk keni marrë ende asnjë kod Covid?", whatToDoPositiveTestTexts.getSq().getInfoBox().getTitle());
+		assertEquals("Još niste dobili Covid šifru?", whatToDoPositiveTestTexts.getBs().getInfoBox().getTitle());
+		assertEquals("Još niste dobili Covid šifru?", whatToDoPositiveTestTexts.getHr().getInfoBox().getTitle());
+		assertEquals("Još niste dobili Covid šifru?", whatToDoPositiveTestTexts.getSr().getInfoBox().getTitle());
+		assertEquals("Anc nagin code covid?", whatToDoPositiveTestTexts.getRm().getInfoBox().getTitle());
+		assertEquals("Covid kodunu henüz almadınız mı?", whatToDoPositiveTestTexts.getTr().getInfoBox().getTitle());	
+		assertEquals("ናይ ኮቪድ ኮድ ገና የብልኩምን፧", whatToDoPositiveTestTexts.getTi().getInfoBox().getTitle());
 	}
 
 	@Test
