@@ -475,6 +475,11 @@ public class GaenConfigController {
         infoBox.setUrlTitle(messages.getMessage("infoline_coronavirus_number", locale));
         infoBox.setUrl("tel:" + messages.getMessage("infoline_coronavirus_number", locale).replace(" ", ""));
         infoBox.setIsDismissible(false);
+		infoBox.setHearingImpairedInfo(
+				messages.getMessage(
+						"hearing_impaired_info",
+						Locale.forLanguageTag(
+								"de"))); // TODO when all texts are translated use `locale`
         return infoBox;
     }
 }
