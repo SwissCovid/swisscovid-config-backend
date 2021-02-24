@@ -466,27 +466,15 @@ public class GaenConfigController {
 			}
 		};
 	}
-
+	
     private InfoBox getWhatToDoPositiveTestTextInfoBox(Messages messages, Locale locale) {
         InfoBox infoBox = new InfoBox();
         infoBox.setTitle(
-                messages.getMessage(
-                        "inform_detail_infobox1_title",
-                        Locale.forLanguageTag(
-                                "de"))); // TODO when all texts are translated use `locale`
-        infoBox.setMsg(
-                messages.getMessage("inform_detail_infobox1_text", Locale.forLanguageTag("de")));
+                messages.getMessage("inform_detail_infobox1_title", locale));
+        infoBox.setMsg(messages.getMessage("inform_detail_infobox1_text", locale));
         infoBox.setUrlTitle(messages.getMessage("infoline_coronavirus_number", locale));
-        infoBox.setUrl(
-                "tel:"
-                        + messages.getMessage("infoline_coronavirus_number", locale)
-                                .replace(" ", ""));
+        infoBox.setUrl("tel:" + messages.getMessage("infoline_coronavirus_number", locale).replace(" ", ""));
         infoBox.setIsDismissible(false);
-        infoBox.setHearingImpairedInfo(
-                messages.getMessage(
-                        "hearing_impaired_info",
-                        Locale.forLanguageTag(
-                                "de"))); // TODO when all texts are translated use `locale`
         return infoBox;
     }
 }
