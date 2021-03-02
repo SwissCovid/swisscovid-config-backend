@@ -1,0 +1,6 @@
+### config request
+
+GET {{baseUrl}}/v1/config?appversion={{appversion}}&osversion={{osversion}}&buildnr={{buildnr}}
+
+###
+
