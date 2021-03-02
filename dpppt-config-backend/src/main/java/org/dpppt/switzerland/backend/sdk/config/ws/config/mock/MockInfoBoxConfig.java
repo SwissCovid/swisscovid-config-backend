@@ -1,9 +1,11 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.config.mock;
 
+import java.util.List;
 import org.dpppt.switzerland.backend.sdk.config.ws.controller.GaenConfigController;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.MockHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -16,6 +18,8 @@ import ch.ubique.openapi.docannotations.Documentation;
 @Profile("mock-infobox")
 public class MockInfoBoxConfig {
 
+	@Value("${ws.interops.countrycodes:}")
+	List<String> interOpsCountryCodes;
 	
 	@Bean
 	@Primary
@@ -26,7 +30,7 @@ public class MockInfoBoxConfig {
 	public class MockInfoBoxController extends GaenConfigController {
 
 		public MockInfoBoxController(Messages messages) {
-			super(messages);
+			super(messages, interOpsCountryCodes);
 		}
 		
 		@Override

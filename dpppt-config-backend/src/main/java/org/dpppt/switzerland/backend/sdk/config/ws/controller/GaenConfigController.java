@@ -96,10 +96,13 @@ public class GaenConfigController {
 	private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
 
 	private final Messages messages;
+	private final List<String> interOpsCountryCodes;
 	private final TestLocationHelper testLocationHelper;
 
-	public GaenConfigController(Messages messages) {
+	public GaenConfigController(Messages messages,
+			List<String> interOpsCountryCodes) {
 		this.messages = messages;
+		this.interOpsCountryCodes = interOpsCountryCodes;
 		this.testLocationHelper = new TestLocationHelper(messages);
 	}
 
@@ -120,6 +123,7 @@ public class GaenConfigController {
 			@Documentation(description = "Version of the OS", example = "ios13.6") @RequestParam String osversion,
 			@Documentation(description = "Build number of the app", example = "ios-200619.2333.175") @RequestParam String buildnr) {
 		ConfigResponse config = new ConfigResponse();
+		config.setInterOpsCountries(interOpsCountryCodes);
 		config.setWhatToDoPositiveTestTexts(whatToDoPositiveTestTexts(messages));
 		config.setTestLocations(testLocationHelper.getTestLocations());
 

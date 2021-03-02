@@ -3,7 +3,6 @@ package org.dpppt.switzerland.backend.sdk.config.ws.helper;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection;
-import org.dpppt.switzerland.backend.sdk.config.ws.model.SDKConfig;
 
 public class MockHelper {
 

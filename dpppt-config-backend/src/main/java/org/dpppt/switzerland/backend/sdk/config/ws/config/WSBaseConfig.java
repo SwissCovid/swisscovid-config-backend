@@ -54,6 +54,9 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	final SignatureAlgorithm algorithm = SignatureAlgorithm.ES256;
 
+	@Value("${ws.interops.countrycodes:}")
+	List<String> interOpsCountryCodes;
+
 	@Value("${ws.headers.protected:}")
 	List<String> protectedHeaders;
 
@@ -76,7 +79,7 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 
 	@Bean
 	public GaenConfigController gaenConfigController(Messages messages) {
-		return new GaenConfigController(messages);
+		return new GaenConfigController(messages,  interOpsCountryCodes);
 	}
 
 	@Bean
