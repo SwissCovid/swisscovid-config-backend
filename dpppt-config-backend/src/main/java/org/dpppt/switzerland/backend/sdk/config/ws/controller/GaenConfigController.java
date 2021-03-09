@@ -93,7 +93,7 @@ public class GaenConfigController {
 
 	private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
 
-	private final Messages messages;
+	protected final Messages messages;
 	private final List<String> interOpsCountryCodes;
 	private final TestLocationHelper testLocationHelper;
 
@@ -480,10 +480,8 @@ public class GaenConfigController {
         infoBox.setUrl("tel:" + messages.getMessage("infoline_coronavirus_number", locale).replace(" ", ""));
         infoBox.setIsDismissible(false);
 		infoBox.setHearingImpairedInfo(
-				messages.getMessage(
-						"hearing_impaired_info",
-						Locale.forLanguageTag(
-								"de"))); // TODO when all texts are translated use `locale`
+				messages.getMessage("hearing_impaired_info", Locale.forLanguageTag(
+						"de"))); // TODO when all texts are translated use `locale`)); 
         return infoBox;
     }
 }

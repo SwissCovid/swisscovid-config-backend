@@ -10,6 +10,9 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ch.ubique.openapi.docannotations.Documentation;
 
