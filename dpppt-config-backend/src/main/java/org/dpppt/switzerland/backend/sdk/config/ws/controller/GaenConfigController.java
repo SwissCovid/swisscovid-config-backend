@@ -10,11 +10,11 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.controller;
 
+import ch.ubique.openapi.docannotations.Documentation;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.IOS136InfoBoxHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.MockHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.TestLocationHelper;
@@ -36,8 +36,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import ch.ubique.openapi.docannotations.Documentation;
 
 /**
  * 
@@ -95,11 +93,14 @@ public class GaenConfigController {
 
 	private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
 
-	private final Messages messages;
+	protected final Messages messages;
+	private final List<String> interOpsCountryCodes;
 	private final TestLocationHelper testLocationHelper;
 
-	public GaenConfigController(Messages messages) {
+	public GaenConfigController(Messages messages,
+			List<String> interOpsCountryCodes) {
 		this.messages = messages;
+		this.interOpsCountryCodes = interOpsCountryCodes;
 		this.testLocationHelper = new TestLocationHelper(messages);
 	}
 
@@ -120,6 +121,7 @@ public class GaenConfigController {
 			@Documentation(description = "Version of the OS", example = "ios13.6") @RequestParam String osversion,
 			@Documentation(description = "Build number of the app", example = "ios-200619.2333.175") @RequestParam String buildnr) {
 		ConfigResponse config = new ConfigResponse();
+		config.setInterOpsCountries(interOpsCountryCodes);
 		config.setWhatToDoPositiveTestTexts(whatToDoPositiveTestTexts(messages));
 		config.setTestLocations(testLocationHelper.getTestLocations());
 
@@ -176,7 +178,7 @@ public class GaenConfigController {
 			@Documentation(description = "Version of the App installed", example = "ios-1.0.7") @RequestParam String appversion,
 			@Documentation(description = "Version of the OS", example = "ios13.6") @RequestParam String osversion,
 			@Documentation(description = "Build number of the app", example = "ios-200619.2333.175") @RequestParam String buildnr) {
-		ConfigResponse body = MockHelper.mockConfigResponseWithInfoBox(true);
+		ConfigResponse body = MockHelper.mockConfigResponseWithInfoBox(true, messages);
 		return ResponseEntity.ok(body);
 	}
 
@@ -477,6 +479,7 @@ public class GaenConfigController {
         infoBox.setUrlTitle(messages.getMessage("infoline_coronavirus_number", locale));
         infoBox.setUrl("tel:" + messages.getMessage("infoline_coronavirus_number", locale).replace(" ", ""));
         infoBox.setIsDismissible(false);
+		infoBox.setHearingImpairedInfo(messages.getMessage("hearing_impaired_info", locale)); 
         return infoBox;
     }
 }

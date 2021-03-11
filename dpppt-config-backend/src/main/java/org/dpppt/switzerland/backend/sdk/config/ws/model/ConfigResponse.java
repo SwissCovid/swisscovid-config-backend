@@ -10,7 +10,8 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ch.ubique.openapi.docannotations.Documentation;
@@ -35,6 +36,9 @@ public class ConfigResponse {
 	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
 	@Documentation(description = "GAEN epidemiological parameters for Android")
 	private GAENSDKConfig androidGaenSdkConfig = new GAENSDKConfig();
+
+    @Documentation(description = "list of ISO 3166-1 alpha-2 country codes describing the available interops countries")
+    private List<String> interOpsCountries = new ArrayList<>();
 
 	public boolean isForceUpdate() {
 		return forceUpdate;
@@ -84,4 +88,11 @@ public class ConfigResponse {
 		this.testLocations = testLocations;
 	}
 
+	public List<String> getInterOpsCountries() {
+		return interOpsCountries;
+	}
+
+	public void setInterOpsCountries(List<String> interOpsCountries) {
+		this.interOpsCountries = interOpsCountries;
+	}
 }

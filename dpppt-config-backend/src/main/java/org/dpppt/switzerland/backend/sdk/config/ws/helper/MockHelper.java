@@ -1,14 +1,18 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.helper;
 
+import java.util.Locale;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection;
-import org.dpppt.switzerland.backend.sdk.config.ws.model.SDKConfig;
+import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
 
 public class MockHelper {
 
-	public static ConfigResponse mockConfigResponseWithInfoBox(boolean dismissible) {
+	public static ConfigResponse mockConfigResponseWithInfoBox(boolean dismissible,
+			Messages messages) {
 		ConfigResponse configResponse = new ConfigResponse();
+
+		String hearingImpairedInfo = messages.getMessage("hearing_impaired_info", Locale.forLanguageTag("de"));
 
 		InfoBox infoBoxde = new InfoBox();
 		infoBoxde.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz DE");
@@ -16,6 +20,7 @@ public class MockHelper {
 		infoBoxde.setUrlTitle("Und ein externer Link DE");
 		infoBoxde.setUrl("https://www.bag.admin.ch/bag/de/home.html");
 		infoBoxde.setIsDismissible(dismissible);
+		infoBoxde.setHearingImpairedInfo(hearingImpairedInfo + " DE");
 
 		InfoBox infoBoxfr = new InfoBox();
 		infoBoxfr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz FR");
@@ -23,6 +28,7 @@ public class MockHelper {
 		infoBoxfr.setUrlTitle("Und ein externer Link FR");
 		infoBoxfr.setUrl("https://www.bag.admin.ch/bag/fr/home.html");
 		infoBoxfr.setIsDismissible(dismissible);
+		infoBoxfr.setHearingImpairedInfo(hearingImpairedInfo + " FR");
 
 		InfoBox infoBoxit = new InfoBox();
 		infoBoxit.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz IT");
@@ -30,6 +36,7 @@ public class MockHelper {
 		infoBoxit.setUrlTitle("Und ein externer Link IT");
 		infoBoxit.setUrl("https://www.bag.admin.ch/bag/it/home.html");
 		infoBoxit.setIsDismissible(dismissible);
+		infoBoxit.setHearingImpairedInfo(hearingImpairedInfo + " IT");
 
 		InfoBox infoBoxen = new InfoBox();
 		infoBoxen.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz EN");
@@ -37,6 +44,7 @@ public class MockHelper {
 		infoBoxen.setUrlTitle("Und ein externer Link EN");
 		infoBoxen.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxen.setIsDismissible(dismissible);
+		infoBoxen.setHearingImpairedInfo(hearingImpairedInfo + " EN");
 
 		InfoBox infoBoxpt = new InfoBox();
 		infoBoxpt.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz PT");
@@ -44,6 +52,7 @@ public class MockHelper {
 		infoBoxpt.setUrlTitle("Und ein externer Link PT");
 		infoBoxpt.setUrl("https://www.bag.admin.ch/bag/pt/home.html");
 		infoBoxpt.setIsDismissible(dismissible);
+		infoBoxpt.setHearingImpairedInfo(hearingImpairedInfo + " PT");
 
 		InfoBox infoBoxes = new InfoBox();
 		infoBoxes.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz ES");
@@ -51,6 +60,7 @@ public class MockHelper {
 		infoBoxes.setUrlTitle("Und ein externer Link ES");
 		infoBoxes.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxes.setIsDismissible(dismissible);
+		infoBoxes.setHearingImpairedInfo(hearingImpairedInfo + " ES");
 
 		InfoBox infoBoxsq = new InfoBox();
 		infoBoxsq.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz SQ");
@@ -58,6 +68,7 @@ public class MockHelper {
 		infoBoxsq.setUrlTitle("Und ein externer Link SQ");
 		infoBoxsq.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxsq.setIsDismissible(dismissible);
+		infoBoxsq.setHearingImpairedInfo(hearingImpairedInfo + " SQ");
 
 		InfoBox infoBoxbs = new InfoBox();
 		infoBoxbs.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz BS");
@@ -65,6 +76,7 @@ public class MockHelper {
 		infoBoxbs.setUrlTitle("Und ein externer Link BS");
 		infoBoxbs.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxbs.setIsDismissible(dismissible);
+		infoBoxbs.setHearingImpairedInfo(hearingImpairedInfo + " BS");
 
 		InfoBox infoBoxhr = new InfoBox();
 		infoBoxhr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz HR");
@@ -72,6 +84,7 @@ public class MockHelper {
 		infoBoxhr.setUrlTitle("Und ein externer Link HR");
 		infoBoxhr.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxhr.setIsDismissible(dismissible);
+		infoBoxhr.setHearingImpairedInfo(hearingImpairedInfo + " HR");
 
 		InfoBox infoBoxrm = new InfoBox();
 		infoBoxrm.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz RM");
@@ -79,6 +92,7 @@ public class MockHelper {
 		infoBoxrm.setUrlTitle("Und ein externer Link RM");
 		infoBoxrm.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxrm.setIsDismissible(dismissible);
+		infoBoxrm.setHearingImpairedInfo(hearingImpairedInfo + " RM");
 
 		InfoBox infoBoxsr = new InfoBox();
 		infoBoxsr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz SR");
@@ -86,13 +100,15 @@ public class MockHelper {
 		infoBoxsr.setUrlTitle("Und ein externer Link SR");
 		infoBoxsr.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxsr.setIsDismissible(dismissible);
+		infoBoxsr.setHearingImpairedInfo(hearingImpairedInfo + " SR");
 
-		InfoBox Infoboxtr = new InfoBox();
-		Infoboxtr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz TR");
-		Infoboxtr.setTitle("Hinweis TR");
-		Infoboxtr.setUrlTitle("Und ein externer Link TR");
-		Infoboxtr.setUrl("https://www.bag.admin.ch/bag/en/home.html");
-		Infoboxtr.setIsDismissible(dismissible);
+		InfoBox infoBoxtr = new InfoBox();
+		infoBoxtr.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz TR");
+		infoBoxtr.setTitle("Hinweis TR");
+		infoBoxtr.setUrlTitle("Und ein externer Link TR");
+		infoBoxtr.setUrl("https://www.bag.admin.ch/bag/en/home.html");
+		infoBoxtr.setIsDismissible(dismissible);
+		infoBoxtr.setHearingImpairedInfo(hearingImpairedInfo + " TR");
 
 		InfoBox infoBoxti = new InfoBox();
 		infoBoxti.setMsg("Hier steht ein Text. Das kann ein Hinweis sein. Je länger umso mehr Platz TI");
@@ -100,6 +116,7 @@ public class MockHelper {
 		infoBoxti.setUrlTitle("Und ein externer Link TI");
 		infoBoxti.setUrl("https://www.bag.admin.ch/bag/en/home.html");
 		infoBoxti.setIsDismissible(dismissible);
+		infoBoxti.setHearingImpairedInfo(hearingImpairedInfo + " TI");
 
 		InfoBoxCollection collection = new InfoBoxCollection();
 		collection.setDeInfoBox(infoBoxde);
@@ -113,7 +130,7 @@ public class MockHelper {
 		collection.setBsInfoBox(infoBoxbs);
 		collection.setRmInfoBox(infoBoxrm);
 		collection.setSrInfoBox(infoBoxsr);
-		collection.setTrInfobox(Infoboxtr);
+		collection.setTrInfobox(infoBoxtr);
 		collection.setTiInfobox(infoBoxti);
 
 		configResponse.setInfoBox(collection);
