@@ -89,6 +89,7 @@ public class GaenConfigController {
 	private static final String IOS_VERSION_13_7 = "ios13.7";
 	private static final String IOS_VERSION_14 = "ios14.0";
 	private static final Version APP_VERSION_1_0_9 = new Version("ios-1.0.9");
+	private static final Version APP_VERSION_1_4_2 = new Version("ios-1.4.2");
 	private static final Version IOS_APP_VERSION_1_1_2 = new Version("ios-1.1.2");
 
 	private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
@@ -145,6 +146,10 @@ public class GaenConfigController {
 		// Check for old app Versions, iOS only
 		Version userAppVersion = new Version(appversion);
 		if (userAppVersion.isIOS() && APP_VERSION_1_0_9.isLargerVersionThan(userAppVersion)) {
+			config = generalUpdateRelease(true);
+		}
+
+		if (APP_VERSION_1_4_2.isSameVersionAs(userAppVersion)) {
 			config = generalUpdateRelease(true);
 		}
 
