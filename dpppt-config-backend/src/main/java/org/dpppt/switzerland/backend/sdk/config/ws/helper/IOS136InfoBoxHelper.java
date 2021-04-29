@@ -119,7 +119,7 @@ public class IOS136InfoBoxHelper {
 		infoBoxRm.setIsDismissible(true);
 
 		InfoBox infoBoxTr = new InfoBox();
-		infoBoxCollection.setTrInfobox(infoBoxTr);
+		infoBoxCollection.setTrInfoBox(infoBoxTr);
 		infoBoxTr.setMsg(
 				"Cep telefonunuzun işletim sistemi, tespit edilen temaslı kişilerin sayısı hakkında haftalık güncelleme ile sizi bilgilendirir. Dilerseniz bu bildirimleri engelleyebilirsiniz. iOS 13.7 sürümünden itibaren bu bilgi artık görüntülenmemektedir; telefonunuzu güncellemenizi tavsiye ediyoruz.\n"
 						+ "\n"
@@ -131,7 +131,7 @@ public class IOS136InfoBoxHelper {
 		infoBoxTr.setIsDismissible(true);
 
 		InfoBox infoBoxTi = new InfoBox();
-		infoBoxCollection.setTiInfobox(infoBoxTi);
+		infoBoxCollection.setTiInfoBox(infoBoxTi);
 		infoBoxTi.setMsg(
 				"እቲ ስርዓተ መስርሕ ኣብ ሞባይልኩም ኩሉ ሰሙን ምስቲ ዝመጽእ ኣፕደይት ብዛዕባ መጠን ዝተረጋገጸ ምንቅስቓስ ይሕብረኩም። እዚ ምልክት ከተስተውዕሉ ኣየድልየኩምን። ካብ ቨርዝዮን iOS 13.7 ንየው እዚ ሓበሬታ ኣይክረአን እዩ፤ ሞባይላትኩም ከተሕድስዎም ንመኽረኩም ኢና።\n"
 						+ "\n"

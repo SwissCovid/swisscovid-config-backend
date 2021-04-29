@@ -130,8 +130,8 @@ public class MockHelper {
 		collection.setBsInfoBox(infoBoxbs);
 		collection.setRmInfoBox(infoBoxrm);
 		collection.setSrInfoBox(infoBoxsr);
-		collection.setTrInfobox(infoBoxtr);
-		collection.setTiInfobox(infoBoxti);
+		collection.setTrInfoBox(infoBoxtr);
+		collection.setTiInfoBox(infoBoxti);
 
 		configResponse.setInfoBox(collection);
 

@@ -28,8 +28,8 @@ public class InfoBoxCollection {
 	private InfoBox hrInfoBox;
 	private InfoBox srInfoBox;
 	private InfoBox rmInfoBox;
-	private InfoBox trInfobox;
-	private InfoBox tiInfobox;
+	private InfoBox trInfoBox;
+	private InfoBox tiInfoBox;
 
 	public InfoBox getPtInfoBox() {
 		return this.ptInfoBox;
@@ -119,19 +119,19 @@ public class InfoBoxCollection {
 		this.deInfoBox = deInfoBox;
 	}
 
-	public InfoBox getTrInfobox() {
-		return trInfobox;
+	public InfoBox getTrInfoBox() {
+		return trInfoBox;
 	}
 
-	public void setTrInfobox(InfoBox trInfobox) {
-		this.trInfobox = trInfobox;
+	public void setTrInfoBox(InfoBox trInfoBox) {
+		this.trInfoBox = trInfoBox;
 	}
 
-	public InfoBox getTiInfobox() {
-		return tiInfobox;
+	public InfoBox getTiInfoBox() {
+		return tiInfoBox;
 	}
 
-	public void setTiInfobox(InfoBox tiInfobox) {
-		this.tiInfobox = tiInfobox;
+	public void setTiInfoBox(InfoBox tiInfoBox) {
+		this.tiInfoBox = tiInfoBox;
 	}
 }
