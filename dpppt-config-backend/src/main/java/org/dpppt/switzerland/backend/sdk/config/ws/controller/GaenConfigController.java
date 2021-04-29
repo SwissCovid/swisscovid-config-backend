@@ -394,8 +394,8 @@ public class GaenConfigController {
 		collection.setBsInfoBox(infoBoxbs);
 		collection.setRmInfoBox(infoBoxrm);
 		collection.setSrInfoBox(infoBoxsr);
-		collection.setTiInfobox(infoBoxti);
-		collection.setTrInfobox(infoBoxtr);
+		collection.setTiInfoBox(infoBoxti);
+		collection.setTrInfoBox(infoBoxtr);
 
 		configResponse.setInfoBox(collection);
 
