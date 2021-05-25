@@ -122,6 +122,7 @@ public class GaenConfigController {
 			@Documentation(description = "Build number of the app", example = "ios-200619.2333.175") @RequestParam String buildnr) {
 		ConfigResponse config = new ConfigResponse();
 		config.setInterOpsCountries(interOpsCountryCodes);
+		config.setTestInformationUrls(testLocationHelper.getTestInfoUrls());
 		config.setWhatToDoPositiveTestTexts(whatToDoPositiveTestTexts(messages));
 		config.setTestLocations(testLocationHelper.getTestLocations());
 

@@ -394,5 +394,20 @@ public abstract class BaseControllerTest {
 			assertEquals(resp.getTestLocations().getRm().get(i).getRegion(), allCantonsAndLiechtenstein.get(i));
 		}
 	}
+	
+	@Test
+	public void testTestInfoUrl() throws Exception {
+		MockHttpServletResponse result = mockMvc
+				.perform(get("/v1/config").param("osversion", "ios14.2").param("appversion", "ios-1.1.2")
+						.param("buildnr", "ios-2020.0145asdfa34"))
+				.andExpect(status().is2xxSuccessful()).andReturn().getResponse();
+
+		ConfigResponse resp = objectMapper.readValue(result.getContentAsString(Charset.forName("utf-8")),
+				ConfigResponse.class);
+
+		assertEquals(resp.getTestInformationUrls().size(), 13);
+		
+		assertTrue(resp.getTestInformationUrls().keySet().containsAll(List.of("bs", "de", "en", "es", "fr", "hr", "it", "pt", "rm", "sq", "sr", "ti", "tr")));
+	}
 
 }
