@@ -12,6 +12,7 @@ package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ch.ubique.openapi.docannotations.Documentation;
@@ -39,6 +40,9 @@ public class ConfigResponse {
 
     @Documentation(description = "list of ISO 3166-1 alpha-2 country codes describing the available interops countries")
     private List<String> interOpsCountries = new ArrayList<>();
+    
+    @Documentation(description = "Localized urls to test information website")   
+    private Map<String, String> testInformationUrls;
 
 	public boolean isForceUpdate() {
 		return forceUpdate;
@@ -94,5 +98,13 @@ public class ConfigResponse {
 
 	public void setInterOpsCountries(List<String> interOpsCountries) {
 		this.interOpsCountries = interOpsCountries;
+	}
+	
+	public Map<String, String> getTestInformationUrls() {
+		return testInformationUrls;
+	}
+	
+	public void setTestInformationUrls(Map<String, String> testInformationUrls) {
+		this.testInformationUrls = testInformationUrls;
 	}
 }

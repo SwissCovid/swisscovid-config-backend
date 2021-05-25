@@ -1,8 +1,10 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.helper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocationCollection;
@@ -18,6 +20,7 @@ public class TestLocationHelper {
 
 	private final Messages messages;
 	private final TestLocationCollection testLocationCollection;
+	private final Map<String, String> testInfoUrls;
 
 	private static final List<String> ALL_CANTONS_AND_LIECHTENSTEIN = List.of("canton_aargau",
 			"canton_appenzell_ausserrhoden", "canton_appenzell_innerrhoden", "canton_basel_country",
@@ -44,6 +47,22 @@ public class TestLocationHelper {
 		testLocationCollection.setSr(getTestLocationsForLanguage(Locale.forLanguageTag("sr")));
 		testLocationCollection.setTi(getTestLocationsForLanguage(Locale.forLanguageTag("ti")));
 		testLocationCollection.setTr(getTestLocationsForLanguage(Locale.forLanguageTag("tr")));
+		
+		this.testInfoUrls = new HashMap<>();
+		testInfoUrls.put("bs", messages.getMessage("test_info_url", Locale.forLanguageTag("bs")));
+		testInfoUrls.put("de", messages.getMessage("test_info_url", Locale.forLanguageTag("de")));
+		testInfoUrls.put("en", messages.getMessage("test_info_url", Locale.forLanguageTag("en")));
+		testInfoUrls.put("es", messages.getMessage("test_info_url", Locale.forLanguageTag("es")));
+		testInfoUrls.put("fr", messages.getMessage("test_info_url", Locale.forLanguageTag("fr")));
+		testInfoUrls.put("hr", messages.getMessage("test_info_url", Locale.forLanguageTag("hr")));
+		testInfoUrls.put("it", messages.getMessage("test_info_url", Locale.forLanguageTag("it")));
+		testInfoUrls.put("pt", messages.getMessage("test_info_url", Locale.forLanguageTag("pt")));
+		testInfoUrls.put("rm", messages.getMessage("test_info_url", Locale.forLanguageTag("rm")));
+		testInfoUrls.put("sq", messages.getMessage("test_info_url", Locale.forLanguageTag("sq")));
+		testInfoUrls.put("sr", messages.getMessage("test_info_url", Locale.forLanguageTag("sr")));
+		testInfoUrls.put("ti", messages.getMessage("test_info_url", Locale.forLanguageTag("ti")));
+		testInfoUrls.put("tr", messages.getMessage("test_info_url", Locale.forLanguageTag("tr")));
+
 	}
 
 	private List<TestLocation> getTestLocationsForLanguage(Locale language) {
@@ -56,6 +75,10 @@ public class TestLocationHelper {
 
 	public TestLocationCollection getTestLocations() {
 		return this.testLocationCollection;
+	}
+	
+	public Map<String, String> getTestInfoUrls() {
+		return this.testInfoUrls;
 	}
 
 }
