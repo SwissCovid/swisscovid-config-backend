@@ -32,7 +32,7 @@
         <dependency>
             <groupId>ch.ubique.openapi</groupId>
             <artifactId>doc-annotations</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.4</version>
         </dependency>
         
         <dependency>
@@ -180,26 +180,7 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>ubique-oss-springboot-swagger3</id>
-            <name>bintray</name>
-            <url>https://dl.bintray.com/ubique-oss/springboot-swagger3</url>
-        </repository>
     </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>ubique-oss-springboot-swagger3</id>
-            <name>bintray</name>
-            <url>https://dl.bintray.com/ubique-oss/springboot-swagger3</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <build>
         <finalName>
@@ -296,7 +277,7 @@
             <plugin>
                 <groupId>ch.ubique.openapi</groupId>
                 <artifactId>springboot-swagger-3</artifactId>
-                <version>1.2.8</version>
+                <version>1.3.3</version>
                 <configuration>
                     <apiVersion>1.0-gapple</apiVersion>
                     <basePackages>
