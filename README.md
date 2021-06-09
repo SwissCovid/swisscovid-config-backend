@@ -68,3 +68,7 @@ The call to `/v1/config` does the following special actions:
 - CrowdNotifier Android SDK: [crowdnotifier-sdk-android](https://github.com/CrowdNotifier/crowdnotifier-sdk-android)
 - CrowdNotifier iOS SDK: [crowdnotifier-sdk-ios](https://github.com/CrowdNotifier/crowdnotifier-sdk-ios)
 - CrowdNotifier Backend: [swisscovid-cn-backend](https://github.com/SwissCovid/swisscovid-cn-backend)
+
+## License
+
+This project is licensed under the terms of the MPL 2 license. See the [LICENSE](LICENSE) file.
