@@ -96,12 +96,14 @@ public class GaenConfigController {
 	protected final Messages messages;
 	private final List<String> interOpsCountryCodes;
 	private final TestLocationHelper testLocationHelper;
+	private final boolean checkInUpdateNotificationEnabled;
 
 	public GaenConfigController(Messages messages,
-			List<String> interOpsCountryCodes) {
+			List<String> interOpsCountryCodes, boolean checkInUpdateNotificationEnabled) {
 		this.messages = messages;
 		this.interOpsCountryCodes = interOpsCountryCodes;
 		this.testLocationHelper = new TestLocationHelper(messages);
+		this.checkInUpdateNotificationEnabled = checkInUpdateNotificationEnabled;
 	}
 
 	@Documentation(description = "Echo endpoint", responses = { "200 => Hello from DP3T Config WS" })
@@ -121,6 +123,7 @@ public class GaenConfigController {
 			@Documentation(description = "Version of the OS", example = "ios13.6") @RequestParam String osversion,
 			@Documentation(description = "Build number of the app", example = "ios-200619.2333.175") @RequestParam String buildnr) {
 		ConfigResponse config = new ConfigResponse();
+		config.setCheckInUpdateNotificationEnabled(this.checkInUpdateNotificationEnabled);
 		config.setInterOpsCountries(interOpsCountryCodes);
 		config.setTestInformationUrls(testLocationHelper.getTestInfoUrls());
 		config.setWhatToDoPositiveTestTexts(whatToDoPositiveTestTexts(messages));

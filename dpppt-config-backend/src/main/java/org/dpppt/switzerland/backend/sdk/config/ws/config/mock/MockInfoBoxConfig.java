@@ -30,7 +30,7 @@ public class MockInfoBoxConfig {
 	public class MockInfoBoxController extends GaenConfigController {
 
 		public MockInfoBoxController(Messages messages) {
-			super(messages, interOpsCountryCodes);
+			super(messages, interOpsCountryCodes, false);
 		}
 		
 		@Override
