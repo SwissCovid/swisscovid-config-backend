@@ -62,6 +62,8 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 
 	@Value("${ws.retentiondays: 21}")
 	int retentionDays;
+	@Value("${ws.checkinupdatenotificationenabled: true}")
+	boolean checkInUpdateNotificationEnabled;
 	
 	@Value("#{${ws.security.headers: {'X-Content-Type-Options':'nosniff', 'X-Frame-Options':'DENY','X-Xss-Protection':'1; mode=block'}}}")
 	Map<String,String> additionalHeaders;
@@ -79,7 +81,7 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 
 	@Bean
 	public GaenConfigController gaenConfigController(Messages messages) {
-		return new GaenConfigController(messages,  interOpsCountryCodes);
+		return new GaenConfigController(messages,  interOpsCountryCodes, checkInUpdateNotificationEnabled);
 	}
 
 	@Bean
