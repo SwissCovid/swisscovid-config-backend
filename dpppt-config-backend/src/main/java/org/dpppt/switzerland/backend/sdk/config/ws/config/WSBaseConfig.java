@@ -143,8 +143,7 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource =
                 new ReloadableResourceBundleMessageSource();
-
-        messageSource.setBasename("classpath:i18n/messages");
+        messageSource.setBasenames("classpath:i18n/messages", "classpath:i18n/messages_v1_legacy");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setFallbackToSystemLocale(false);
         messageSource.setDefaultLocale(null);
