@@ -44,6 +44,9 @@ public class ConfigResponse {
     @Documentation(description = "Localized urls to test information website")   
     private Map<String, String> testInformationUrls;
 
+	@Documentation(description = "Flag to enable notifications informing users about the new checkin feature")
+	private boolean checkInUpdateNotificationEnabled = false;
+
 	public boolean isForceUpdate() {
 		return forceUpdate;
 	}
@@ -106,5 +109,13 @@ public class ConfigResponse {
 	
 	public void setTestInformationUrls(Map<String, String> testInformationUrls) {
 		this.testInformationUrls = testInformationUrls;
+	}
+
+	public void setCheckInUpdateNotificationEnabled(boolean checkInUpdateNotificationEnabled) {
+		this.checkInUpdateNotificationEnabled = checkInUpdateNotificationEnabled;
+	}
+
+	public boolean isCheckInUpdateNotificationEnabled() {
+		return checkInUpdateNotificationEnabled;
 	}
 }

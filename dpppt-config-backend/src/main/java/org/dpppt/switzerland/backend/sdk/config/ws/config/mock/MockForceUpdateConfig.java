@@ -29,7 +29,7 @@ public class MockForceUpdateConfig {
 	public class MockForceUpdateController extends GaenConfigController {
 
 		public MockForceUpdateController(Messages messages) {
-			super(messages, interOpsCountryCodes);
+			super(messages, interOpsCountryCodes, false);
 		}
 		
 		@Override

@@ -96,12 +96,14 @@ public class GaenConfigController {
 	protected final Messages messages;
 	private final List<String> interOpsCountryCodes;
 	private final TestLocationHelper testLocationHelper;
+	private final boolean checkInUpdateNotificationEnabled;
 
 	public GaenConfigController(Messages messages,
-			List<String> interOpsCountryCodes) {
+			List<String> interOpsCountryCodes, boolean checkInUpdateNotificationEnabled) {
 		this.messages = messages;
 		this.interOpsCountryCodes = interOpsCountryCodes;
 		this.testLocationHelper = new TestLocationHelper(messages);
+		this.checkInUpdateNotificationEnabled = checkInUpdateNotificationEnabled;
 	}
 
 	@Documentation(description = "Echo endpoint", responses = { "200 => Hello from DP3T Config WS" })
@@ -120,10 +122,12 @@ public class GaenConfigController {
 			@Documentation(description = "Version of the App installed", example = "ios-1.0.7") @RequestParam String appversion,
 			@Documentation(description = "Version of the OS", example = "ios13.6") @RequestParam String osversion,
 			@Documentation(description = "Build number of the app", example = "ios-200619.2333.175") @RequestParam String buildnr) {
+		Version userAppVersion = new Version(appversion);
 		ConfigResponse config = new ConfigResponse();
+		config.setCheckInUpdateNotificationEnabled(this.checkInUpdateNotificationEnabled);
 		config.setInterOpsCountries(interOpsCountryCodes);
 		config.setTestInformationUrls(testLocationHelper.getTestInfoUrls());
-		config.setWhatToDoPositiveTestTexts(whatToDoPositiveTestTexts(messages));
+		config.setWhatToDoPositiveTestTexts(whatToDoPositiveTestTexts(userAppVersion, messages));
 		config.setTestLocations(testLocationHelper.getTestLocations());
 
 		// For iOS 13.6 users show information about weekly notification
@@ -144,7 +148,6 @@ public class GaenConfigController {
 		}
 
 		// Check for old app Versions, iOS only
-		Version userAppVersion = new Version(appversion);
 		if (userAppVersion.isIOS() && APP_VERSION_1_0_9.isLargerVersionThan(userAppVersion)) {
 			config = generalUpdateRelease(true);
 		}
@@ -416,54 +419,61 @@ public class GaenConfigController {
 		}
 	}
 
-	private WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts(Messages messages) {
+	private WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts(Version appVersion, Messages messages) {
+		final String prefix;
+		if (appVersion.isSmallerVersionThan(new Version("2.0.0"))) {
+			prefix = "v1_legacy_";
+		} else {
+			prefix = "";
+		}
+
 		return new WhatToDoPositiveTestTextsCollection() {
 			{
-				setDe(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("de")));
-				setFr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("fr")));
-				setIt(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("it")));
-				setEn(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("en")));
-				setPt(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("pt")));
-				setEs(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("es")));
-				setSq(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("sq")));
-				setBs(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("bs")));
-				setHr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("hr")));
-				setSr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("sr")));
-				setRm(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("rm")));
-				setTr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("tr")));
-				setTi(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("ti")));
+				setDe(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("de"), prefix));
+				setFr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("fr"), prefix));
+				setIt(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("it"), prefix));
+				setEn(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("en"), prefix));
+				setPt(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("pt"), prefix));
+				setEs(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("es"), prefix));
+				setSq(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("sq"), prefix));
+				setBs(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("bs"), prefix));
+				setHr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("hr"), prefix));
+				setSr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("sr"), prefix));
+				setRm(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("rm"), prefix));
+				setTr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("tr"), prefix));
+				setTi(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("ti"), prefix));
 			}
 		};
 	}
 
-	private WhatToDoPositiveTestTexts getWhatToDoPositiveTestText(Messages messages, Locale locale) {
+	private WhatToDoPositiveTestTexts getWhatToDoPositiveTestText(Messages messages, Locale locale, String prefix) {
 		return new WhatToDoPositiveTestTexts() {
 			{
-				setEnterCovidcodeBoxSupertitle(messages.getMessage("inform_detail_box_subtitle", locale));
-				setEnterCovidcodeBoxTitle(messages.getMessage("inform_detail_box_title", locale));
-				setEnterCovidcodeBoxText(messages.getMessage("inform_detail_box_text", locale));
-				setEnterCovidcodeBoxButtonTitle(messages.getMessage("inform_detail_box_button", locale));
+				setEnterCovidcodeBoxSupertitle(messages.getMessage(prefix + "inform_detail_box_subtitle", locale));
+				setEnterCovidcodeBoxTitle(messages.getMessage(prefix + "inform_detail_box_title", locale));
+				setEnterCovidcodeBoxText(messages.getMessage(prefix + "inform_detail_box_text", locale));
+				setEnterCovidcodeBoxButtonTitle(messages.getMessage(prefix + "inform_detail_box_button", locale));
 
-				setInfoBox(getWhatToDoPositiveTestTextInfoBox(messages, locale));
+				setInfoBox(getWhatToDoPositiveTestTextInfoBox(messages, locale, prefix));
 
 				setFaqEntries(Arrays.asList(new FaqEntry() {
 					{
-						setTitle(messages.getMessage("inform_detail_faq1_title", locale));
-						setText(messages.getMessage("inform_detail_faq1_text", locale));
+						setTitle(messages.getMessage(prefix + "inform_detail_faq1_title", locale));
+						setText(messages.getMessage(prefix + "inform_detail_faq1_text", locale));
 						setIconAndroid("ic_verified_user");
 						setIconIos("ic-verified-user");
 					}
 				}, new FaqEntry() {
 					{
-						setTitle(messages.getMessage("inform_detail_faq2_title", locale));
-						setText(messages.getMessage("inform_detail_faq2_text", locale));
+						setTitle(messages.getMessage(prefix + "inform_detail_faq2_title", locale));
+						setText(messages.getMessage(prefix + "inform_detail_faq2_text", locale));
 						setIconAndroid("ic_key");
 						setIconIos("ic-key");
 					}
 				}, new FaqEntry() {
 					{
-						setTitle(messages.getMessage("inform_detail_faq3_title", locale));
-						setText(messages.getMessage("inform_detail_faq3_text", locale));
+						setTitle(messages.getMessage(prefix + "inform_detail_faq3_title", locale));
+						setText(messages.getMessage(prefix + "inform_detail_faq3_text", locale));
 						setIconAndroid("ic_person");
 						setIconIos("ic-user");
 					}
@@ -472,15 +482,15 @@ public class GaenConfigController {
 		};
 	}
 	
-    private InfoBox getWhatToDoPositiveTestTextInfoBox(Messages messages, Locale locale) {
+    private InfoBox getWhatToDoPositiveTestTextInfoBox(Messages messages, Locale locale, String prefix) {
         InfoBox infoBox = new InfoBox();
         infoBox.setTitle(
-                messages.getMessage("inform_detail_infobox1_title", locale));
-        infoBox.setMsg(messages.getMessage("inform_detail_infobox1_text", locale));
-        infoBox.setUrlTitle(messages.getMessage("infoline_coronavirus_number", locale));
-        infoBox.setUrl("tel:" + messages.getMessage("infoline_coronavirus_number", locale).replace(" ", ""));
+                messages.getMessage(prefix + "inform_detail_infobox1_title", locale));
+        infoBox.setMsg(messages.getMessage(prefix + "inform_detail_infobox1_text", locale));
+        infoBox.setUrlTitle(messages.getMessage(prefix + "infoline_coronavirus_number", locale));
+        infoBox.setUrl("tel:" + messages.getMessage(prefix + "infoline_coronavirus_number", locale).replace(" ", ""));
         infoBox.setIsDismissible(false);
-		infoBox.setHearingImpairedInfo(messages.getMessage("hearing_impaired_info", locale)); 
+		infoBox.setHearingImpairedInfo(messages.getMessage(prefix + "hearing_impaired_info", locale));
         return infoBox;
     }
 }
