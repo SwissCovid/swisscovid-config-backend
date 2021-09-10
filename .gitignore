@@ -27,3 +27,5 @@ hs_err_pid*
 **/org.eclipse*
 **/.classpath
 dpppt-config-backend/.sts4-cache/classpath-data.json
+
+dpppt-config-backend/dp3t-config-ws.log.1

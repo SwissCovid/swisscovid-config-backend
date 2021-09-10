@@ -18,6 +18,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.boot.test.autoconfigure.actuate.metrics.AutoConfigureMetrics;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -48,6 +49,8 @@ import io.jsonwebtoken.Jwts;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles({ "cloud-dev" })
+// to make sure prometheus is exposed in tests
+@AutoConfigureMetrics
 public abstract class BaseControllerTest {
 	@Autowired
 	protected ObjectMapper objectMapper;
