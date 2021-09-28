@@ -53,6 +53,17 @@ public class ConfigResponse {
                     "Flag to enable notifications informing users about the new checkin feature")
     private boolean checkInUpdateNotificationEnabled = false;
 
+    @Documentation(description = "Holds vaccination booking infos for cantons by language")
+    private Map<Language, List<VaccinationBookingCanton>> vaccinationBookingCantons = null;
+
+    @Documentation(description = "Holds general vaccination booking info by language")
+    private Map<Language, VaccinationBookingInfo> vaccinationBookingInfo = null;
+
+    @Documentation(
+            description =
+                    "feature flag. when set to true the vaccination infos should be displayed")
+    private Boolean showVaccinationInfo;
+
     public boolean isForceUpdate() {
         return forceUpdate;
     }
@@ -124,5 +135,31 @@ public class ConfigResponse {
 
     public boolean isCheckInUpdateNotificationEnabled() {
         return checkInUpdateNotificationEnabled;
+    }
+
+    public Map<Language, List<VaccinationBookingCanton>> getVaccinationBookingCantons() {
+        return vaccinationBookingCantons;
+    }
+
+    public void setVaccinationBookingCantons(
+            Map<Language, List<VaccinationBookingCanton>> vaccinationBookingCantons) {
+        this.vaccinationBookingCantons = vaccinationBookingCantons;
+    }
+
+    public Map<Language, VaccinationBookingInfo> getVaccinationBookingInfo() {
+        return vaccinationBookingInfo;
+    }
+
+    public void setVaccinationBookingInfo(
+            Map<Language, VaccinationBookingInfo> vaccinationBookingInfo) {
+        this.vaccinationBookingInfo = vaccinationBookingInfo;
+    }
+
+    public Boolean getShowVaccinationInfo() {
+        return showVaccinationInfo;
+    }
+
+    public void setShowVaccinationInfo(Boolean showVaccinationInfo) {
+        this.showVaccinationInfo = showVaccinationInfo;
     }
 }

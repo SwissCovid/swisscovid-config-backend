@@ -29,6 +29,7 @@ import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.dpppt.switzerland.backend.sdk.config.ws.controller.GaenConfigController;
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
+import org.dpppt.switzerland.backend.sdk.config.ws.helper.VaccinationInfoHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.interceptor.HeaderInjector;
 import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
 import org.slf4j.Logger;
@@ -80,9 +81,21 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
     }
 
     @Bean
-    public GaenConfigController gaenConfigController(Messages messages) {
+    public VaccinationInfoHelper vaccinationInfoHelper(Messages messages) {
+        return new VaccinationInfoHelper(messages);
+    }
+
+    @Bean
+    public GaenConfigController gaenConfigController(
+            Messages messages,
+            VaccinationInfoHelper vaccinationInfoHelper,
+            @Value("${ws.vaccination-info.show:false}") boolean showVaccinationInfo) {
         return new GaenConfigController(
-                messages, interOpsCountryCodes, checkInUpdateNotificationEnabled);
+                messages,
+                interOpsCountryCodes,
+                checkInUpdateNotificationEnabled,
+                vaccinationInfoHelper,
+                showVaccinationInfo);
     }
 
     @Bean

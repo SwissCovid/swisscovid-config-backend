@@ -48,7 +48,11 @@ public enum Canton {
         return namePoeditorKey;
     }
 
-    public String getIconAssetName() {
+    public String getAndroidIconAssetName() {
+        return "icon_" + id;
+    }
+
+    public String getIosIconAssetName() {
         return "icon-" + id;
     }
 

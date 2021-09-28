@@ -4,6 +4,7 @@ import ch.ubique.openapi.docannotations.Documentation;
 import java.util.List;
 import org.dpppt.switzerland.backend.sdk.config.ws.controller.GaenConfigController;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.MockHelper;
+import org.dpppt.switzerland.backend.sdk.config.ws.helper.VaccinationInfoHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,14 +23,25 @@ public class MockInfoBoxConfig {
 
     @Bean
     @Primary
-    public GaenConfigController gaenConfigController(Messages messages) {
-        return new MockInfoBoxController(messages);
+    public GaenConfigController gaenConfigController(
+            Messages messages,
+            VaccinationInfoHelper vaccinationInfoHelper,
+            @Value("${ws.vaccination-info.show:false}") boolean showVaccinationInfo) {
+        return new MockInfoBoxController(messages, vaccinationInfoHelper, showVaccinationInfo);
     }
 
     public class MockInfoBoxController extends GaenConfigController {
 
-        public MockInfoBoxController(Messages messages) {
-            super(messages, interOpsCountryCodes, false);
+        public MockInfoBoxController(
+                Messages messages,
+                VaccinationInfoHelper vaccinationInfoHelper,
+                boolean showVaccinationInfo) {
+            super(
+                    messages,
+                    interOpsCountryCodes,
+                    false,
+                    vaccinationInfoHelper,
+                    showVaccinationInfo);
         }
 
         @Override

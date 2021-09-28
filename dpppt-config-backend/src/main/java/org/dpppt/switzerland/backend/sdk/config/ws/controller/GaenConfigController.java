@@ -18,6 +18,7 @@ import java.util.Locale;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.IOS136InfoBoxHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.MockHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.TestLocationHelper;
+import org.dpppt.switzerland.backend.sdk.config.ws.helper.VaccinationInfoHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.FaqEntry;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox;
@@ -84,15 +85,21 @@ public class GaenConfigController {
     private final List<String> interOpsCountryCodes;
     private final TestLocationHelper testLocationHelper;
     private final boolean checkInUpdateNotificationEnabled;
+    private final VaccinationInfoHelper vaccinationInfoHelper;
+    private final boolean showVaccinationInfo;
 
     public GaenConfigController(
             Messages messages,
             List<String> interOpsCountryCodes,
-            boolean checkInUpdateNotificationEnabled) {
+            boolean checkInUpdateNotificationEnabled,
+            VaccinationInfoHelper vaccinationInfoHelper,
+            boolean showVaccinationInfo) {
         this.messages = messages;
         this.interOpsCountryCodes = interOpsCountryCodes;
         this.testLocationHelper = new TestLocationHelper(messages);
         this.checkInUpdateNotificationEnabled = checkInUpdateNotificationEnabled;
+        this.vaccinationInfoHelper = vaccinationInfoHelper;
+        this.showVaccinationInfo = showVaccinationInfo;
     }
 
     @Documentation(
@@ -129,6 +136,10 @@ public class GaenConfigController {
         config.setTestInformationUrls(testLocationHelper.getTestInfoUrls());
         config.setWhatToDoPositiveTestTexts(whatToDoPositiveTestTexts(userAppVersion, messages));
         config.setTestLocations(testLocationHelper.getTestLocations());
+
+        config.setVaccinationBookingCantons(vaccinationInfoHelper.getVaccinationBookingCantons());
+        config.setVaccinationBookingInfo(vaccinationInfoHelper.getVaccinationBookingInfo());
+        config.setShowVaccinationInfo(showVaccinationInfo);
 
         // For iOS 13.6 users show information about weekly notification
         if (osversion.startsWith(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
