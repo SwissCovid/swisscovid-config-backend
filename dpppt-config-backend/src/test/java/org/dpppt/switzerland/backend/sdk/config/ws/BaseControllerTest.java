@@ -19,9 +19,13 @@ import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -58,21 +62,32 @@ public abstract class BaseControllerTest {
     @Autowired protected ResponseWrapperFilter filter;
     protected PublicKey publicKey;
 
+    public void setup() throws Exception {
+        this.publicKey = filter.getPublicKey();
+        this.objectMapper = new ObjectMapper(new JsonFactory());
+        this.objectMapper.registerModule(new JavaTimeModule());
+        this.objectMapper.registerModule(new JodaModule());
+        // this makes sure, that the objectmapper does not fail, when a filter is not provided.
+        this.objectMapper.setFilterProvider(new SimpleFilterProvider().setFailOnUnknownId(false));
+    }
+
     protected String json(Object o) throws IOException {
         return objectMapper.writeValueAsString(o);
     }
 
     protected void assertTestNoUpdate(MockHttpServletResponse result) throws Exception {
-        ConfigResponse resp =
-                objectMapper.readValue(
-                        result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+        ConfigResponse resp = toConfigResponse(result);
         assertNull(resp.getInfoBox());
     }
 
+    private ConfigResponse toConfigResponse(MockHttpServletResponse result)
+            throws JsonProcessingException, UnsupportedEncodingException {
+        return objectMapper.readValue(
+                result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+    }
+
     protected void assertTestNormalUpdate(MockHttpServletResponse result) throws Exception {
-        ConfigResponse resp =
-                objectMapper.readValue(
-                        result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+        ConfigResponse resp = toConfigResponse(result);
         assertNotNull(resp);
         assertNotNull(resp.getInfoBox());
         assertNotNull(resp.getInfoBox().getDeInfoBox());
@@ -80,9 +95,7 @@ public abstract class BaseControllerTest {
     }
 
     protected void assertTestTestflightUpdate(MockHttpServletResponse result) throws Exception {
-        ConfigResponse resp =
-                objectMapper.readValue(
-                        result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+        ConfigResponse resp = toConfigResponse(result);
         assertNotNull(resp);
         assertNotNull(resp.getInfoBox());
         assertNotNull(resp.getInfoBox().getDeInfoBox());
@@ -90,17 +103,13 @@ public abstract class BaseControllerTest {
     }
 
     private void assertIsNoForceUpdate(MockHttpServletResponse result) throws Exception {
-        ConfigResponse resp =
-                objectMapper.readValue(
-                        result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+        ConfigResponse resp = toConfigResponse(result);
         assertFalse(resp.isForceUpdate());
     }
 
     private void assertThresholds(MockHttpServletResponse result)
             throws JsonMappingException, JsonProcessingException, UnsupportedEncodingException {
-        ConfigResponse resp =
-                objectMapper.readValue(
-                        result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+        ConfigResponse resp = toConfigResponse(result);
         assertEquals(63, (int) resp.getiOSGaenSdkConfig().getHigherThreshold());
         assertEquals(55, (int) resp.getiOSGaenSdkConfig().getLowerThreshold());
         assertEquals(63, (int) resp.getAndroidGaenSdkConfig().getHigherThreshold());
@@ -109,9 +118,7 @@ public abstract class BaseControllerTest {
 
     private void assertWhatToDoPositiveTestInfoBox(MockHttpServletResponse result)
             throws Exception {
-        ConfigResponse resp =
-                objectMapper.readValue(
-                        result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+        ConfigResponse resp = toConfigResponse(result);
         assertNotNull(resp.getWhatToDoPositiveTestTexts().getDe().getInfoBox());
         assertNotNull(resp.getWhatToDoPositiveTestTexts().getFr().getInfoBox());
         assertNotNull(resp.getWhatToDoPositiveTestTexts().getIt().getInfoBox());
@@ -128,9 +135,7 @@ public abstract class BaseControllerTest {
     }
 
     private void assertEnterCovidcodeBoxText(MockHttpServletResponse result) throws Exception {
-        ConfigResponse resp =
-                objectMapper.readValue(
-                        result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+        ConfigResponse resp = toConfigResponse(result);
         assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getDe().getEnterCovidcodeBoxText());
         assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getFr().getEnterCovidcodeBoxText());
         assertNotEquals("", resp.getWhatToDoPositiveTestTexts().getIt().getEnterCovidcodeBoxText());
@@ -399,9 +404,7 @@ public abstract class BaseControllerTest {
                         .andReturn()
                         .getResponse();
 
-        ConfigResponse resp =
-                objectMapper.readValue(
-                        result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+        ConfigResponse resp = toConfigResponse(result);
 
         WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts =
                 resp.getWhatToDoPositiveTestTexts();
@@ -532,9 +535,7 @@ public abstract class BaseControllerTest {
                         .andReturn()
                         .getResponse();
 
-        ConfigResponse resp =
-                objectMapper.readValue(
-                        result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+        ConfigResponse resp = toConfigResponse(result);
         // all cantons plus liechtenstein
         assertEquals(27, resp.getTestLocations().getBs().size());
         assertEquals(27, resp.getTestLocations().getDe().size());
@@ -573,9 +574,7 @@ public abstract class BaseControllerTest {
                         .andReturn()
                         .getResponse();
 
-        ConfigResponse resp =
-                objectMapper.readValue(
-                        result.getContentAsString(Charset.forName("utf-8")), ConfigResponse.class);
+        ConfigResponse resp = toConfigResponse(result);
 
         assertEquals(resp.getTestInformationUrls().size(), 13);
 
