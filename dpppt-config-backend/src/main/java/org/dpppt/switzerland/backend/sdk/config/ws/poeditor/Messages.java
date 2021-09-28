@@ -23,8 +23,8 @@ public class Messages {
     }
 
     /**
-     * returns message for the given message key and locale.
-     * throws a {@link NoSuchMessageException} if no such message exists
+     * returns message for the given message key and locale. throws a {@link NoSuchMessageException}
+     * if no such message exists
      *
      * @param messageKey
      * @param locale
@@ -35,10 +35,8 @@ public class Messages {
     }
 
     /**
-     * FOR USE DURING DEVELOPMENT WHEN NOT ALL TRANSLATIONS ARE PRESENT
-     * returns message for the given messagekey and locale.
-     * fallback language: EN
-     * returns null if no such message exists.
+     * FOR USE DURING DEVELOPMENT WHEN NOT ALL TRANSLATIONS ARE PRESENT returns message for the
+     * given messagekey and locale. fallback language: EN returns null if no such message exists.
      *
      * @param messageKey
      * @param locale

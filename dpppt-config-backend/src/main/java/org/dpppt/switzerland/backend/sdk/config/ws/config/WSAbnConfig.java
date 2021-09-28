@@ -11,7 +11,6 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.config;
 
 import java.util.Base64;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -21,19 +20,19 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 @Profile("cloud-abn")
 public class WSAbnConfig extends WSBaseConfig {
     @Value("${vcap.services.ecdsa_cs_abn.credentials.privateKey}")
-	private String privateKey;
-	@Value("${vcap.services.ecdsa_cs_abn.credentials.publicKey}")
-	public String publicKey;
-	
+    private String privateKey;
+
+    @Value("${vcap.services.ecdsa_cs_abn.credentials.publicKey}")
+    public String publicKey;
+
     @Override
-	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {}
 
-	}
-
-	@Override
+    @Override
     String getPrivateKey() {
         return new String(Base64.getDecoder().decode(privateKey));
     }
+
     @Override
     String getPublicKey() {
         return new String(Base64.getDecoder().decode(publicKey));

@@ -16,121 +16,121 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value = Include.NON_NULL)
 public class WhatToDoPositiveTestTextsCollection {
 
-	private WhatToDoPositiveTestTexts de;
-	private WhatToDoPositiveTestTexts fr;
-	private WhatToDoPositiveTestTexts it;
-	private WhatToDoPositiveTestTexts en;
-	private WhatToDoPositiveTestTexts pt;
-	private WhatToDoPositiveTestTexts es;
-	private WhatToDoPositiveTestTexts sq;
-	private WhatToDoPositiveTestTexts bs;
-	private WhatToDoPositiveTestTexts hr;
-	private WhatToDoPositiveTestTexts sr;
-	private WhatToDoPositiveTestTexts rm;
-	private WhatToDoPositiveTestTexts tr;
-	private WhatToDoPositiveTestTexts ti;
+    private WhatToDoPositiveTestTexts de;
+    private WhatToDoPositiveTestTexts fr;
+    private WhatToDoPositiveTestTexts it;
+    private WhatToDoPositiveTestTexts en;
+    private WhatToDoPositiveTestTexts pt;
+    private WhatToDoPositiveTestTexts es;
+    private WhatToDoPositiveTestTexts sq;
+    private WhatToDoPositiveTestTexts bs;
+    private WhatToDoPositiveTestTexts hr;
+    private WhatToDoPositiveTestTexts sr;
+    private WhatToDoPositiveTestTexts rm;
+    private WhatToDoPositiveTestTexts tr;
+    private WhatToDoPositiveTestTexts ti;
 
-	public WhatToDoPositiveTestTexts getDe() {
-		return de;
-	}
+    public WhatToDoPositiveTestTexts getDe() {
+        return de;
+    }
 
-	public void setDe(WhatToDoPositiveTestTexts de) {
-		this.de = de;
-	}
+    public void setDe(WhatToDoPositiveTestTexts de) {
+        this.de = de;
+    }
 
-	public WhatToDoPositiveTestTexts getFr() {
-		return fr;
-	}
+    public WhatToDoPositiveTestTexts getFr() {
+        return fr;
+    }
 
-	public void setFr(WhatToDoPositiveTestTexts fr) {
-		this.fr = fr;
-	}
+    public void setFr(WhatToDoPositiveTestTexts fr) {
+        this.fr = fr;
+    }
 
-	public WhatToDoPositiveTestTexts getIt() {
-		return it;
-	}
+    public WhatToDoPositiveTestTexts getIt() {
+        return it;
+    }
 
-	public void setIt(WhatToDoPositiveTestTexts it) {
-		this.it = it;
-	}
+    public void setIt(WhatToDoPositiveTestTexts it) {
+        this.it = it;
+    }
 
-	public WhatToDoPositiveTestTexts getEn() {
-		return en;
-	}
+    public WhatToDoPositiveTestTexts getEn() {
+        return en;
+    }
 
-	public void setEn(WhatToDoPositiveTestTexts en) {
-		this.en = en;
-	}
+    public void setEn(WhatToDoPositiveTestTexts en) {
+        this.en = en;
+    }
 
-	public WhatToDoPositiveTestTexts getPt() {
-		return pt;
-	}
+    public WhatToDoPositiveTestTexts getPt() {
+        return pt;
+    }
 
-	public void setPt(WhatToDoPositiveTestTexts pt) {
-		this.pt = pt;
-	}
+    public void setPt(WhatToDoPositiveTestTexts pt) {
+        this.pt = pt;
+    }
 
-	public WhatToDoPositiveTestTexts getEs() {
-		return es;
-	}
+    public WhatToDoPositiveTestTexts getEs() {
+        return es;
+    }
 
-	public void setEs(WhatToDoPositiveTestTexts es) {
-		this.es = es;
-	}
+    public void setEs(WhatToDoPositiveTestTexts es) {
+        this.es = es;
+    }
 
-	public WhatToDoPositiveTestTexts getSq() {
-		return sq;
-	}
+    public WhatToDoPositiveTestTexts getSq() {
+        return sq;
+    }
 
-	public void setSq(WhatToDoPositiveTestTexts sq) {
-		this.sq = sq;
-	}
+    public void setSq(WhatToDoPositiveTestTexts sq) {
+        this.sq = sq;
+    }
 
-	public WhatToDoPositiveTestTexts getBs() {
-		return bs;
-	}
+    public WhatToDoPositiveTestTexts getBs() {
+        return bs;
+    }
 
-	public void setBs(WhatToDoPositiveTestTexts bs) {
-		this.bs = bs;
-	}
+    public void setBs(WhatToDoPositiveTestTexts bs) {
+        this.bs = bs;
+    }
 
-	public WhatToDoPositiveTestTexts getHr() {
-		return hr;
-	}
+    public WhatToDoPositiveTestTexts getHr() {
+        return hr;
+    }
 
-	public void setHr(WhatToDoPositiveTestTexts hr) {
-		this.hr = hr;
-	}
+    public void setHr(WhatToDoPositiveTestTexts hr) {
+        this.hr = hr;
+    }
 
-	public WhatToDoPositiveTestTexts getSr() {
-		return sr;
-	}
+    public WhatToDoPositiveTestTexts getSr() {
+        return sr;
+    }
 
-	public void setSr(WhatToDoPositiveTestTexts sr) {
-		this.sr = sr;
-	}
+    public void setSr(WhatToDoPositiveTestTexts sr) {
+        this.sr = sr;
+    }
 
-	public WhatToDoPositiveTestTexts getRm() {
-		return rm;
-	}
+    public WhatToDoPositiveTestTexts getRm() {
+        return rm;
+    }
 
-	public void setRm(WhatToDoPositiveTestTexts rm) {
-		this.rm = rm;
-	}
+    public void setRm(WhatToDoPositiveTestTexts rm) {
+        this.rm = rm;
+    }
 
-	public WhatToDoPositiveTestTexts getTr() {
-		return tr;
-	}
+    public WhatToDoPositiveTestTexts getTr() {
+        return tr;
+    }
 
-	public void setTr(WhatToDoPositiveTestTexts tr) {
-		this.tr = tr;
-	}
+    public void setTr(WhatToDoPositiveTestTexts tr) {
+        this.tr = tr;
+    }
 
-	public WhatToDoPositiveTestTexts getTi() {
-		return ti;
-	}
+    public WhatToDoPositiveTestTexts getTi() {
+        return ti;
+    }
 
-	public void setTi(WhatToDoPositiveTestTexts ti) {
-		this.ti = ti;
-	}
+    public void setTi(WhatToDoPositiveTestTexts ti) {
+        this.ti = ti;
+    }
 }

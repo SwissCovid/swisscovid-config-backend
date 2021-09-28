@@ -11,7 +11,6 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.config;
 
 import java.util.Base64;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -20,23 +19,22 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 @Configuration
 @Profile("cloud-test")
 public class WSTestConfig extends WSBaseConfig {
-	@Value("${vcap.services.ecdsa_cs_test.credentials.privateKey}")
-	private String privateKey;
-	@Value("${vcap.services.ecdsa_cs_test.credentials.publicKey}")
-	public String publicKey;
+    @Value("${vcap.services.ecdsa_cs_test.credentials.privateKey}")
+    private String privateKey;
 
-	@Override
-	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+    @Value("${vcap.services.ecdsa_cs_test.credentials.publicKey}")
+    public String publicKey;
 
-	}
+    @Override
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {}
 
-	@Override
-	String getPrivateKey() {
-		return new String(Base64.getDecoder().decode(privateKey));
-	}
+    @Override
+    String getPrivateKey() {
+        return new String(Base64.getDecoder().decode(privateKey));
+    }
 
-	@Override
-	String getPublicKey() {
-		return new String(Base64.getDecoder().decode(publicKey));
-	}
+    @Override
+    String getPublicKey() {
+        return new String(Base64.getDecoder().decode(publicKey));
+    }
 }

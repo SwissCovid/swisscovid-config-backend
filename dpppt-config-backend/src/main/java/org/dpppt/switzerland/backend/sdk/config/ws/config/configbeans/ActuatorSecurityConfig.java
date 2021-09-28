@@ -15,5 +15,5 @@ public class ActuatorSecurityConfig {
     public ActuatorSecurityConfig(String username, String password) {
         this.username = username;
         this.password = password;
-    }    
+    }
 }
