@@ -14,6 +14,8 @@ paths:
       responses:
         '200':
           description: Hello from DP3T Config WS
+          headers: {
+            }
           content:
             application/json:
               schema:
@@ -27,11 +29,20 @@ paths:
         '200':
           description: ConfigResponse structure with eventual notifications and epidemic
             parameters
+          headers: {
+            }
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse'
       parameters:
+      - name: appversion
+        in: query
+        description: Version of the App installed
+        example: ios-1.0.7
+        required: true
+        schema:
+          type: string
       - name: osversion
         in: query
         description: Version of the OS
@@ -60,19 +71,22 @@ paths:
       parameters:
       - name: appversion
         in: query
-        description: ''
+        description: Version of the App installed
+        example: ios-1.0.7
         required: true
         schema:
           type: string
       - name: osversion
         in: query
-        description: ''
+        description: Version of the OS
+        example: ios13.6
         required: true
         schema:
           type: string
       - name: buildnr
         in: query
-        description: ''
+        description: Build number of the app
+        example: ios-200619.2333.175
         required: true
         schema:
           type: string
@@ -83,25 +97,83 @@ components:
       properties:
         forceUpdate:
           type: boolean
-        forceTraceShutdown:
-          type: boolean
+          description: Blocks the app and shows a link to the app-store. The user
+            can only continue once she updated the app
+          example: ''
         infoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection'
-          description: Holds a message translated in different languages
-          example: ''
-        sdkConfig:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.SDKConfig'
-          description: Configuration of the epidemiological parameters for the pre-GAEN
-            DPPPT process
-          example: ''
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection'
+          - description: Holds a message translated in different languages
+          - example: ''
+        whatToDoPositiveTestTexts:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTextsCollection'
+        testLocations:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocationCollection'
+          - description: Holds a url for test locations for each canton and Liechtenstein
+          - example: ''
         iOSGaenSdkConfig:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.GAENSDKConfig'
-          description: GAEN epidemiological parameters for iOS
-          example: ''
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.GAENSDKConfig'
+          - description: GAEN epidemiological parameters for iOS
+          - example: ''
         androidGaenSdkConfig:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.GAENSDKConfig'
-          description: GAEN epidemiological parameters for Android
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.GAENSDKConfig'
+          - description: GAEN epidemiological parameters for Android
+          - example: ''
+        interOpsCountries:
+          type: array
+          items:
+            type: string
+          description: list of ISO 3166-1 alpha-2 country codes describing the available
+            interops countries
+        testInformationUrls:
+          type: object
+          description: Localized urls to test information website
           example: ''
+          additionalProperties:
+            type: string
+        checkInUpdateNotificationEnabled:
+          type: boolean
+          description: Flag to enable notifications informing users about the new
+            checkin feature
+          example: ''
+        vaccinationBookingCantons:
+          type: object
+          description: Holds vaccination booking infos for cantons by language
+          example: ''
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.VaccinationBookingCanton'
+        vaccinationBookingInfo:
+          type: object
+          description: Holds general vaccination booking info by language
+          example: ''
+          additionalProperties:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.VaccinationBookingInfo'
+        showVaccinationInfo:
+          type: boolean
+          description: feature flag. when set to true the vaccination infos should
+            be displayed
+          example: ''
+    org.dpppt.switzerland.backend.sdk.config.ws.model.FaqEntry:
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+        iconAndroid:
+          type: string
+        iconIos:
+          type: string
+        linkTitle:
+          type: string
+        linkUrl:
+          type: string
     org.dpppt.switzerland.backend.sdk.config.ws.model.GAENSDKConfig:
       type: object
       properties:
@@ -114,9 +186,9 @@ components:
         higherThreshold:
           type: integer
           description: Higher threshold that is sent to the GAEN to count encounters
-            with other devices It is expressed in dB attenuation from the Bluetooth
+            with other devices .It is expressed in dB attenuation from the Bluetooth
             chip.
-          example: ''
+          example: '60'
         factorLow:
           type: number
           format: double
@@ -131,8 +203,8 @@ components:
           example: 0.5d
         triggerThreshold:
           type: integer
-          description: Minimum duration of exposure in minutes, before an encounter
-            is added to the attenuationDuration
+          description: Minimum duration of exposure during one day reported by the
+            GAEN before the user is alerted of an exposure risk
           example: '15'
     org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox:
       type: object
@@ -155,44 +227,202 @@ components:
           example: DP3T page
         isDismissible:
           type: boolean
-          description: If true, the user can cancel the message
+          description: If true, the user can dismiss the message
           example: 'true'
+        hearingImpairedInfo:
+          type: string
+          description: Text to display in hearing impaired pop up
+          example: ''
     org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection:
       type: object
       properties:
         deInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
         frInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
         itInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
         enInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
         ptInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
         esInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
         sqInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
         bsInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
         hrInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
         srInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
         rmInfoBox:
-          $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
-    org.dpppt.switzerland.backend.sdk.config.ws.model.SDKConfig:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        trInfoBox:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        tiInfoBox:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+    org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation:
       type: object
       properties:
-        numberOfWindowsForExposure:
-          type: integer
-        eventThreshold:
-          type: number
-          format: float
-        badAttenuationThreshold:
-          type: number
-          format: float
-        contactAttenuationThreshold:
-          type: number
-          format: float
+        region:
+          type: string
+        url:
+          type: string
+    org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocationCollection:
+      type: object
+      properties:
+        de:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        fr:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        it:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        en:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        pt:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        es:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        sq:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        bs:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        hr:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        sr:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        rm:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        tr:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+        ti:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation'
+    org.dpppt.switzerland.backend.sdk.config.ws.model.VaccinationBookingCanton:
+      type: object
+      required:
+      - name
+      - iconAndroid
+      - iconIos
+      - linkUrl
+      properties:
+        name:
+          type: string
+        iconAndroid:
+          type: string
+        iconIos:
+          type: string
+        linkUrl:
+          type: string
+    org.dpppt.switzerland.backend.sdk.config.ws.model.VaccinationBookingInfo:
+      type: object
+      required:
+      - title
+      - text
+      - info
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+        info:
+          type: string
+    org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts:
+      type: object
+      properties:
+        enterCovidcodeBoxSupertitle:
+          type: string
+        enterCovidcodeBoxTitle:
+          type: string
+        enterCovidcodeBoxText:
+          type: string
+        enterCovidcodeBoxButtonTitle:
+          type: string
+        infoBox:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox'
+        faqEntries:
+          type: array
+          items:
+            $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.FaqEntry'
+    org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTextsCollection:
+      type: object
+      properties:
+        de:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        fr:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        it:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        en:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        pt:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        es:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        sq:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        bs:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        hr:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        sr:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        rm:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        tr:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'
+        ti:
+          allOf:
+          - $ref: '#/components/schemas/org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts'

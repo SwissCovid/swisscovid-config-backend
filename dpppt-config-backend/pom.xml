@@ -290,7 +290,7 @@
                     </ignoredTypes>
                     <controllers>
                         <controller>
-                            org.dpppt.switzerland.backend.sdk.config.ws.controller.DPPPTConfigController
+                            org.dpppt.switzerland.backend.sdk.config.ws.controller.GaenConfigController
                         </controller>
                     </controllers>
                     <description>DP3T API</description>
