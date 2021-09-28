@@ -22,6 +22,7 @@ import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.FaqEntry;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBox;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.InfoBoxCollection;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.Language;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTexts;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTextsCollection;
 import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
@@ -455,19 +456,19 @@ public class GaenConfigController {
 
         return new WhatToDoPositiveTestTextsCollection() {
             {
-                setDe(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("de"), prefix));
-                setFr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("fr"), prefix));
-                setIt(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("it"), prefix));
-                setEn(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("en"), prefix));
-                setPt(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("pt"), prefix));
-                setEs(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("es"), prefix));
-                setSq(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("sq"), prefix));
-                setBs(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("bs"), prefix));
-                setHr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("hr"), prefix));
-                setSr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("sr"), prefix));
-                setRm(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("rm"), prefix));
-                setTr(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("tr"), prefix));
-                setTi(getWhatToDoPositiveTestText(messages, Locale.forLanguageTag("ti"), prefix));
+                setDe(getWhatToDoPositiveTestText(messages, Language.DE.toLocale(), prefix));
+                setFr(getWhatToDoPositiveTestText(messages, Language.FR.toLocale(), prefix));
+                setIt(getWhatToDoPositiveTestText(messages, Language.IT.toLocale(), prefix));
+                setEn(getWhatToDoPositiveTestText(messages, Language.EN.toLocale(), prefix));
+                setPt(getWhatToDoPositiveTestText(messages, Language.PT.toLocale(), prefix));
+                setEs(getWhatToDoPositiveTestText(messages, Language.ES.toLocale(), prefix));
+                setSq(getWhatToDoPositiveTestText(messages, Language.SQ.toLocale(), prefix));
+                setBs(getWhatToDoPositiveTestText(messages, Language.BS.toLocale(), prefix));
+                setHr(getWhatToDoPositiveTestText(messages, Language.HR.toLocale(), prefix));
+                setSr(getWhatToDoPositiveTestText(messages, Language.SR.toLocale(), prefix));
+                setRm(getWhatToDoPositiveTestText(messages, Language.RM.toLocale(), prefix));
+                setTr(getWhatToDoPositiveTestText(messages, Language.TR.toLocale(), prefix));
+                setTi(getWhatToDoPositiveTestText(messages, Language.TI.toLocale(), prefix));
             }
         };
     }

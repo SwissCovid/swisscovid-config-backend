@@ -27,10 +27,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.security.PublicKey;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.Language;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTextsCollection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -606,9 +608,6 @@ public abstract class BaseControllerTest {
         assertTrue(
                 resp.getTestInformationUrls()
                         .keySet()
-                        .containsAll(
-                                List.of(
-                                        "bs", "de", "en", "es", "fr", "hr", "it", "pt", "rm", "sq",
-                                        "sr", "ti", "tr")));
+                        .containsAll(Arrays.asList(Language.values())));
     }
 }

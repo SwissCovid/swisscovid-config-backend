@@ -1,10 +1,11 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.helper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.Language;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocationCollection;
 import org.dpppt.switzerland.backend.sdk.config.ws.poeditor.Messages;
@@ -18,7 +19,7 @@ public class TestLocationHelper {
 
     private final Messages messages;
     private final TestLocationCollection testLocationCollection;
-    private final Map<String, String> testInfoUrls;
+    private final Map<Language, String> testInfoUrls;
 
     private static final List<String> ALL_CANTONS_AND_LIECHTENSTEIN =
             List.of(
@@ -54,34 +55,34 @@ public class TestLocationHelper {
         this.messages = messages;
         this.testLocationCollection = new TestLocationCollection();
 
-        testLocationCollection.setBs(getTestLocationsForLanguage(Locale.forLanguageTag("bs")));
-        testLocationCollection.setDe(getTestLocationsForLanguage(Locale.forLanguageTag("de")));
-        testLocationCollection.setEn(getTestLocationsForLanguage(Locale.forLanguageTag("en")));
-        testLocationCollection.setEs(getTestLocationsForLanguage(Locale.forLanguageTag("es")));
-        testLocationCollection.setFr(getTestLocationsForLanguage(Locale.forLanguageTag("fr")));
-        testLocationCollection.setHr(getTestLocationsForLanguage(Locale.forLanguageTag("hr")));
-        testLocationCollection.setIt(getTestLocationsForLanguage(Locale.forLanguageTag("it")));
-        testLocationCollection.setPt(getTestLocationsForLanguage(Locale.forLanguageTag("pt")));
-        testLocationCollection.setRm(getTestLocationsForLanguage(Locale.forLanguageTag("rm")));
-        testLocationCollection.setSq(getTestLocationsForLanguage(Locale.forLanguageTag("sq")));
-        testLocationCollection.setSr(getTestLocationsForLanguage(Locale.forLanguageTag("sr")));
-        testLocationCollection.setTi(getTestLocationsForLanguage(Locale.forLanguageTag("ti")));
-        testLocationCollection.setTr(getTestLocationsForLanguage(Locale.forLanguageTag("tr")));
+        testLocationCollection.setBs(getTestLocationsForLanguage(Language.BS.toLocale()));
+        testLocationCollection.setDe(getTestLocationsForLanguage(Language.DE.toLocale()));
+        testLocationCollection.setEn(getTestLocationsForLanguage(Language.EN.toLocale()));
+        testLocationCollection.setEs(getTestLocationsForLanguage(Language.ES.toLocale()));
+        testLocationCollection.setFr(getTestLocationsForLanguage(Language.FR.toLocale()));
+        testLocationCollection.setHr(getTestLocationsForLanguage(Language.HR.toLocale()));
+        testLocationCollection.setIt(getTestLocationsForLanguage(Language.IT.toLocale()));
+        testLocationCollection.setPt(getTestLocationsForLanguage(Language.PT.toLocale()));
+        testLocationCollection.setRm(getTestLocationsForLanguage(Language.RM.toLocale()));
+        testLocationCollection.setSq(getTestLocationsForLanguage(Language.SQ.toLocale()));
+        testLocationCollection.setSr(getTestLocationsForLanguage(Language.SR.toLocale()));
+        testLocationCollection.setTi(getTestLocationsForLanguage(Language.TI.toLocale()));
+        testLocationCollection.setTr(getTestLocationsForLanguage(Language.TR.toLocale()));
 
-        this.testInfoUrls = new HashMap<>();
-        testInfoUrls.put("bs", messages.getMessage("test_info_url", Locale.forLanguageTag("bs")));
-        testInfoUrls.put("de", messages.getMessage("test_info_url", Locale.forLanguageTag("de")));
-        testInfoUrls.put("en", messages.getMessage("test_info_url", Locale.forLanguageTag("en")));
-        testInfoUrls.put("es", messages.getMessage("test_info_url", Locale.forLanguageTag("es")));
-        testInfoUrls.put("fr", messages.getMessage("test_info_url", Locale.forLanguageTag("fr")));
-        testInfoUrls.put("hr", messages.getMessage("test_info_url", Locale.forLanguageTag("hr")));
-        testInfoUrls.put("it", messages.getMessage("test_info_url", Locale.forLanguageTag("it")));
-        testInfoUrls.put("pt", messages.getMessage("test_info_url", Locale.forLanguageTag("pt")));
-        testInfoUrls.put("rm", messages.getMessage("test_info_url", Locale.forLanguageTag("rm")));
-        testInfoUrls.put("sq", messages.getMessage("test_info_url", Locale.forLanguageTag("sq")));
-        testInfoUrls.put("sr", messages.getMessage("test_info_url", Locale.forLanguageTag("sr")));
-        testInfoUrls.put("ti", messages.getMessage("test_info_url", Locale.forLanguageTag("ti")));
-        testInfoUrls.put("tr", messages.getMessage("test_info_url", Locale.forLanguageTag("tr")));
+        this.testInfoUrls = new EnumMap<>(Language.class);
+        testInfoUrls.put(Language.BS, messages.getMessage("test_info_url", Language.BS.toLocale()));
+        testInfoUrls.put(Language.DE, messages.getMessage("test_info_url", Language.DE.toLocale()));
+        testInfoUrls.put(Language.EN, messages.getMessage("test_info_url", Language.EN.toLocale()));
+        testInfoUrls.put(Language.ES, messages.getMessage("test_info_url", Language.ES.toLocale()));
+        testInfoUrls.put(Language.FR, messages.getMessage("test_info_url", Language.FR.toLocale()));
+        testInfoUrls.put(Language.HR, messages.getMessage("test_info_url", Language.HR.toLocale()));
+        testInfoUrls.put(Language.IT, messages.getMessage("test_info_url", Language.IT.toLocale()));
+        testInfoUrls.put(Language.PT, messages.getMessage("test_info_url", Language.PT.toLocale()));
+        testInfoUrls.put(Language.RM, messages.getMessage("test_info_url", Language.RM.toLocale()));
+        testInfoUrls.put(Language.SQ, messages.getMessage("test_info_url", Language.SQ.toLocale()));
+        testInfoUrls.put(Language.SR, messages.getMessage("test_info_url", Language.SR.toLocale()));
+        testInfoUrls.put(Language.TI, messages.getMessage("test_info_url", Language.TI.toLocale()));
+        testInfoUrls.put(Language.TR, messages.getMessage("test_info_url", Language.TR.toLocale()));
     }
 
     private List<TestLocation> getTestLocationsForLanguage(Locale language) {
@@ -98,7 +99,7 @@ public class TestLocationHelper {
         return this.testLocationCollection;
     }
 
-    public Map<String, String> getTestInfoUrls() {
+    public Map<Language, String> getTestInfoUrls() {
         return this.testInfoUrls;
     }
 }

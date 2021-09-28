@@ -46,7 +46,7 @@ public class ConfigResponse {
     private List<String> interOpsCountries = new ArrayList<>();
 
     @Documentation(description = "Localized urls to test information website")
-    private Map<String, String> testInformationUrls;
+    private Map<Language, String> testInformationUrls;
 
     @Documentation(
             description =
@@ -110,11 +110,11 @@ public class ConfigResponse {
         this.interOpsCountries = interOpsCountries;
     }
 
-    public Map<String, String> getTestInformationUrls() {
+    public Map<Language, String> getTestInformationUrls() {
         return testInformationUrls;
     }
 
-    public void setTestInformationUrls(Map<String, String> testInformationUrls) {
+    public void setTestInformationUrls(Map<Language, String> testInformationUrls) {
         this.testInformationUrls = testInformationUrls;
     }
 
