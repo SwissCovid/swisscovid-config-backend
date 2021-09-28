@@ -34,12 +34,17 @@ import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import javax.validation.Validator;
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.Canton;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.Language;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.VaccinationBookingCanton;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.VaccinationBookingInfo;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTextsCollection;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.actuate.metrics.AutoConfigureMetrics;
@@ -56,6 +61,7 @@ import org.springframework.web.context.WebApplicationContext;
 // to make sure prometheus is exposed in tests
 @AutoConfigureMetrics
 public abstract class BaseControllerTest {
+    @Autowired protected Validator validator;
     @Autowired protected ObjectMapper objectMapper;
     protected MockMvc mockMvc;
     @Autowired protected WebApplicationContext webApplicationContext;
@@ -582,5 +588,49 @@ public abstract class BaseControllerTest {
                 resp.getTestInformationUrls()
                         .keySet()
                         .containsAll(Arrays.asList(Language.values())));
+    }
+
+    @Test
+    public void testVaccinationInfos() throws Exception {
+        MockHttpServletResponse result =
+                mockMvc.perform(
+                                get("/v1/config")
+                                        .param("osversion", "ios14.2")
+                                        .param("appversion", "ios-1.1.2")
+                                        .param("buildnr", "ios-2020.0145asdfa34"))
+                        .andExpect(status().is2xxSuccessful())
+                        .andReturn()
+                        .getResponse();
+
+        ConfigResponse configResponse = toConfigResponse(result);
+
+        Assertions.assertFalse(configResponse.getShowVaccinationInfo());
+
+        validateVaccinationBookingCantons(configResponse);
+        validateVaccinationBookingInfo(configResponse);
+    }
+
+    private void validateVaccinationBookingInfo(ConfigResponse resp) {
+        Map<Language, VaccinationBookingInfo> byLanguage = resp.getVaccinationBookingInfo();
+        Assertions.assertNotNull(byLanguage);
+        assertEquals(Language.values().length, byLanguage.size());
+        for (Entry<Language, VaccinationBookingInfo> forLanguage : byLanguage.entrySet()) {
+            VaccinationBookingInfo info = forLanguage.getValue();
+            Assertions.assertTrue(validator.validate(info).isEmpty());
+        }
+    }
+
+    private void validateVaccinationBookingCantons(ConfigResponse resp) {
+        Map<Language, List<VaccinationBookingCanton>> byLanguage =
+                resp.getVaccinationBookingCantons();
+        Assertions.assertNotNull(byLanguage);
+        assertEquals(Language.values().length, byLanguage.size());
+        for (Entry<Language, List<VaccinationBookingCanton>> forLanguage : byLanguage.entrySet()) {
+            List<VaccinationBookingCanton> vaccinationBookingCantons = forLanguage.getValue();
+            Assertions.assertEquals(Canton.values().length, vaccinationBookingCantons.size());
+            for (VaccinationBookingCanton vaccinationBookingCanton : vaccinationBookingCantons) {
+                Assertions.assertTrue(validator.validate(vaccinationBookingCanton).isEmpty());
+            }
+        }
     }
 }
