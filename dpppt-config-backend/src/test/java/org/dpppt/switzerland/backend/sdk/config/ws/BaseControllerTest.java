@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import org.dpppt.switzerland.backend.sdk.config.ws.filter.ResponseWrapperFilter;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.Canton;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.ConfigResponse;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.Language;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.WhatToDoPositiveTestTextsCollection;
@@ -549,35 +550,8 @@ public abstract class BaseControllerTest {
         assertEquals(27, resp.getTestLocations().getTi().size());
         assertEquals(27, resp.getTestLocations().getTr().size());
 
-        List<String> allCantonsAndLiechtenstein =
-                List.of(
-                        "canton_aargau",
-                        "canton_appenzell_ausserrhoden",
-                        "canton_appenzell_innerrhoden",
-                        "canton_basel_country",
-                        "canton_basel_city",
-                        "canton_berne",
-                        "canton_fribourg",
-                        "canton_geneva",
-                        "canton_glarus",
-                        "canton_graubuenden",
-                        "canton_jura",
-                        "canton_lucerne",
-                        "canton_neuchatel",
-                        "canton_nidwalden",
-                        "canton_obwalden",
-                        "canton_st_gallen",
-                        "canton_schaffhausen",
-                        "canton_schwyz",
-                        "canton_solothurn",
-                        "canton_thurgovia",
-                        "canton_ticino",
-                        "canton_uri",
-                        "canton_valais",
-                        "canton_vaud",
-                        "canton_zug",
-                        "canton_zurich",
-                        "country_liechtenstein");
+        List<String> allCantonsAndLiechtenstein = Canton.namePoeditorKeys();
+        allCantonsAndLiechtenstein.add("country_liechtenstein");
 
         // check if all keys are included in order
         for (int i = 0; i < allCantonsAndLiechtenstein.size(); i++) {

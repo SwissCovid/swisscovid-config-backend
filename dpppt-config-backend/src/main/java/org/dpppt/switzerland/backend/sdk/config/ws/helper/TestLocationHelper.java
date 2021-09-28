@@ -5,6 +5,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.dpppt.switzerland.backend.sdk.config.ws.model.Canton;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.Language;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocation;
 import org.dpppt.switzerland.backend.sdk.config.ws.model.TestLocationCollection;
@@ -21,35 +22,14 @@ public class TestLocationHelper {
     private final TestLocationCollection testLocationCollection;
     private final Map<Language, String> testInfoUrls;
 
-    private static final List<String> ALL_CANTONS_AND_LIECHTENSTEIN =
-            List.of(
-                    "canton_aargau",
-                    "canton_appenzell_ausserrhoden",
-                    "canton_appenzell_innerrhoden",
-                    "canton_basel_country",
-                    "canton_basel_city",
-                    "canton_berne",
-                    "canton_fribourg",
-                    "canton_geneva",
-                    "canton_glarus",
-                    "canton_graubuenden",
-                    "canton_jura",
-                    "canton_lucerne",
-                    "canton_neuchatel",
-                    "canton_nidwalden",
-                    "canton_obwalden",
-                    "canton_st_gallen",
-                    "canton_schaffhausen",
-                    "canton_schwyz",
-                    "canton_solothurn",
-                    "canton_thurgovia",
-                    "canton_ticino",
-                    "canton_uri",
-                    "canton_valais",
-                    "canton_vaud",
-                    "canton_zug",
-                    "canton_zurich",
-                    "country_liechtenstein");
+    private static final List<String> ALL_CANTONS_AND_LIECHTENSTEIN;
+
+    static {
+        {
+            ALL_CANTONS_AND_LIECHTENSTEIN = Canton.namePoeditorKeys();
+            ALL_CANTONS_AND_LIECHTENSTEIN.add("country_liechtenstein");
+        }
+    }
 
     public TestLocationHelper(Messages messages) {
         this.messages = messages;
