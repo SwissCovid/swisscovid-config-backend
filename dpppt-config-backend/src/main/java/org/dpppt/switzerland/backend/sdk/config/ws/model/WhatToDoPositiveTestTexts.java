@@ -11,7 +11,6 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,7 +21,7 @@ public class WhatToDoPositiveTestTexts {
     private String enterCovidcodeBoxText;
     private String enterCovidcodeBoxButtonTitle;
 
-    //dismissible will be ignored by clients
+    // dismissible will be ignored by clients
     private InfoBox infoBox;
 
     private List<FaqEntry> faqEntries;

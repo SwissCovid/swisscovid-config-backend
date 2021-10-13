@@ -10,112 +10,156 @@
 
 package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
+import ch.ubique.openapi.docannotations.Documentation;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import ch.ubique.openapi.docannotations.Documentation;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 @Documentation(description = "ConfigResponse description")
 public class ConfigResponse {
 
-	@Documentation(description = "Blocks the app and shows a link to the app-store. The user can only continue once "
-			+ "she updated the app")
-	private boolean forceUpdate = false;
+    @Documentation(
+            description =
+                    "Blocks the app and shows a link to the app-store. The user can only continue once "
+                            + "she updated the app")
+    private boolean forceUpdate = false;
 
-	@Documentation(description = "Holds a message translated in different languages")
-	private InfoBoxCollection infoBox = null;
-	private WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts;
+    @Documentation(description = "Holds a message translated in different languages")
+    private InfoBoxCollection infoBox = null;
 
-	@Documentation(description = "Holds a url for test locations for each canton and Liechtenstein")
-	private TestLocationCollection testLocations;
+    private WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts;
 
-	@Documentation(description = "GAEN epidemiological parameters for iOS")
-	private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
-	@Documentation(description = "GAEN epidemiological parameters for Android")
-	private GAENSDKConfig androidGaenSdkConfig = new GAENSDKConfig();
+    @Documentation(description = "Holds a url for test locations for each canton and Liechtenstein")
+    private TestLocationCollection testLocations;
 
-    @Documentation(description = "list of ISO 3166-1 alpha-2 country codes describing the available interops countries")
+    @Documentation(description = "GAEN epidemiological parameters for iOS")
+    private GAENSDKConfig iOSGaenSdkConfig = new GAENSDKConfig();
+
+    @Documentation(description = "GAEN epidemiological parameters for Android")
+    private GAENSDKConfig androidGaenSdkConfig = new GAENSDKConfig();
+
+    @Documentation(
+            description =
+                    "list of ISO 3166-1 alpha-2 country codes describing the available interops countries")
     private List<String> interOpsCountries = new ArrayList<>();
-    
-    @Documentation(description = "Localized urls to test information website")   
-    private Map<String, String> testInformationUrls;
 
-	@Documentation(description = "Flag to enable notifications informing users about the new checkin feature")
-	private boolean checkInUpdateNotificationEnabled = false;
+    @Documentation(description = "Localized urls to test information website")
+    private Map<Language, String> testInformationUrls;
 
-	public boolean isForceUpdate() {
-		return forceUpdate;
-	}
+    @Documentation(
+            description =
+                    "Flag to enable notifications informing users about the new checkin feature")
+    private boolean checkInUpdateNotificationEnabled = false;
 
-	public void setForceUpdate(boolean forceUpdate) {
-		this.forceUpdate = forceUpdate;
-	}
+    @Documentation(description = "Holds vaccination booking infos for cantons by language")
+    private Map<Language, List<VaccinationBookingCanton>> vaccinationBookingCantons = null;
 
-	public InfoBoxCollection getInfoBox() {
-		return infoBox;
-	}
+    @Documentation(description = "Holds general vaccination booking info by language")
+    private Map<Language, VaccinationBookingInfo> vaccinationBookingInfo = null;
 
-	public void setInfoBox(InfoBoxCollection infoBox) {
-		this.infoBox = infoBox;
-	}
+    @Documentation(
+            description =
+                    "feature flag. when set to true the vaccination infos should be displayed")
+    private Boolean showVaccinationInfo;
 
-	public WhatToDoPositiveTestTextsCollection getWhatToDoPositiveTestTexts() {
-		return whatToDoPositiveTestTexts;
-	}
+    public boolean isForceUpdate() {
+        return forceUpdate;
+    }
 
-	public void setWhatToDoPositiveTestTexts(WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts) {
-		this.whatToDoPositiveTestTexts = whatToDoPositiveTestTexts;
-	}
+    public void setForceUpdate(boolean forceUpdate) {
+        this.forceUpdate = forceUpdate;
+    }
 
-	public GAENSDKConfig getiOSGaenSdkConfig() {
-		return iOSGaenSdkConfig;
-	}
+    public InfoBoxCollection getInfoBox() {
+        return infoBox;
+    }
 
-	public void setiOSGaenSdkConfig(GAENSDKConfig iOSGaenSdkConfig) {
-		this.iOSGaenSdkConfig = iOSGaenSdkConfig;
-	}
+    public void setInfoBox(InfoBoxCollection infoBox) {
+        this.infoBox = infoBox;
+    }
 
-	public GAENSDKConfig getAndroidGaenSdkConfig() {
-		return androidGaenSdkConfig;
-	}
+    public WhatToDoPositiveTestTextsCollection getWhatToDoPositiveTestTexts() {
+        return whatToDoPositiveTestTexts;
+    }
 
-	public void setAndroidGaenSdkConfig(GAENSDKConfig androidGaenSdkConfig) {
-		this.androidGaenSdkConfig = androidGaenSdkConfig;
-	}
+    public void setWhatToDoPositiveTestTexts(
+            WhatToDoPositiveTestTextsCollection whatToDoPositiveTestTexts) {
+        this.whatToDoPositiveTestTexts = whatToDoPositiveTestTexts;
+    }
 
-	public TestLocationCollection getTestLocations() {
-		return testLocations;
-	}
+    public GAENSDKConfig getiOSGaenSdkConfig() {
+        return iOSGaenSdkConfig;
+    }
 
-	public void setTestLocations(TestLocationCollection testLocations) {
-		this.testLocations = testLocations;
-	}
+    public void setiOSGaenSdkConfig(GAENSDKConfig iOSGaenSdkConfig) {
+        this.iOSGaenSdkConfig = iOSGaenSdkConfig;
+    }
 
-	public List<String> getInterOpsCountries() {
-		return interOpsCountries;
-	}
+    public GAENSDKConfig getAndroidGaenSdkConfig() {
+        return androidGaenSdkConfig;
+    }
 
-	public void setInterOpsCountries(List<String> interOpsCountries) {
-		this.interOpsCountries = interOpsCountries;
-	}
-	
-	public Map<String, String> getTestInformationUrls() {
-		return testInformationUrls;
-	}
-	
-	public void setTestInformationUrls(Map<String, String> testInformationUrls) {
-		this.testInformationUrls = testInformationUrls;
-	}
+    public void setAndroidGaenSdkConfig(GAENSDKConfig androidGaenSdkConfig) {
+        this.androidGaenSdkConfig = androidGaenSdkConfig;
+    }
 
-	public void setCheckInUpdateNotificationEnabled(boolean checkInUpdateNotificationEnabled) {
-		this.checkInUpdateNotificationEnabled = checkInUpdateNotificationEnabled;
-	}
+    public TestLocationCollection getTestLocations() {
+        return testLocations;
+    }
 
-	public boolean isCheckInUpdateNotificationEnabled() {
-		return checkInUpdateNotificationEnabled;
-	}
+    public void setTestLocations(TestLocationCollection testLocations) {
+        this.testLocations = testLocations;
+    }
+
+    public List<String> getInterOpsCountries() {
+        return interOpsCountries;
+    }
+
+    public void setInterOpsCountries(List<String> interOpsCountries) {
+        this.interOpsCountries = interOpsCountries;
+    }
+
+    public Map<Language, String> getTestInformationUrls() {
+        return testInformationUrls;
+    }
+
+    public void setTestInformationUrls(Map<Language, String> testInformationUrls) {
+        this.testInformationUrls = testInformationUrls;
+    }
+
+    public void setCheckInUpdateNotificationEnabled(boolean checkInUpdateNotificationEnabled) {
+        this.checkInUpdateNotificationEnabled = checkInUpdateNotificationEnabled;
+    }
+
+    public boolean isCheckInUpdateNotificationEnabled() {
+        return checkInUpdateNotificationEnabled;
+    }
+
+    public Map<Language, List<VaccinationBookingCanton>> getVaccinationBookingCantons() {
+        return vaccinationBookingCantons;
+    }
+
+    public void setVaccinationBookingCantons(
+            Map<Language, List<VaccinationBookingCanton>> vaccinationBookingCantons) {
+        this.vaccinationBookingCantons = vaccinationBookingCantons;
+    }
+
+    public Map<Language, VaccinationBookingInfo> getVaccinationBookingInfo() {
+        return vaccinationBookingInfo;
+    }
+
+    public void setVaccinationBookingInfo(
+            Map<Language, VaccinationBookingInfo> vaccinationBookingInfo) {
+        this.vaccinationBookingInfo = vaccinationBookingInfo;
+    }
+
+    public Boolean getShowVaccinationInfo() {
+        return showVaccinationInfo;
+    }
+
+    public void setShowVaccinationInfo(Boolean showVaccinationInfo) {
+        this.showVaccinationInfo = showVaccinationInfo;
+    }
 }

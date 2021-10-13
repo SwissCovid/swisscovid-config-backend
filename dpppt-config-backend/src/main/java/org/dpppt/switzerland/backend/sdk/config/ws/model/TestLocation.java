@@ -12,32 +12,30 @@ package org.dpppt.switzerland.backend.sdk.config.ws.model;
 
 public class TestLocation {
 
-	private String region;
-	private String url;
+    private String region;
+    private String url;
 
-	public TestLocation() {
-	}
-	
-	public TestLocation(String region, String url) {
-		super();
-		this.region = region;
-		this.url = url;
-	}
+    public TestLocation() {}
 
-	public String getRegion() {
-		return region;
-	}
+    public TestLocation(String region, String url) {
+        super();
+        this.region = region;
+        this.url = url;
+    }
 
-	public void setRegion(String region) {
-		this.region = region;
-	}
+    public String getRegion() {
+        return region;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

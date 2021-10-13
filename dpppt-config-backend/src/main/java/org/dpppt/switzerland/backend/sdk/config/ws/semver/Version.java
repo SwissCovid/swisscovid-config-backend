@@ -23,8 +23,7 @@ public class Version implements Comparable<Version> {
             Pattern.compile(
                     "^(?:(?<platform>ios|android)-)?(?<major>0|[1-9]\\d*)(\\.(?<minor>0|[1-9]\\d*))?(\\.(?<patch>0|[1-9]\\d*))?(?:-(?<prerelease>(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$");
 
-    public Version() {
-    }
+    public Version() {}
 
     public Version(String versionString) {
         if (versionString == null) {

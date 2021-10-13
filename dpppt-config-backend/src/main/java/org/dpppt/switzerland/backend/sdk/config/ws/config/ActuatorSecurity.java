@@ -34,55 +34,88 @@ public class ActuatorSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired Environment environment;
     // region Actuator Passwords
-    //----------------------------------------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------------------------------------
     @Bean
     @Profile("cloud-dev")
     ActuatorSecurityConfig passwordCloudDev() {
-        return new ActuatorSecurityConfig(user, environment.getProperty("vcap.services.ha_prometheus_dev.credentials.password"));
+        return new ActuatorSecurityConfig(
+                user,
+                environment.getProperty("vcap.services.ha_prometheus_dev.credentials.password"));
     }
+
     @Bean
     @Profile("cloud-test")
     ActuatorSecurityConfig passwordCloudTest() {
-        return new ActuatorSecurityConfig(user, environment.getProperty("vcap.services.ha_prometheus_test.credentials.password"));
+        return new ActuatorSecurityConfig(
+                user,
+                environment.getProperty("vcap.services.ha_prometheus_test.credentials.password"));
     }
+
     @Bean
     @Profile("cloud-abn")
     ActuatorSecurityConfig passwordCloudAbn() {
-        return new ActuatorSecurityConfig(user, environment.getProperty("vcap.services.ha_prometheus_abn.credentials.password"));
+        return new ActuatorSecurityConfig(
+                user,
+                environment.getProperty("vcap.services.ha_prometheus_abn.credentials.password"));
     }
+
     @Bean
     @Profile("cloud-prod")
     ActuatorSecurityConfig passwordProdAbn() {
-        return new ActuatorSecurityConfig(user, environment.getProperty("vcap.services.ha_prometheus_prod.credentials.password"));
+        return new ActuatorSecurityConfig(
+                user,
+                environment.getProperty("vcap.services.ha_prometheus_prod.credentials.password"));
     }
 
     @Bean
     @ConditionalOnMissingBean
     ActuatorSecurityConfig passwordDefault() {
-        return new ActuatorSecurityConfig(user, environment.getProperty("ws.monitor.prometheus.password"));
+        return new ActuatorSecurityConfig(
+                user, environment.getProperty("ws.monitor.prometheus.password"));
     }
-    //----------------------------------------------------------------------------------------------------------------------------------
-    //endregion
-    
+    // ----------------------------------------------------------------------------------------------------------------------------------
+    // endregion
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.requestMatcher(org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.toAnyEndpoint()).
-                authorizeRequests().
-                requestMatchers(org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.to(HealthEndpoint.class)).permitAll().
-                requestMatchers(org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.to(InfoEndpoint.class)).permitAll().
-                requestMatchers(org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.to(LoggersEndpoint.class)).hasRole(PROMETHEUS_ROLE).
-                requestMatchers(org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.to(PrometheusScrapeEndpoint.class)).hasRole(PROMETHEUS_ROLE).
-                anyRequest().denyAll().
-                and().
-                httpBasic();
+        http.requestMatcher(
+                        org.springframework.boot.actuate.autoconfigure.security.servlet
+                                .EndpointRequest.toAnyEndpoint())
+                .authorizeRequests()
+                .requestMatchers(
+                        org.springframework.boot.actuate.autoconfigure.security.servlet
+                                .EndpointRequest.to(HealthEndpoint.class))
+                .permitAll()
+                .requestMatchers(
+                        org.springframework.boot.actuate.autoconfigure.security.servlet
+                                .EndpointRequest.to(InfoEndpoint.class))
+                .permitAll()
+                .requestMatchers(
+                        org.springframework.boot.actuate.autoconfigure.security.servlet
+                                .EndpointRequest.to(LoggersEndpoint.class))
+                .hasRole(PROMETHEUS_ROLE)
+                .requestMatchers(
+                        org.springframework.boot.actuate.autoconfigure.security.servlet
+                                .EndpointRequest.to(PrometheusScrapeEndpoint.class))
+                .hasRole(PROMETHEUS_ROLE)
+                .anyRequest()
+                .denyAll()
+                .and()
+                .httpBasic();
 
         http.csrf().ignoringAntMatchers("/actuator/loggers/**");
     }
 
     @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth, ActuatorSecurityConfig securityConfig) throws Exception {
-        auth.inMemoryAuthentication().withUser(securityConfig.getUsername()).password(passwordEncoder().encode(securityConfig.getPassword())).roles(PROMETHEUS_ROLE);
+    protected void configureGlobal(
+            AuthenticationManagerBuilder auth, ActuatorSecurityConfig securityConfig)
+            throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser(securityConfig.getUsername())
+                .password(passwordEncoder().encode(securityConfig.getPassword()))
+                .roles(PROMETHEUS_ROLE);
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

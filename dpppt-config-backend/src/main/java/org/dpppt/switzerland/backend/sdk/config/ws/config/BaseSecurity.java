@@ -6,10 +6,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 public class BaseSecurity extends WebSecurityConfigurerAdapter {
-	@Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-		http
-		.authorizeRequests()
-		.antMatchers("/v1/**").permitAll();
+        http.authorizeRequests().antMatchers("/v1/**").permitAll();
     }
 }
