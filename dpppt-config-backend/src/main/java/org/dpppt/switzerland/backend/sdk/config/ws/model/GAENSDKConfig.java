@@ -14,65 +14,78 @@ import ch.ubique.openapi.docannotations.Documentation;
 
 public class GAENSDKConfig {
 
-	@Documentation(description = "Lower threshold that is sent to the GAEN to count encounters with other devices. It" +
-			" is expressed in dB attenuation from the Bluetooth chip.",
-			example="53")
-	private Integer lowerThreshold = 55;
-	@Documentation(description = "Higher threshold that is sent to the GAEN to count encounters with other devices " +
-			".It is expressed in dB attenuation from the Bluetooth chip.",
-			example="60")
-	private Integer higherThreshold = 63;
-	@Documentation(description = "Multiplication factor used to weigh the return value of the GAEN in " +
-			"attenuationDuration[0]",
-			example = "1.0d")
-	private Double factorLow = 1.0d;
-	@Documentation(description = "Multiplication factor used to weigh the return value of the GAEN in " +
-			"attenuationDuration[1]",
-			example = "0.5d")
-	private Double factorHigh = 0.5d;
-	@Documentation(description = "Minimum duration of exposure during one day reported by the GAEN before the user " +
-			"is alerted of an exposure risk",
-			example = "15")
-	private Integer triggerThreshold = 15;
+    @Documentation(
+            description =
+                    "Lower threshold that is sent to the GAEN to count encounters with other devices. It"
+                            + " is expressed in dB attenuation from the Bluetooth chip.",
+            example = "53")
+    private Integer lowerThreshold = 55;
 
-	public Integer getLowerThreshold() {
-		return lowerThreshold;
-	}
+    @Documentation(
+            description =
+                    "Higher threshold that is sent to the GAEN to count encounters with other devices "
+                            + ".It is expressed in dB attenuation from the Bluetooth chip.",
+            example = "60")
+    private Integer higherThreshold = 63;
 
-	public void setLowerThreshold(Integer lowerThreshold) {
-		this.lowerThreshold = lowerThreshold;
-	}
+    @Documentation(
+            description =
+                    "Multiplication factor used to weigh the return value of the GAEN in "
+                            + "attenuationDuration[0]",
+            example = "1.0d")
+    private Double factorLow = 1.0d;
 
-	public Integer getHigherThreshold() {
-		return higherThreshold;
-	}
+    @Documentation(
+            description =
+                    "Multiplication factor used to weigh the return value of the GAEN in "
+                            + "attenuationDuration[1]",
+            example = "0.5d")
+    private Double factorHigh = 0.5d;
 
-	public void setHigherThreshold(Integer higherThreshold) {
-		this.higherThreshold = higherThreshold;
-	}
+    @Documentation(
+            description =
+                    "Minimum duration of exposure during one day reported by the GAEN before the user "
+                            + "is alerted of an exposure risk",
+            example = "15")
+    private Integer triggerThreshold = 15;
 
-	public Double getFactorLow() {
-		return factorLow;
-	}
+    public Integer getLowerThreshold() {
+        return lowerThreshold;
+    }
 
-	public void setFactorLow(Double factorLow) {
-		this.factorLow = factorLow;
-	}
+    public void setLowerThreshold(Integer lowerThreshold) {
+        this.lowerThreshold = lowerThreshold;
+    }
 
-	public Double getFactorHigh() {
-		return factorHigh;
-	}
+    public Integer getHigherThreshold() {
+        return higherThreshold;
+    }
 
-	public void setFactorHigh(Double factorHigh) {
-		this.factorHigh = factorHigh;
-	}
+    public void setHigherThreshold(Integer higherThreshold) {
+        this.higherThreshold = higherThreshold;
+    }
 
-	public Integer getTriggerThreshold() {
-		return triggerThreshold;
-	}
+    public Double getFactorLow() {
+        return factorLow;
+    }
 
-	public void setTriggerThreshold(Integer triggerThreshold) {
-		this.triggerThreshold = triggerThreshold;
-	}
+    public void setFactorLow(Double factorLow) {
+        this.factorLow = factorLow;
+    }
 
+    public Double getFactorHigh() {
+        return factorHigh;
+    }
+
+    public void setFactorHigh(Double factorHigh) {
+        this.factorHigh = factorHigh;
+    }
+
+    public Integer getTriggerThreshold() {
+        return triggerThreshold;
+    }
+
+    public void setTriggerThreshold(Integer triggerThreshold) {
+        this.triggerThreshold = triggerThreshold;
+    }
 }
