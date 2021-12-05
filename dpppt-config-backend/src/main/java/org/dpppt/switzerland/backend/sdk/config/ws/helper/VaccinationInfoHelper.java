@@ -17,6 +17,8 @@ public class VaccinationInfoHelper {
 
     private static final String VACCINATION_BOOKING_INFO_PREFIX = "vaccination_booking_info_";
 
+    private static final String VACCINATION_IMPF_CHECK_PREFIX = "vaccination_impf_check_";
+
     private final Messages msg;
 
     public VaccinationInfoHelper(Messages msg) {
@@ -50,6 +52,12 @@ public class VaccinationInfoHelper {
             info.setTitle(msg.getMessage(VACCINATION_BOOKING_INFO_PREFIX + "title", l));
             info.setText(msg.getMessage(VACCINATION_BOOKING_INFO_PREFIX + "text", l));
             info.setInfo(msg.getMessage(VACCINATION_BOOKING_INFO_PREFIX + "info", l));
+
+            info.setImpfcheckTitle(msg.getMessage(VACCINATION_IMPF_CHECK_PREFIX + "title", l));
+            info.setImpfcheckText(msg.getMessage(VACCINATION_IMPF_CHECK_PREFIX + "info_text", l));
+            info.setImpfcheckButton(msg.getMessage(VACCINATION_IMPF_CHECK_PREFIX + "action", l));
+            info.setImpfcheckUrl(msg.getMessage(VACCINATION_IMPF_CHECK_PREFIX + "url", l));
+
             result.put(language, info);
         }
         return result;
