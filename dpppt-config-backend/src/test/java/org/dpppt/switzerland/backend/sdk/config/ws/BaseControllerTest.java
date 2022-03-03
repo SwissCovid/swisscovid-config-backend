@@ -344,6 +344,22 @@ public abstract class BaseControllerTest {
     }
 
     @Test
+    public void testDeactivation() throws Exception {
+        var result =
+                mockMvc.perform(
+                                get("/v1/config")
+                                        .param("osversion", "android11")
+                                        .param("appversion", "android-2.3.2")
+                                        .param("buildnr", "android-2020.0145asdfa34"))
+                        .andExpect(status().is2xxSuccessful())
+                        .andReturn()
+                        .getResponse();
+        ConfigResponse resp = toConfigResponse(result);
+        assertNotNull(resp.getDeactivationMessage());
+        assertTrue(resp.getDeactivate());
+    }
+
+    @Test
     public void testNoForceUpdate() throws Exception {
         MockHttpServletResponse result =
                 mockMvc.perform(
