@@ -78,6 +78,8 @@ public class GaenConfigController {
     private static final String IOS_VERSION_14 = "ios14.0";
     private static final Version APP_VERSION_1_0_9 = new Version("ios-1.0.9");
     private static final Version IOS_APP_VERSION_1_1_2 = new Version("ios-1.1.2");
+    private static final Version APP_VERSION_2_3_1 = new Version("ios-2.3.1");
+
 
     private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
 
@@ -87,19 +89,22 @@ public class GaenConfigController {
     private final boolean checkInUpdateNotificationEnabled;
     private final VaccinationInfoHelper vaccinationInfoHelper;
     private final boolean showVaccinationInfo;
+    private final boolean deactivate;
 
     public GaenConfigController(
             Messages messages,
             List<String> interOpsCountryCodes,
             boolean checkInUpdateNotificationEnabled,
             VaccinationInfoHelper vaccinationInfoHelper,
-            boolean showVaccinationInfo) {
+            boolean showVaccinationInfo,
+            boolean deactivate) {
         this.messages = messages;
         this.interOpsCountryCodes = interOpsCountryCodes;
         this.testLocationHelper = new TestLocationHelper(messages);
         this.checkInUpdateNotificationEnabled = checkInUpdateNotificationEnabled;
         this.vaccinationInfoHelper = vaccinationInfoHelper;
         this.showVaccinationInfo = showVaccinationInfo;
+        this.deactivate = deactivate;
     }
 
     @Documentation(
@@ -140,27 +145,13 @@ public class GaenConfigController {
         config.setVaccinationBookingCantons(vaccinationInfoHelper.getVaccinationBookingCantons());
         config.setVaccinationBookingInfo(vaccinationInfoHelper.getVaccinationBookingInfo());
         config.setShowVaccinationInfo(showVaccinationInfo);
+        config.setDeactivate(deactivate);
 
-        // For iOS 13.6 users show information about weekly notification
-        if (osversion.startsWith(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
-            IOS136InfoBoxHelper.setInfoTextForiOS136(config);
-        }
-
-        // if we have testflight builds suggest to switch to store version
-        if (TESTFLIGHT_VERSIONS.contains(buildnr)) {
-            config = testFlightUpdate();
-        }
-
-        // Build nr of the initial iOS pilot test app. Contains bug, that factors are
-        // not used correctly in contact calculations. Set factorHigh to 0.0 for
-        // improving the calculation.
-        if (buildnr.equals("ios-200524.1316.87")) {
-            config.getiOSGaenSdkConfig().setFactorHigh(0.0d);
-        }
-
-        // Check for old app Versions, iOS only
-        if (userAppVersion.isIOS() && APP_VERSION_1_0_9.isLargerVersionThan(userAppVersion)) {
-            config = generalUpdateRelease(true);
+        //Check for version >2.3.1 (the deactivation update)
+        if(userAppVersion.isLargerVersionThan(APP_VERSION_2_3_1)){
+           config.setDeactivationMessage(appDeactivationInfobox());
+        }else{
+           config.setInfoBox(appDeactivationInfobox());
         }
 
         // Work around a limitation of SwissCovid 1.1.2 on iOS which requires an InfoBox
@@ -294,6 +285,108 @@ public class GaenConfigController {
 
         return configResponse;
     }
+
+
+
+
+    private InfoBoxCollection appDeactivationInfobox() {
+        InfoBox infoBoxde = new InfoBox();
+        infoBoxde.setMsg(
+                "PLACEHOLDER app wird denn abgstellt im fall");
+        infoBoxde.setTitle("PLACEHOLDER COVID IS NO MORE");
+        infoBoxde.setIsDismissible(false);
+
+        InfoBox infoBoxfr = new InfoBox();
+        infoBoxfr.setMsg(
+                "PLACEHOLDER TEXT FR");
+        infoBoxfr.setTitle("PLACEHOLDER TITLE FR");
+        infoBoxfr.setIsDismissible(false);
+
+        InfoBox infoBoxit = new InfoBox();
+        infoBoxit.setMsg(
+                "PLACEHOLDER TEXT IT");
+        infoBoxit.setTitle("PLACEHOLDER TITLE IT");
+        infoBoxit.setIsDismissible(false);
+
+        InfoBox infoBoxen = new InfoBox();
+        infoBoxen.setMsg(
+                "PLACEHOLDER TEXT EN");
+        infoBoxen.setTitle("PLACEHOLDER TITLE EN");
+        infoBoxen.setIsDismissible(false);
+
+        InfoBox infoBoxpt = new InfoBox();
+        infoBoxpt.setMsg(
+                "PLACEHOLDER TEXT");
+        infoBoxpt.setTitle("PLACEHOLDER TITLE");
+        infoBoxpt.setIsDismissible(false);
+
+        InfoBox infoBoxes = new InfoBox();
+        infoBoxes.setMsg(
+                "PLACEHOLDER TEXT");
+        infoBoxes.setTitle("PLACEHOLDER TITLE");
+        infoBoxes.setIsDismissible(false);
+
+        InfoBox infoBoxsq = new InfoBox();
+        infoBoxsq.setMsg(
+                "PLACEHOLDER TEXT");
+        infoBoxsq.setTitle("PLACEHOLDER TITLE");
+        infoBoxsq.setIsDismissible(false);
+
+        InfoBox infoBoxbs = new InfoBox();
+        infoBoxbs.setMsg(
+                "PLACEHOLDER TEXT");
+        infoBoxbs.setTitle("PLACEHOLDER TITLE");
+        infoBoxbs.setIsDismissible(false);
+
+        InfoBox infoBoxhr = new InfoBox();
+        infoBoxhr.setMsg(
+                "PLACEHOLDER TEXT");
+        infoBoxhr.setTitle("PLACEHOLDER TITLE");
+        infoBoxhr.setIsDismissible(false);
+
+        InfoBox infoBoxrm = new InfoBox();
+        infoBoxrm.setMsg(
+                "PLACEHOLDER TEXT");
+        infoBoxrm.setTitle("PLACEHOLDER TITLE");
+        infoBoxrm.setIsDismissible(false);
+
+        InfoBox infoBoxsr = new InfoBox();
+        infoBoxsr.setMsg(
+                "PLACEHOLDER TEXT");
+        infoBoxsr.setTitle("PLACEHOLDER TITLE");
+        infoBoxsr.setIsDismissible(false);
+
+        InfoBox infoBoxtr = new InfoBox();
+        infoBoxtr.setMsg(
+                "PLACEHOLDER TEXT");
+        infoBoxtr.setTitle("PLACEHOLDER TITLE");
+        infoBoxtr.setIsDismissible(false);
+
+        InfoBox infoBoxti = new InfoBox();
+        infoBoxti.setMsg(
+                "PLACEHOLDER TEXT");
+        infoBoxti.setTitle("PLACEHOLDER TITLE");
+        infoBoxti.setIsDismissible(false);
+
+        InfoBoxCollection collection = new InfoBoxCollection();
+        collection.setDeInfoBox(infoBoxde);
+        collection.setEnInfoBox(infoBoxen);
+        collection.setFrInfoBox(infoBoxfr);
+        collection.setItInfoBox(infoBoxit);
+        collection.setPtInfoBox(infoBoxpt);
+        collection.setEsInfoBox(infoBoxes);
+        collection.setSqInfoBox(infoBoxsq);
+        collection.setHrInfoBox(infoBoxhr);
+        collection.setBsInfoBox(infoBoxbs);
+        collection.setRmInfoBox(infoBoxrm);
+        collection.setSrInfoBox(infoBoxsr);
+        collection.setTiInfoBox(infoBoxti);
+        collection.setTrInfoBox(infoBoxtr);
+
+        return collection;
+    }
+
+
 
     private ConfigResponse generalUpdateRelease(boolean isIos) {
         ConfigResponse configResponse = new ConfigResponse();

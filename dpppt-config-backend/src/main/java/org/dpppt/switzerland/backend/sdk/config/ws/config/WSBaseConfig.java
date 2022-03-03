@@ -89,13 +89,15 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
     public GaenConfigController gaenConfigController(
             Messages messages,
             VaccinationInfoHelper vaccinationInfoHelper,
-            @Value("${ws.vaccination-info.show:false}") boolean showVaccinationInfo) {
+            @Value("${ws.vaccination-info.show:false}") boolean showVaccinationInfo,
+            @Value("${ws.deactivate-app:false}") boolean deactivate) {
         return new GaenConfigController(
                 messages,
                 interOpsCountryCodes,
                 checkInUpdateNotificationEnabled,
                 vaccinationInfoHelper,
-                showVaccinationInfo);
+                showVaccinationInfo,
+                deactivate);
     }
 
     @Bean
