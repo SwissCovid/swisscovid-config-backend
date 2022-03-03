@@ -64,6 +64,14 @@ public class ConfigResponse {
                     "feature flag. when set to true the vaccination infos should be displayed")
     private Boolean showVaccinationInfo;
 
+    @Documentation(
+            description = "Flag to deactivate the app, stopping contact tracing and showing a message to the user"
+    )
+    private Boolean deactivate;
+
+    @Documentation(description = "Holds a message translated in different languages")
+    private InfoBoxCollection deactivationMessage = null;
+
     public boolean isForceUpdate() {
         return forceUpdate;
     }
@@ -161,5 +169,22 @@ public class ConfigResponse {
 
     public void setShowVaccinationInfo(Boolean showVaccinationInfo) {
         this.showVaccinationInfo = showVaccinationInfo;
+    }
+
+    public Boolean getDeactivate() {
+        return deactivate;
+    }
+
+    public void setDeactivate(Boolean deactivate) {
+        this.deactivate = deactivate;
+    }
+
+    public InfoBoxCollection getDeactivationMessage() {
+        return deactivationMessage;
+    }
+
+    public void setDeactivationMessage(
+            InfoBoxCollection deactivationMessage) {
+        this.deactivationMessage = deactivationMessage;
     }
 }
