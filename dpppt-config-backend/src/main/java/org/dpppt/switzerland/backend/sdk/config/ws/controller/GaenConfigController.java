@@ -148,9 +148,9 @@ public class GaenConfigController {
         config.setDeactivate(deactivate);
 
         //Check for version >2.3.1 (the deactivation update)
-        if(userAppVersion.isLargerVersionThan(APP_VERSION_2_3_1)){
+        if (userAppVersion.isLargerVersionThan(APP_VERSION_2_3_1)) {
            config.setDeactivationMessage(appDeactivationInfobox());
-        }else{
+        } else {
            config.setInfoBox(appDeactivationInfobox());
         }
 
