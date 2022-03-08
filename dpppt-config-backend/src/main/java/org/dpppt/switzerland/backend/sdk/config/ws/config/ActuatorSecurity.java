@@ -1,12 +1,10 @@
 package org.dpppt.switzerland.backend.sdk.config.ws.config;
 
-import org.dpppt.switzerland.backend.sdk.config.ws.config.configbeans.ActuatorSecurityConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.HealthEndpoint;
 import org.springframework.boot.actuate.info.InfoEndpoint;
 import org.springframework.boot.actuate.logging.LoggersEndpoint;
 import org.springframework.boot.actuate.metrics.export.prometheus.PrometheusScrapeEndpoint;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
@@ -15,8 +13,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE + 9)
@@ -30,13 +26,6 @@ public class ActuatorSecurity extends WebSecurityConfigurerAdapter {
     private String user;
     @Value("${ws.monitor.prometheus.password}")
     private String password;
-
-
-    @Bean
-    ActuatorSecurityConfig passwordDefault() {
-        return new ActuatorSecurityConfig(
-                user, password);
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -74,12 +63,8 @@ public class ActuatorSecurity extends WebSecurityConfigurerAdapter {
             throws Exception {
         auth.inMemoryAuthentication()
                 .withUser(user)
-                .password(passwordEncoder().encode(password))
+                .password(password)
                 .roles(PROMETHEUS_ROLE);
-    }
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
 
