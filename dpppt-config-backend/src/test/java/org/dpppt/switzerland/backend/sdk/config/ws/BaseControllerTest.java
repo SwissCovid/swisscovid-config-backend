@@ -105,7 +105,7 @@ public abstract class BaseControllerTest {
         assertNotNull(resp);
         assertNotNull(resp.getInfoBox());
         assertNotNull(resp.getInfoBox().getDeInfoBox());
-        assertEquals("PLACEHOLDER COVID IS NO MORE", resp.getInfoBox().getDeInfoBox().getTitle());
+        assertEquals("Der Betrieb der SwissCovid App wurde eingestellt", resp.getInfoBox().getDeInfoBox().getTitle());
     }
 
     protected void assertTestTestflightUpdate(MockHttpServletResponse result) throws Exception {

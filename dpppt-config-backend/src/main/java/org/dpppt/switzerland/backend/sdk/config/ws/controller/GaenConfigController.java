@@ -15,7 +15,6 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import org.dpppt.switzerland.backend.sdk.config.ws.helper.IOS136InfoBoxHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.MockHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.TestLocationHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.VaccinationInfoHelper;
@@ -82,6 +81,12 @@ public class GaenConfigController {
 
 
     private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
+    //TODO actual URL
+    private static final String TERMINATION_URL = "https://bag-coronavirus.ch/swisscovid-app/";
+    public static final String TERMINATION_TITLE = "termination_title";
+    public static final String TERMINATION_TEXT = "termination_text";
+    public static final String TERMINATION_TEXT_INFOBOX = "termination_text_infobox";
+    public static final String TERMINATION_LINK_TITLE = "termination_link_title";
 
     protected final Messages messages;
     private final List<String> interOpsCountryCodes;
@@ -287,102 +292,32 @@ public class GaenConfigController {
     }
 
 
+    private InfoBox createDeactivationInfobox(Language language){
+        InfoBox infoBox = new InfoBox();
+        infoBox.setMsg(messages.getNullableMessage(TERMINATION_TEXT, language.toLocale()));
+        infoBox.setTitle(messages.getNullableMessage(TERMINATION_TITLE, language.toLocale()));
+        infoBox.setUrlTitle(messages.getNullableMessage(TERMINATION_LINK_TITLE, language.toLocale()));
+        infoBox.setUrl(TERMINATION_URL);
+        infoBox.setIsDismissible(false);
+        return infoBox;
+    }
 
 
     private InfoBoxCollection appDeactivationInfobox() {
-        InfoBox infoBoxde = new InfoBox();
-        infoBoxde.setMsg(
-                "PLACEHOLDER app wird denn abgstellt im fall");
-        infoBoxde.setTitle("PLACEHOLDER COVID IS NO MORE");
-        infoBoxde.setIsDismissible(false);
-
-        InfoBox infoBoxfr = new InfoBox();
-        infoBoxfr.setMsg(
-                "PLACEHOLDER TEXT FR");
-        infoBoxfr.setTitle("PLACEHOLDER TITLE FR");
-        infoBoxfr.setIsDismissible(false);
-
-        InfoBox infoBoxit = new InfoBox();
-        infoBoxit.setMsg(
-                "PLACEHOLDER TEXT IT");
-        infoBoxit.setTitle("PLACEHOLDER TITLE IT");
-        infoBoxit.setIsDismissible(false);
-
-        InfoBox infoBoxen = new InfoBox();
-        infoBoxen.setMsg(
-                "PLACEHOLDER TEXT EN");
-        infoBoxen.setTitle("PLACEHOLDER TITLE EN");
-        infoBoxen.setIsDismissible(false);
-
-        InfoBox infoBoxpt = new InfoBox();
-        infoBoxpt.setMsg(
-                "PLACEHOLDER TEXT");
-        infoBoxpt.setTitle("PLACEHOLDER TITLE");
-        infoBoxpt.setIsDismissible(false);
-
-        InfoBox infoBoxes = new InfoBox();
-        infoBoxes.setMsg(
-                "PLACEHOLDER TEXT");
-        infoBoxes.setTitle("PLACEHOLDER TITLE");
-        infoBoxes.setIsDismissible(false);
-
-        InfoBox infoBoxsq = new InfoBox();
-        infoBoxsq.setMsg(
-                "PLACEHOLDER TEXT");
-        infoBoxsq.setTitle("PLACEHOLDER TITLE");
-        infoBoxsq.setIsDismissible(false);
-
-        InfoBox infoBoxbs = new InfoBox();
-        infoBoxbs.setMsg(
-                "PLACEHOLDER TEXT");
-        infoBoxbs.setTitle("PLACEHOLDER TITLE");
-        infoBoxbs.setIsDismissible(false);
-
-        InfoBox infoBoxhr = new InfoBox();
-        infoBoxhr.setMsg(
-                "PLACEHOLDER TEXT");
-        infoBoxhr.setTitle("PLACEHOLDER TITLE");
-        infoBoxhr.setIsDismissible(false);
-
-        InfoBox infoBoxrm = new InfoBox();
-        infoBoxrm.setMsg(
-                "PLACEHOLDER TEXT");
-        infoBoxrm.setTitle("PLACEHOLDER TITLE");
-        infoBoxrm.setIsDismissible(false);
-
-        InfoBox infoBoxsr = new InfoBox();
-        infoBoxsr.setMsg(
-                "PLACEHOLDER TEXT");
-        infoBoxsr.setTitle("PLACEHOLDER TITLE");
-        infoBoxsr.setIsDismissible(false);
-
-        InfoBox infoBoxtr = new InfoBox();
-        infoBoxtr.setMsg(
-                "PLACEHOLDER TEXT");
-        infoBoxtr.setTitle("PLACEHOLDER TITLE");
-        infoBoxtr.setIsDismissible(false);
-
-        InfoBox infoBoxti = new InfoBox();
-        infoBoxti.setMsg(
-                "PLACEHOLDER TEXT");
-        infoBoxti.setTitle("PLACEHOLDER TITLE");
-        infoBoxti.setIsDismissible(false);
-
         InfoBoxCollection collection = new InfoBoxCollection();
-        collection.setDeInfoBox(infoBoxde);
-        collection.setEnInfoBox(infoBoxen);
-        collection.setFrInfoBox(infoBoxfr);
-        collection.setItInfoBox(infoBoxit);
-        collection.setPtInfoBox(infoBoxpt);
-        collection.setEsInfoBox(infoBoxes);
-        collection.setSqInfoBox(infoBoxsq);
-        collection.setHrInfoBox(infoBoxhr);
-        collection.setBsInfoBox(infoBoxbs);
-        collection.setRmInfoBox(infoBoxrm);
-        collection.setSrInfoBox(infoBoxsr);
-        collection.setTiInfoBox(infoBoxti);
-        collection.setTrInfoBox(infoBoxtr);
-
+        collection.setDeInfoBox(createDeactivationInfobox(Language.DE));
+        collection.setEnInfoBox(createDeactivationInfobox(Language.EN));
+        collection.setFrInfoBox(createDeactivationInfobox(Language.FR));
+        collection.setItInfoBox(createDeactivationInfobox(Language.IT));
+        collection.setPtInfoBox(createDeactivationInfobox(Language.PT));
+        collection.setEsInfoBox(createDeactivationInfobox(Language.ES));
+        collection.setSqInfoBox(createDeactivationInfobox(Language.SQ));
+        collection.setHrInfoBox(createDeactivationInfobox(Language.HR));
+        collection.setBsInfoBox(createDeactivationInfobox(Language.BS));
+        collection.setRmInfoBox(createDeactivationInfobox(Language.RM));
+        collection.setSrInfoBox(createDeactivationInfobox(Language.SR));
+        collection.setTiInfoBox(createDeactivationInfobox(Language.TI));
+        collection.setTrInfoBox(createDeactivationInfobox(Language.TR));
         return collection;
     }
 
