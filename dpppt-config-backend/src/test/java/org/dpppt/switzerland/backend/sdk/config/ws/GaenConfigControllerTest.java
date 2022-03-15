@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @SpringBootTest(
         properties = {
             "ws.monitor.prometheus.user=prometheus",
-            "ws.monitor.prometheus.password=prometheus",
+            "ws.monitor.prometheus.password={noop}prometheus",
             "management.endpoints.enabled-by-default=true",
             "management.endpoints.web.exposure.include=*"
         })
