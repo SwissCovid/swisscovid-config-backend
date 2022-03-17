@@ -154,9 +154,9 @@ public class GaenConfigController {
 
         //Check for version >2.3.1 (the deactivation update)
         if (userAppVersion.isLargerVersionThan(APP_VERSION_2_3_1)) {
-           config.setDeactivationMessage(appDeactivationInfobox());
+           config.setDeactivationMessage(appDeactivationInfobox(false));
         } else {
-           config.setInfoBox(appDeactivationInfobox());
+           config.setInfoBox(appDeactivationInfobox(true));
         }
 
         // Work around a limitation of SwissCovid 1.1.2 on iOS which requires an InfoBox
@@ -292,9 +292,14 @@ public class GaenConfigController {
     }
 
 
-    private InfoBox createDeactivationInfobox(Language language){
+    private InfoBox createDeactivationInfobox(Language language, boolean oldVersion){
         InfoBox infoBox = new InfoBox();
-        infoBox.setMsg(messages.getNullableMessage(TERMINATION_TEXT, language.toLocale()));
+        if(oldVersion){
+            infoBox.setMsg(messages.getNullableMessage(TERMINATION_TEXT_INFOBOX, language.toLocale()));
+        }else{
+            infoBox.setMsg(messages.getNullableMessage(TERMINATION_TEXT, language.toLocale()));
+        }
+
         infoBox.setTitle(messages.getNullableMessage(TERMINATION_TITLE, language.toLocale()));
         infoBox.setUrlTitle(messages.getNullableMessage(TERMINATION_LINK_TITLE, language.toLocale()));
         infoBox.setUrl(TERMINATION_URL);
@@ -303,24 +308,23 @@ public class GaenConfigController {
     }
 
 
-    private InfoBoxCollection appDeactivationInfobox() {
+    private InfoBoxCollection appDeactivationInfobox(boolean oldVersion) {
         InfoBoxCollection collection = new InfoBoxCollection();
-        collection.setDeInfoBox(createDeactivationInfobox(Language.DE));
-        collection.setEnInfoBox(createDeactivationInfobox(Language.EN));
-        collection.setFrInfoBox(createDeactivationInfobox(Language.FR));
-        collection.setItInfoBox(createDeactivationInfobox(Language.IT));
-        collection.setPtInfoBox(createDeactivationInfobox(Language.PT));
-        collection.setEsInfoBox(createDeactivationInfobox(Language.ES));
-        collection.setSqInfoBox(createDeactivationInfobox(Language.SQ));
-        collection.setHrInfoBox(createDeactivationInfobox(Language.HR));
-        collection.setBsInfoBox(createDeactivationInfobox(Language.BS));
-        collection.setRmInfoBox(createDeactivationInfobox(Language.RM));
-        collection.setSrInfoBox(createDeactivationInfobox(Language.SR));
-        collection.setTiInfoBox(createDeactivationInfobox(Language.TI));
-        collection.setTrInfoBox(createDeactivationInfobox(Language.TR));
+        collection.setDeInfoBox(createDeactivationInfobox(Language.DE, oldVersion));
+        collection.setEnInfoBox(createDeactivationInfobox(Language.EN, oldVersion));
+        collection.setFrInfoBox(createDeactivationInfobox(Language.FR, oldVersion));
+        collection.setItInfoBox(createDeactivationInfobox(Language.IT, oldVersion));
+        collection.setPtInfoBox(createDeactivationInfobox(Language.PT, oldVersion));
+        collection.setEsInfoBox(createDeactivationInfobox(Language.ES, oldVersion));
+        collection.setSqInfoBox(createDeactivationInfobox(Language.SQ, oldVersion));
+        collection.setHrInfoBox(createDeactivationInfobox(Language.HR, oldVersion));
+        collection.setBsInfoBox(createDeactivationInfobox(Language.BS, oldVersion));
+        collection.setRmInfoBox(createDeactivationInfobox(Language.RM, oldVersion));
+        collection.setSrInfoBox(createDeactivationInfobox(Language.SR, oldVersion));
+        collection.setTiInfoBox(createDeactivationInfobox(Language.TI, oldVersion));
+        collection.setTrInfoBox(createDeactivationInfobox(Language.TR, oldVersion));
         return collection;
     }
-
 
 
     private ConfigResponse generalUpdateRelease(boolean isIos) {
