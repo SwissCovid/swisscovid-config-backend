@@ -100,6 +100,14 @@ public abstract class BaseControllerTest {
         assertEquals("App-Update verfügbar", resp.getInfoBox().getDeInfoBox().getTitle());
     }
 
+    protected void assertTestDeactivationUpdate(MockHttpServletResponse result) throws Exception {
+        ConfigResponse resp = toConfigResponse(result);
+        assertNotNull(resp);
+        assertNotNull(resp.getInfoBox());
+        assertNotNull(resp.getInfoBox().getDeInfoBox());
+        assertEquals("Der Betrieb der SwissCovid App wurde eingestellt", resp.getInfoBox().getDeInfoBox().getTitle());
+    }
+
     protected void assertTestTestflightUpdate(MockHttpServletResponse result) throws Exception {
         ConfigResponse resp = toConfigResponse(result);
         assertNotNull(resp);
@@ -220,7 +228,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNoUpdate(result);
+        assertTestDeactivationUpdate(result);
         result =
                 mockMvc.perform(
                                 get("/v1/config")
@@ -230,7 +238,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNoUpdate(result);
+        assertTestDeactivationUpdate(result);
         result =
                 mockMvc.perform(
                                 get("/v1/config")
@@ -240,7 +248,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNormalUpdate(result);
+        assertTestDeactivationUpdate(result);
         result =
                 mockMvc.perform(
                                 get("/v1/config")
@@ -250,7 +258,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNoUpdate(result);
+        assertTestDeactivationUpdate(result);
         result =
                 mockMvc.perform(
                                 get("/v1/config")
@@ -260,7 +268,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNoUpdate(result);
+        assertTestDeactivationUpdate(result);
         result =
                 mockMvc.perform(
                                 get("/v1/config")
@@ -270,7 +278,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNoUpdate(result);
+        assertTestDeactivationUpdate(result);
         result =
                 mockMvc.perform(
                                 get("/v1/config")
@@ -280,7 +288,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNoUpdate(result);
+        assertTestDeactivationUpdate(result);
         result =
                 mockMvc.perform(
                                 get("/v1/config")
@@ -290,7 +298,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNormalUpdate(result);
+        assertTestDeactivationUpdate(result);
 
         result =
                 mockMvc.perform(
@@ -301,7 +309,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNormalUpdate(result);
+        assertTestDeactivationUpdate(result);
 
         result =
                 mockMvc.perform(
@@ -312,7 +320,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNoUpdate(result);
+        assertTestDeactivationUpdate(result);
         result =
                 mockMvc.perform(
                                 get("/v1/config")
@@ -322,7 +330,33 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
+        assertTestDeactivationUpdate(result);
+        result =
+                mockMvc.perform(
+                                get("/v1/config")
+                                        .param("osversion", "android11")
+                                        .param("appversion", "android-2.3.2")
+                                        .param("buildnr", "android-2020.0145asdfa34"))
+                        .andExpect(status().is2xxSuccessful())
+                        .andReturn()
+                        .getResponse();
         assertTestNoUpdate(result);
+    }
+
+    @Test
+    public void testDeactivation() throws Exception {
+        var result =
+                mockMvc.perform(
+                                get("/v1/config")
+                                        .param("osversion", "android11")
+                                        .param("appversion", "android-2.3.2")
+                                        .param("buildnr", "android-2020.0145asdfa34"))
+                        .andExpect(status().is2xxSuccessful())
+                        .andReturn()
+                        .getResponse();
+        ConfigResponse resp = toConfigResponse(result);
+        assertNotNull(resp.getDeactivationMessage());
+        assertTrue(resp.getDeactivate());
     }
 
     @Test
@@ -369,7 +403,7 @@ public abstract class BaseControllerTest {
                             .andExpect(status().is2xxSuccessful())
                             .andReturn()
                             .getResponse();
-            assertTestTestflightUpdate(result);
+            assertTestDeactivationUpdate(result);
         }
         final MockHttpServletResponse result =
                 mockMvc.perform(
@@ -380,7 +414,7 @@ public abstract class BaseControllerTest {
                         .andExpect(status().is2xxSuccessful())
                         .andReturn()
                         .getResponse();
-        assertTestNoUpdate(result);
+        assertTestDeactivationUpdate(result);
     }
 
     @Test

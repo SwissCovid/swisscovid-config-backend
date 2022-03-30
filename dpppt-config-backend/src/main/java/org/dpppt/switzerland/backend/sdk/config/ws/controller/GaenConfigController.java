@@ -15,7 +15,6 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import org.dpppt.switzerland.backend.sdk.config.ws.helper.IOS136InfoBoxHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.MockHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.TestLocationHelper;
 import org.dpppt.switzerland.backend.sdk.config.ws.helper.VaccinationInfoHelper;
@@ -78,8 +77,16 @@ public class GaenConfigController {
     private static final String IOS_VERSION_14 = "ios14.0";
     private static final Version APP_VERSION_1_0_9 = new Version("ios-1.0.9");
     private static final Version IOS_APP_VERSION_1_1_2 = new Version("ios-1.1.2");
+    private static final Version APP_VERSION_2_3_1 = new Version("ios-2.3.1");
+
 
     private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
+
+    public static final String TERMINATION_TITLE = "termination_title";
+    public static final String TERMINATION_TEXT = "termination_text";
+    public static final String TERMINATION_TEXT_INFOBOX = "termination_text_infobox";
+    public static final String TERMINATION_LINK_TITLE = "termination_link_title";
+    public static final String TERMINATION_LINK_URL = "termination_url";
 
     protected final Messages messages;
     private final List<String> interOpsCountryCodes;
@@ -87,19 +94,22 @@ public class GaenConfigController {
     private final boolean checkInUpdateNotificationEnabled;
     private final VaccinationInfoHelper vaccinationInfoHelper;
     private final boolean showVaccinationInfo;
+    private final boolean deactivate;
 
     public GaenConfigController(
             Messages messages,
             List<String> interOpsCountryCodes,
             boolean checkInUpdateNotificationEnabled,
             VaccinationInfoHelper vaccinationInfoHelper,
-            boolean showVaccinationInfo) {
+            boolean showVaccinationInfo,
+            boolean deactivate) {
         this.messages = messages;
         this.interOpsCountryCodes = interOpsCountryCodes;
         this.testLocationHelper = new TestLocationHelper(messages);
         this.checkInUpdateNotificationEnabled = checkInUpdateNotificationEnabled;
         this.vaccinationInfoHelper = vaccinationInfoHelper;
         this.showVaccinationInfo = showVaccinationInfo;
+        this.deactivate = deactivate;
     }
 
     @Documentation(
@@ -140,27 +150,13 @@ public class GaenConfigController {
         config.setVaccinationBookingCantons(vaccinationInfoHelper.getVaccinationBookingCantons());
         config.setVaccinationBookingInfo(vaccinationInfoHelper.getVaccinationBookingInfo());
         config.setShowVaccinationInfo(showVaccinationInfo);
+        config.setDeactivate(deactivate);
 
-        // For iOS 13.6 users show information about weekly notification
-        if (osversion.startsWith(IOS_VERSION_DE_WEEKLY_NOTIFCATION_INFO)) {
-            IOS136InfoBoxHelper.setInfoTextForiOS136(config);
-        }
-
-        // if we have testflight builds suggest to switch to store version
-        if (TESTFLIGHT_VERSIONS.contains(buildnr)) {
-            config = testFlightUpdate();
-        }
-
-        // Build nr of the initial iOS pilot test app. Contains bug, that factors are
-        // not used correctly in contact calculations. Set factorHigh to 0.0 for
-        // improving the calculation.
-        if (buildnr.equals("ios-200524.1316.87")) {
-            config.getiOSGaenSdkConfig().setFactorHigh(0.0d);
-        }
-
-        // Check for old app Versions, iOS only
-        if (userAppVersion.isIOS() && APP_VERSION_1_0_9.isLargerVersionThan(userAppVersion)) {
-            config = generalUpdateRelease(true);
+        //Check for version >2.3.1 (the deactivation update)
+        if (userAppVersion.isLargerVersionThan(APP_VERSION_2_3_1)) {
+           config.setDeactivationMessage(appDeactivationInfobox(false));
+        } else {
+           config.setInfoBox(appDeactivationInfobox(true));
         }
 
         // Work around a limitation of SwissCovid 1.1.2 on iOS which requires an InfoBox
@@ -294,6 +290,42 @@ public class GaenConfigController {
 
         return configResponse;
     }
+
+
+    private InfoBox createDeactivationInfobox(Language language, boolean oldVersion){
+        InfoBox infoBox = new InfoBox();
+        if(oldVersion){
+            infoBox.setMsg(messages.getNullableMessage(TERMINATION_TEXT_INFOBOX, language.toLocale()));
+        }else{
+            infoBox.setMsg(messages.getNullableMessage(TERMINATION_TEXT, language.toLocale()));
+        }
+
+        infoBox.setTitle(messages.getNullableMessage(TERMINATION_TITLE, language.toLocale()));
+        infoBox.setUrlTitle(messages.getNullableMessage(TERMINATION_LINK_TITLE, language.toLocale()));
+        infoBox.setUrl(messages.getNullableMessage(TERMINATION_LINK_URL, language.toLocale()));
+        infoBox.setIsDismissible(false);
+        return infoBox;
+    }
+
+
+    private InfoBoxCollection appDeactivationInfobox(boolean oldVersion) {
+        InfoBoxCollection collection = new InfoBoxCollection();
+        collection.setDeInfoBox(createDeactivationInfobox(Language.DE, oldVersion));
+        collection.setEnInfoBox(createDeactivationInfobox(Language.EN, oldVersion));
+        collection.setFrInfoBox(createDeactivationInfobox(Language.FR, oldVersion));
+        collection.setItInfoBox(createDeactivationInfobox(Language.IT, oldVersion));
+        collection.setPtInfoBox(createDeactivationInfobox(Language.PT, oldVersion));
+        collection.setEsInfoBox(createDeactivationInfobox(Language.ES, oldVersion));
+        collection.setSqInfoBox(createDeactivationInfobox(Language.SQ, oldVersion));
+        collection.setHrInfoBox(createDeactivationInfobox(Language.HR, oldVersion));
+        collection.setBsInfoBox(createDeactivationInfobox(Language.BS, oldVersion));
+        collection.setRmInfoBox(createDeactivationInfobox(Language.RM, oldVersion));
+        collection.setSrInfoBox(createDeactivationInfobox(Language.SR, oldVersion));
+        collection.setTiInfoBox(createDeactivationInfobox(Language.TI, oldVersion));
+        collection.setTrInfoBox(createDeactivationInfobox(Language.TR, oldVersion));
+        return collection;
+    }
+
 
     private ConfigResponse generalUpdateRelease(boolean isIos) {
         ConfigResponse configResponse = new ConfigResponse();
