@@ -26,8 +26,9 @@ public class MockInfoBoxConfig {
     public GaenConfigController gaenConfigController(
             Messages messages,
             VaccinationInfoHelper vaccinationInfoHelper,
-            @Value("${ws.vaccination-info.show:false}") boolean showVaccinationInfo) {
-        return new MockInfoBoxController(messages, vaccinationInfoHelper, showVaccinationInfo);
+            @Value("${ws.vaccination-info.show:false}") boolean showVaccinationInfo,
+            @Value("$(ws.deactivate-app:false") boolean deactivate) {
+        return new MockInfoBoxController(messages, vaccinationInfoHelper, showVaccinationInfo, deactivate);
     }
 
     public class MockInfoBoxController extends GaenConfigController {
@@ -35,13 +36,15 @@ public class MockInfoBoxConfig {
         public MockInfoBoxController(
                 Messages messages,
                 VaccinationInfoHelper vaccinationInfoHelper,
-                boolean showVaccinationInfo) {
+                boolean showVaccinationInfo,
+                boolean deactivate) {
             super(
                     messages,
                     interOpsCountryCodes,
                     false,
                     vaccinationInfoHelper,
-                    showVaccinationInfo);
+                    showVaccinationInfo,
+                    deactivate);
         }
 
         @Override
