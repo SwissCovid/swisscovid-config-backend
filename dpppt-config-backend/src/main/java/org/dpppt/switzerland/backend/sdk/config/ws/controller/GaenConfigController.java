@@ -81,12 +81,12 @@ public class GaenConfigController {
 
 
     private static final Logger logger = LoggerFactory.getLogger(GaenConfigController.class);
-    //TODO actual URL
-    private static final String TERMINATION_URL = "https://bag-coronavirus.ch/swisscovid-app/";
+
     public static final String TERMINATION_TITLE = "termination_title";
     public static final String TERMINATION_TEXT = "termination_text";
     public static final String TERMINATION_TEXT_INFOBOX = "termination_text_infobox";
     public static final String TERMINATION_LINK_TITLE = "termination_link_title";
+    public static final String TERMINATION_LINK_URL = "termination_url";
 
     protected final Messages messages;
     private final List<String> interOpsCountryCodes;
@@ -302,7 +302,7 @@ public class GaenConfigController {
 
         infoBox.setTitle(messages.getNullableMessage(TERMINATION_TITLE, language.toLocale()));
         infoBox.setUrlTitle(messages.getNullableMessage(TERMINATION_LINK_TITLE, language.toLocale()));
-        infoBox.setUrl(TERMINATION_URL);
+        infoBox.setUrl(messages.getNullableMessage(TERMINATION_LINK_URL, language.toLocale()));
         infoBox.setIsDismissible(false);
         return infoBox;
     }
