@@ -23,7 +23,7 @@
     <properties>
         <java-version>11</java-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot-version>2.6.4</spring-boot-version>
+        <spring-boot-version>2.6.6</spring-boot-version>
         <itCoverageAgent></itCoverageAgent>
         <build-helper-maven-plugin.version>1.9.1</build-helper-maven-plugin.version>
     </properties>
